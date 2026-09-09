@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en" data-t="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Life Olympics</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Olympia">
+<meta name="theme-color" content="#F2EDE1">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23F2EDE1'/%3E%3Cpath d='M90 44 L90 150' stroke='%236E8452' stroke-width='7'/%3E%3Cpath d='M90 66 C74 60 62 74 62 84 C78 90 90 78 90 66 Z' fill='%236E8452'/%3E%3Cpath d='M90 66 C106 60 118 74 118 84 C102 90 90 78 90 66 Z' fill='%236E8452'/%3E%3Cpath d='M90 100 C74 94 62 108 62 118 C78 124 90 112 90 100 Z' fill='%236E8452'/%3E%3Cpath d='M90 100 C106 94 118 108 118 118 C102 124 90 112 90 100 Z' fill='%236E8452'/%3E%3Ccircle cx='90' cy='34' r='13' fill='%23A9713B'/%3E%3C/svg%3E">
+<style>
+:root[data-t="light"]{--bg:#F2EDE1;--bg2:#E8E1D1;--pan:#FBF9F4;--pan2:#EDE6D6;--line:#DCD2BC;--edge:#C9BCA0;
+--tx:#26221B;--mut:#5C5546;--dim:#8E8674;--br:#A9713B;--br2:#8A5A2B;--lau:#5F7346;--lau2:#4A5C35;
+--g:#4A7A46;--y:#B5772A;--r:#A8402F;--sh:rgba(60,48,30,.10);--vein:rgba(140,125,100,.07);--skin:#D8B489}
+:root[data-t="dark"]{--bg:#221E18;--bg2:#2A251E;--pan:#302A22;--pan2:#3A3329;--line:#463D31;--edge:#5B5042;
+--tx:#EFE8D6;--mut:#B4AA93;--dim:#8A8170;--br:#C89355;--br2:#E0B978;--lau:#8AA36B;--lau2:#A3BA85;
+--g:#6FB566;--y:#D9993C;--r:#D45B49;--sh:rgba(0,0,0,.45);--vein:rgba(220,200,160,.05);--skin:#C9A276}
+html,body{background:var(--bg)!important;min-height:100%}
+#bg{position:fixed;inset:-10px;z-index:-2;background:var(--bg);
+background-image:linear-gradient(122deg,transparent 0%,var(--vein) 17%,transparent 19%,transparent 43%,var(--vein) 46%,transparent 48%,transparent 72%,var(--vein) 76%,transparent 78%),
+linear-gradient(64deg,transparent 0%,var(--vein) 29%,transparent 32%,transparent 68%,var(--vein) 72%,transparent 74%)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;color:var(--tx);font:16px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:480px;margin:0 auto;padding:16px 17px 80px}
+.num{font-variant-numeric:tabular-nums}
+.ser{font-family:"Hoefler Text",Palatino,Georgia,serif}
+.mast{display:flex;align-items:center;gap:12px;padding:4px 0}
+.mast .lau{width:104px;height:20px;display:block;margin:0 auto 2px}
+.mtitle{flex:1;text-align:center}
+.mtitle h1{font-size:25px;font-weight:400;margin:0;letter-spacing:.02em}
+.rule{height:3px;margin:9px 0 4px;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:2px 0}
+.rule i{display:block;height:1px;background:linear-gradient(90deg,transparent,var(--br),transparent)}
+.sub{font-size:10px;color:var(--dim);letter-spacing:.3em;text-transform:uppercase;text-align:center;margin-bottom:12px}
+.av{width:54px;height:54px;border:1px solid var(--edge);border-radius:50%;background:var(--pan);flex:none;overflow:hidden;position:relative}
+.av svg{width:100%;height:100%;display:block}
+.avlv{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:8px;letter-spacing:.08em;background:var(--br);color:#FFF9EC;text-transform:uppercase}
+.tt{background:var(--pan);border:1px solid var(--edge);color:var(--mut);border-radius:16px;padding:5px 10px;font:10px inherit;font-family:inherit;letter-spacing:.1em;text-transform:uppercase;flex:none}
+h2{font-size:11px;color:var(--br2);font-weight:700;margin:0 0 8px;letter-spacing:.17em;text-transform:uppercase}
+.card{background:var(--pan);border:1px solid var(--line);border-top:2px solid var(--edge);border-radius:2px;padding:15px;margin-bottom:11px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.muted{color:var(--mut);font-size:13px}.tiny{color:var(--dim);font-size:12px;line-height:1.45}
+.frieze{height:8px;margin:12px 0;background-image:repeating-linear-gradient(90deg,var(--edge) 0 2px,transparent 2px 6px,var(--edge) 6px 8px,transparent 8px 14px);opacity:.45}
+.tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.tabs button{flex:1 1 22%;padding:9px 0;border:1px solid var(--line);border-radius:2px;background:var(--pan);color:var(--mut);font:600 10px inherit;font-family:inherit;letter-spacing:.06em;text-transform:uppercase}
+.tabs button.on{background:var(--br);color:#FFF9EC;border-color:var(--br)}
+.xpbar{background:var(--pan);border:1px solid var(--line);border-radius:2px;padding:11px 13px;margin-bottom:11px}
+.xpbar .r1{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.bar{height:7px;background:var(--pan2);border:1px solid var(--line);margin-top:7px;overflow:hidden}
+.bar div{height:100%;background:var(--br)}
+.q{display:flex;gap:10px;align-items:flex-start;background:var(--pan);border:1px solid var(--line);border-left:3px solid var(--lau);padding:11px 13px;margin-bottom:6px}
+.q .xp{font-size:11px;color:var(--br2);font-weight:700;flex:none}
+.item{background:var(--pan);border:1px solid var(--line);border-left:3px solid var(--edge);border-radius:2px;margin-bottom:7px;overflow:hidden}
+.head{padding:12px 14px}
+.cap{font-size:9px;letter-spacing:.15em;color:var(--br2);text-transform:uppercase;font-weight:700}
+.name{font-size:16px;margin-top:2px}
+.rx{font-size:12px;color:var(--dim);margin-top:2px}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.chip{font-size:12px;background:var(--pan2);border:1px solid var(--line);padding:2px 7px;color:var(--mut)}
+.body{border-top:1px solid var(--line);padding:13px 14px}
+input,textarea,select{background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:11px;color:var(--tx);font:15px inherit;font-family:inherit;width:100%}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+.inline{display:flex;gap:6px;margin-bottom:9px}
+.inline input.n{width:62px;flex:none}
+button.go{background:var(--br);color:#FFF9EC;border:0;border-radius:2px;padding:11px 13px;font:600 15px inherit;font-family:inherit}
+button.wide{width:100%;padding:11px;border:1px solid var(--edge);border-radius:2px;background:transparent;color:var(--br2);font:600 11px inherit;font-family:inherit;margin-top:7px;letter-spacing:.1em;text-transform:uppercase}
+button.save{width:100%;padding:14px;border:0;border-radius:2px;background:var(--br);color:#FFF9EC;font:700 15px inherit;font-family:inherit;letter-spacing:.05em}
+.opts{display:flex;gap:5px}
+.opts button{flex:1;padding:10px 2px;border:1px solid var(--line);border-radius:2px;background:var(--pan);color:var(--mut);font:12px inherit;font-family:inherit}
+.opts button.sel{background:var(--tx);color:var(--bg);border-color:var(--tx);font-weight:600}
+.opts button.sel.g{background:var(--g);border-color:var(--g);color:#fff}
+.opts button.sel.y{background:var(--y);border-color:var(--y);color:#fff}
+.opts button.sel.r{background:var(--r);border-color:var(--r);color:#fff}
+.verdict{border-left:3px solid;padding:12px 14px;margin-bottom:11px;font-size:14px;background:var(--pan)}
+.verdict.g{border-color:var(--g);color:var(--g)}
+.verdict.y{border-color:var(--y);color:var(--y)}
+.verdict.r{border-color:var(--r);color:var(--r)}
+.prompt{background:var(--pan);border:1px solid var(--br);padding:15px;margin-bottom:11px}
+.how{background:var(--bg2);border:1px solid var(--line);padding:12px;margin-bottom:11px}
+.how ul{margin:0;padding-left:16px}
+.how li{font-size:13px;color:var(--mut);line-height:1.45;margin-bottom:4px}
+.exp{border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
+.exp b{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--br2);margin:9px 0 3px}
+.exp p{margin:0;font-size:13px;color:var(--mut);line-height:1.5}
+.warn{margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:12px;color:var(--y);line-height:1.45}
+.fig{margin-bottom:10px;background:var(--pan);border:1px solid var(--line);padding:5px}
+.fig svg{width:100%;height:auto;max-height:96px;display:block}
+.fig svg line,.fig svg circle,.fig svg rect,.fig svg path{stroke:var(--mut);stroke-width:2.4;fill:none;stroke-linecap:round}
+.fig svg .bl{stroke:var(--edge);stroke-width:3}
+.fig svg .hi{stroke:var(--br);stroke-width:2.8}
+.fig svg .hi2{stroke:var(--br);fill:var(--br);opacity:.3}
+.fig svg text{font-size:8px;fill:var(--dim);stroke:none}
+.alt{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--line);padding:9px 11px;margin-bottom:5px;font-size:13px}
+.alt.on{border-color:var(--br);background:var(--pan2)}
+.alt button{background:var(--br);color:#FFF9EC;border:0;padding:6px 10px;font:11px inherit;font-family:inherit;letter-spacing:.06em;text-transform:uppercase;flex:none}
+.tmr{text-align:center;padding:5px 0 9px}
+.tmr .t{font-size:42px;color:var(--br2)}
+.tmrb{display:flex;gap:7px}
+.tmrb button{flex:1;padding:11px;border:0;border-radius:2px;font:600 14px inherit;font-family:inherit}
+.dki{display:flex;gap:10px;align-items:flex-start;background:var(--pan);border:1px solid var(--line);padding:11px 12px;margin-bottom:5px}
+.box{width:17px;height:17px;border-radius:2px;background:var(--pan2);flex:none;margin-top:2px;border:1px solid var(--edge)}
+.box.on{background:var(--lau);border-color:var(--lau)}
+.done{color:var(--dim);text-decoration:line-through}
+.blk{border:1px solid var(--edge);border-top:2px solid var(--br);padding:12px;margin-bottom:11px;background:var(--pan)}
+.blk h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--br2);margin:0 0 3px}
+.link{color:var(--br);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.dom{background:var(--pan);border:1px solid var(--line);padding:13px;margin-bottom:8px}
+.ev{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.er{font-size:16px;font-weight:600;color:var(--br2)}
+.er small{font-size:11px;color:var(--dim);font-weight:400}
+.entry{background:var(--pan);border:1px solid var(--line);padding:11px 13px;margin-bottom:6px;display:flex;gap:10px}
+.stripe{width:3px;flex:none}
+.del{background:none;border:0;color:var(--dim);font-size:12px;font-family:inherit}
+.empty{color:var(--dim);font-size:14px;text-align:center;padding:26px 0;line-height:1.5}
+.sl{display:flex;gap:5px}
+.sl button{flex:1;padding:10px 0;border:1px solid var(--line);border-radius:2px;background:var(--pan);color:var(--mut);font:13px inherit;font-family:inherit}
+.sl button.sel{background:var(--lau);color:#FFF9EC;border-color:var(--lau)}
+.spark{display:flex;align-items:flex-end;gap:2px;height:26px;margin:8px 0}
+.spark div{flex:1;background:var(--pan2);border:1px solid var(--line)}
+.spark div:last-child{background:var(--br);border-color:var(--br)}
+.pct{font-size:13px;font-weight:600}.up{color:var(--lau2)}.dn{color:var(--r)}
+.big{font-size:38px;color:var(--br2)}
+.tgt{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.tgt b{color:var(--br2)}
+.kit{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.kitx{flex:1 1 30%;text-align:center;padding:9px 4px;border:1px solid var(--line);background:var(--pan2);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.kitx.on{border-color:var(--br);color:var(--br2);background:var(--pan)}
+.heroav{width:170px;height:230px;margin:0 auto;display:block}
+.tl{font-size:12px;color:var(--dim);margin-top:3px;line-height:1.4}
+.logrow{display:flex;gap:5px;padding:10px 12px;background:var(--bg2);border-top:1px solid var(--line)}
+.logrow input{padding:9px;font-size:15px}
+.logrow input.n{width:56px;flex:none}
+.logrow button{background:var(--br);color:#FFF9EC;border:0;padding:9px 14px;font:700 14px inherit;font-family:inherit;flex:none}
+.minirow{display:flex;gap:5px;padding:0 12px 10px;background:var(--bg2)}
+.minirow button{flex:1;background:transparent;border:1px solid var(--line);color:var(--mut);padding:7px 0;font:11px inherit;font-family:inherit;letter-spacing:.08em;text-transform:uppercase}
+.minirow button.on{border-color:var(--br);color:var(--br2)}
+.xpop{position:fixed;left:50%;transform:translateX(-50%);top:14px;z-index:50;background:var(--br);color:#FFF9EC;padding:13px 22px;font:700 16px -apple-system,system-ui,sans-serif;box-shadow:0 4px 16px var(--sh);border-radius:2px;text-align:center;max-width:88%}
+.xpop small{display:block;font-weight:400;font-size:12px;opacity:.9;margin-top:3px}
+.lad{background:var(--pan);border:1px solid var(--line);border-top:2px solid var(--edge);padding:14px;margin-bottom:10px}
+.rung{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.rung .n{width:20px;height:20px;border:1px solid var(--edge);flex:none;text-align:center;font-size:11px;line-height:19px;color:var(--dim)}
+.rung.done .n{background:var(--lau);border-color:var(--lau);color:#FFF9EC}
+.rung.cur .n{background:var(--br);border-color:var(--br);color:#FFF9EC}
+.rung.cur{background:var(--bg2);margin:0 -6px;padding:8px 6px}
+.lock{font-size:11px;color:var(--y);margin-top:4px}
+.done2{color:var(--dim)}
+
+*{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.card,.item,.lad,.blk,.dki,.q{animation:rise .22s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.bar div{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.xpop{animation:pop .3s cubic-bezier(.2,1.4,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateX(-50%) translateY(-14px) scale(.92)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+.tabs button{transition:background-color .15s,color .15s,transform .1s}
+.tabs button:active{transform:scale(.96)}
+button:active{transform:scale(.97)}
+.logrow button{transition:transform .1s,background-color .15s}
+.item.doneEx{border-left-color:var(--lau)}
+.item.doneEx .name:after{content:" ✓";color:var(--lau);font-size:14px}
+.floatbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--pan);border-top:2px solid var(--br);
+padding:11px 16px calc(11px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;box-shadow:0 -3px 14px var(--sh);
+animation:slideup .25s ease both}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+.floatbar .ft{font-size:26px;color:var(--br2);font-variant-numeric:tabular-nums;min-width:74px}
+.floatbar .fl{flex:1;font-size:12px;color:var(--mut);line-height:1.3}
+.floatbar button{background:var(--pan2);border:1px solid var(--edge);color:var(--tx);padding:9px 13px;font:12px inherit;font-family:inherit;letter-spacing:.06em;text-transform:uppercase}
+.prog{display:flex;gap:3px;margin:10px 0 14px}
+.prog i{flex:1;height:4px;background:var(--pan2);border:1px solid var(--line)}
+.prog i.on{background:var(--lau);border-color:var(--lau)}
+.wkbar{display:flex;justify-content:space-between;align-items:center;background:var(--pan);border:1px solid var(--line);border-left:3px solid var(--br);padding:10px 13px;margin-bottom:11px;font-size:13px}
+.danger{color:var(--r)!important;border-color:var(--r)!important}
+.set{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.pbflash{animation:pb .6s ease both}
+@keyframes pb{0%{background:var(--br);color:#FFF9EC}100%{background:transparent}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div class="wrap" id="app"></div>
+<script>
+var KEY="olympia-v5";
+var SVG={
+hs:'<svg viewBox="0 0 120 70"><line x1="14" y1="4" x2="14" y2="66" class="bl"/><line x1="8" y1="66" x2="112" y2="66" class="bl"/><circle cx="40" cy="52" r="6"/><line x1="34" y1="60" x2="34" y2="66"/><line x1="46" y1="60" x2="46" y2="66"/><line x1="40" y1="46" x2="34" y2="20"/><line x1="34" y1="20" x2="20" y2="10" class="hi"/><line x1="40" y1="46" x2="44" y2="20"/><line x1="44" y1="20" x2="26" y2="8" class="hi"/><text x="56" y="26">chest to wall, ribs down</text></svg>',
+ww:'<svg viewBox="0 0 120 70"><line x1="14" y1="4" x2="14" y2="66" class="bl"/><line x1="8" y1="66" x2="112" y2="66" class="bl"/><circle cx="62" cy="48" r="6"/><line x1="66" y1="52" x2="88" y2="60"/><line x1="58" y1="44" x2="34" y2="26" class="hi"/><path d="M30 34 L20 24" class="hi"/><path d="M20 30 L18 22 L26 24" class="hi"/><text x="52" y="20">walk hands in</text></svg>',
+lsit:'<svg viewBox="0 0 120 70"><line x1="8" y1="58" x2="112" y2="58" class="bl"/><circle cx="46" cy="20" r="6"/><line x1="46" y1="26" x2="46" y2="42"/><line x1="40" y1="30" x2="40" y2="50"/><line x1="52" y1="30" x2="52" y2="50"/><line x1="46" y1="42" x2="70" y2="38" class="hi"/><line x1="70" y1="38" x2="86" y2="44" class="hi"/><path d="M40 52 L40 56" class="hi"/><text x="60" y="20">hips off the floor</text></svg>',
+plank:'<svg viewBox="0 0 120 70"><line x1="8" y1="62" x2="112" y2="62" class="bl"/><line x1="18" y1="34" x2="18" y2="60"/><line x1="18" y1="34" x2="96" y2="50"/><circle cx="14" cy="30" r="5"/><path d="M26 22 L40 22" class="hi"/><path d="M36 18 L42 22 L36 26" class="hi"/><text x="46" y="18">shoulders past wrists</text></svg>',
+scap:'<svg viewBox="0 0 120 70"><line x1="20" y1="10" x2="100" y2="10" class="bl"/><line x1="54" y1="10" x2="54" y2="24"/><line x1="66" y1="10" x2="66" y2="24"/><circle cx="60" cy="30" r="6"/><line x1="60" y1="36" x2="60" y2="58"/><path d="M88 26 L88 38" class="hi"/><path d="M84 32 L88 40 L92 32" class="hi"/><text x="10" y="34">shrug down only</text></svg>',
+push:'<svg viewBox="0 0 120 70"><rect x="6" y="44" width="16" height="9" class="bl"/><rect x="98" y="44" width="16" height="9" class="bl"/><line x1="14" y1="44" x2="30" y2="30"/><line x1="30" y1="30" x2="106" y2="44"/><circle cx="26" cy="26" r="5"/><path d="M46 22 L46 36" class="hi"/><text x="56" y="18">chest below hands</text></svg>',
+row:'<svg viewBox="0 0 120 70"><line x1="20" y1="24" x2="100" y2="24" class="bl"/><line x1="8" y1="58" x2="112" y2="58" class="bl"/><circle cx="44" cy="40" r="5"/><line x1="48" y1="42" x2="96" y2="48"/><line x1="52" y1="42" x2="52" y2="26"/><text x="18" y="16">lower chest to edge</text></svg>',
+bulg:'<svg viewBox="0 0 120 70"><rect x="76" y="40" width="30" height="6" class="bl"/><line x1="8" y1="62" x2="112" y2="62" class="bl"/><circle cx="44" cy="14" r="5"/><line x1="44" y1="19" x2="46" y2="40"/><line x1="46" y1="40" x2="38" y2="52"/><line x1="38" y1="52" x2="38" y2="62"/><line x1="46" y1="40" x2="80" y2="44"/><text x="2" y="16">load opposite</text></svg>',
+rdl:'<svg viewBox="0 0 120 70"><line x1="8" y1="62" x2="112" y2="62" class="bl"/><circle cx="34" cy="22" r="5"/><line x1="36" y1="26" x2="66" y2="36" class="hi"/><line x1="66" y1="36" x2="70" y2="62"/><rect x="42" y="48" width="14" height="10" class="hi2"/><text x="10" y="52">hips go back</text></svg>',
+side:'<svg viewBox="0 0 120 70"><line x1="8" y1="60" x2="112" y2="60" class="bl"/><line x1="24" y1="58" x2="24" y2="34"/><line x1="24" y1="34" x2="86" y2="42" class="hi"/><circle cx="92" cy="42" r="6"/><text x="28" y="26">one straight line</text></svg>',
+abd:'<svg viewBox="0 0 120 70"><line x1="8" y1="58" x2="112" y2="58" class="bl"/><circle cx="24" cy="42" r="6"/><line x1="30" y1="44" x2="82" y2="48"/><line x1="82" y1="48" x2="104" y2="52"/><line x1="82" y1="48" x2="100" y2="30" class="hi"/><text x="32" y="16">do not roll back</text></svg>',
+hollow:'<svg viewBox="0 0 120 70"><line x1="8" y1="52" x2="112" y2="52" class="bl"/><circle cx="26" cy="34" r="5"/><line x1="30" y1="38" x2="62" y2="44"/><line x1="62" y1="44" x2="100" y2="34"/><path d="M56 50 L66 50" class="hi"/><text x="26" y="18">low back glued down</text></svg>',
+calf:'<svg viewBox="0 0 120 70"><rect x="30" y="50" width="60" height="8" class="bl"/><line x1="56" y1="12" x2="56" y2="40"/><circle cx="56" cy="8" r="5"/><line x1="56" y1="40" x2="50" y2="50"/><line x1="50" y1="50" x2="66" y2="50" class="hi"/><text x="8" y="30">full range</text></svg>',
+box:'<svg viewBox="0 0 120 70"><rect x="70" y="34" width="34" height="24" class="bl"/><line x1="8" y1="58" x2="112" y2="58" class="bl"/><circle cx="34" cy="22" r="5"/><line x1="34" y1="27" x2="34" y2="40"/><line x1="34" y1="40" x2="27" y2="50"/><line x1="34" y1="40" x2="41" y2="50"/><text x="4" y="14">step down</text></svg>',
+carry:'<svg viewBox="0 0 120 70"><line x1="8" y1="62" x2="112" y2="62" class="bl"/><circle cx="56" cy="12" r="5"/><line x1="56" y1="17" x2="56" y2="40"/><line x1="56" y1="40" x2="50" y2="62"/><line x1="56" y1="40" x2="64" y2="62"/><line x1="56" y1="22" x2="72" y2="22"/><line x1="72" y1="22" x2="72" y2="40"/><rect x="66" y="40" width="14" height="12" class="hi2"/><text x="0" y="20">do not lean</text></svg>',
+squat:'<svg viewBox="0 0 120 70"><line x1="8" y1="60" x2="112" y2="60" class="bl"/><circle cx="42" cy="24" r="5"/><line x1="42" y1="29" x2="46" y2="44"/><line x1="46" y1="44" x2="62" y2="44"/><line x1="62" y1="44" x2="56" y2="60"/><path d="M84 46 L84 28" class="hi"/><text x="60" y="58">stand in stages</text></svg>',
+pike:'<svg viewBox="0 0 120 70"><line x1="16" y1="58" x2="58" y2="14"/><line x1="58" y1="14" x2="96" y2="56"/><circle cx="92" cy="46" r="5"/><text x="14" y="12">hips high</text></svg>',
+bsq:'<svg viewBox="0 0 120 70"><line x1="8" y1="62" x2="112" y2="62" class="bl"/><circle cx="52" cy="14" r="5"/><line x1="52" y1="19" x2="52" y2="36"/><rect x="44" y="22" width="16" height="12" class="hi2"/><line x1="52" y1="36" x2="42" y2="48"/><line x1="42" y1="48" x2="44" y2="62"/><line x1="52" y1="36" x2="62" y2="48"/><line x1="62" y1="48" x2="60" y2="62"/><text x="68" y="26">pack at chest</text></svg>',
+slrdl:'<svg viewBox="0 0 120 70"><line x1="8" y1="62" x2="112" y2="62" class="bl"/><circle cx="30" cy="26" r="5"/><line x1="32" y1="30" x2="62" y2="36" class="hi"/><line x1="62" y1="36" x2="64" y2="62"/><line x1="62" y1="36" x2="94" y2="26"/><text x="62" y="16">hips square</text></svg>',
+bal:'<svg viewBox="0 0 120 70"><line x1="8" y1="60" x2="112" y2="60" class="bl"/><circle cx="60" cy="14" r="5"/><line x1="60" y1="19" x2="60" y2="38"/><line x1="60" y1="38" x2="60" y2="60"/><line x1="60" y1="38" x2="74" y2="48"/><line x1="74" y1="48" x2="70" y2="56" class="hi"/><text x="72" y="20">barefoot</text></svg>',
+pogo:'<svg viewBox="0 0 120 70"><line x1="8" y1="60" x2="112" y2="60" class="bl"/><circle cx="60" cy="16" r="5"/><line x1="60" y1="21" x2="60" y2="40"/><line x1="60" y1="40" x2="54" y2="52"/><line x1="60" y1="40" x2="66" y2="52"/><path d="M86 46 L86 28" class="hi"/><text x="4" y="24">stiff ankles</text></svg>',
+tri:'<svg viewBox="0 0 120 70"><line x1="104" y1="6" x2="104" y2="64" class="bl"/><line x1="30" y1="62" x2="52" y2="22"/><circle cx="56" cy="18" r="5"/><line x1="58" y1="22" x2="82" y2="16"/><line x1="82" y1="16" x2="100" y2="26"/><path d="M78 8 A14 14 0 0 1 92 20" class="hi"/><text x="12" y="16">stop at 90</text></svg>',
+run:'<svg viewBox="0 0 120 70"><line x1="8" y1="60" x2="112" y2="60" class="bl"/><circle cx="52" cy="14" r="5"/><line x1="52" y1="19" x2="58" y2="36"/><line x1="58" y1="36" x2="46" y2="48"/><line x1="46" y1="48" x2="40" y2="60"/><line x1="58" y1="36" x2="72" y2="46"/><line x1="72" y1="46" x2="80" y2="58"/><text x="66" y="26">conversational</text></svg>',
+wrist:'<svg viewBox="0 0 120 70"><line x1="8" y1="56" x2="112" y2="56" class="bl"/><line x1="40" y1="20" x2="40" y2="48"/><line x1="40" y1="48" x2="56" y2="56"/><path d="M56 56 L70 50" class="hi"/><line x1="72" y1="20" x2="72" y2="48"/><line x1="72" y1="48" x2="86" y2="56"/><text x="16" y="16">first knuckles lift</text></svg>'};
+
+function E(t,w,e,p,f){return{t:t,w:w,e:e,p:p,f:f}}
+var SW={
+push:["Knee push-ups","Incline push-ups against a counter","Wall push-ups","Pike push-ups"],
+pull:["Table row","Towel row over a door","Bent-over pack row","Single-arm pack row on a chair","Doorway isometric pull"],
+knee:["Split squat, no elevation","Bodyweight squat","Wall sit","Step-ups on a chair"],
+hip:["Glute bridge","Single-leg glute bridge","Good morning, no load","Hip hinge with a broom"],
+trunk:["Dead bug","Tuck hollow hold","Bent-knee hollow","Plank"],
+lat:["Side plank on knees","Side-lying hip abduction","Suitcase carry"],
+ankle:["Bodyweight calf raise","Seated calf raise","Single-leg balance","Toe walks"],
+pow:["Snap-downs","Squat jumps","Step-ups, fast","Pogo hops"],
+carry:["Backpack carry","Water jug carry","Suitcase carry"],
+skill:["Wrist prep only","Wall plank","Downward dog holds","Crow pose attempts"],
+sa:["Plank lean","Scap push-ups","Support hold on chairs","Bear hold"],
+elbow:["Wall triceps extension","Diamond push-ups on knees","Bench dip, feet close"],
+eng:["Brisk walk","Stairs","Shadow boxing rounds","Skipping without a rope"]};
+var PROG={
+A:{name:"Body A",x:[
+["hs_a","SKILL · HANDSTAND","skill","Chest-to-wall hold","4 x 20-40s","hs",["Wrist prep first: 10 first-knuckle raises each way","Face the wall, walk the feet up, chest and hips toward the wall","Ribs DOWN, squeeze glutes, do not arch","Push the floor away — shoulders to the ears"],"Come down before form breaks, not when you fail.",30,
+E("The handstand line. Shoulder flexion under load, straight-arm strength, and the hollow position vertically.",
+"You have a wall and floor almost always, which makes handstand the highest-value skill you can train right now. It also builds the exact wrist capacity that failed on session one — the prep is the rehab.",
+"Strong that skill practice drives skill acquisition. Specific hold durations are coaching convention.",
+"Wall plank → chest-to-wall 20s → 45s → 60s → heel pulls → freestanding kick-ups.",
+"Handstand · Relative Strength")],
+["sa_a","STRAIGHT-ARM","sa","Plank leans","3 x 20-30s","plank",["Push-up position, elbows locked completely straight","Lean the shoulders forward past the wrists","Hold. Hips level, no sag","Lean further, not longer, to progress"],"This is the quality every lever and planche is built on. It was missing entirely from earlier versions.",25,
+E("Straight-arm scapular strength. A separate quality from bent-arm pressing and pulling.",
+"Calisthenics splits into bent-arm and straight-arm strength, and almost nobody trains the second until a lever stalls. It also conditions the biceps tendon and elbow for ring work.",
+"Coaching convention with sound mechanical logic. No trial evidence I can point to.",
+"Plank lean → longer lean → feet elevated → pseudo planche push-up → tuck planche.",
+"Front lever · Human flag")],
+["push_a","PUSH","push","Deficit push-ups","3 x 6-12 · 2 RIR","push",["Hands on books so the chest sinks below hand level","3s down, brief pause, drive up","Push the floor away at the top, blades spread","Elbows about 45 degrees from the ribs"],"Wrist grumbles? Fists. Toe sore? Knees down or toes off a step edge.",0,
+E("Horizontal pressing through a deeper range than the floor allows.",
+"Your press is well ahead of your pull, so this holds position rather than chasing it. The deficit gets range without the deep dip that threatens the shoulder capsule.",
+"Strong for the principle. Two exposures per muscle group weekly is the reliable dose. The deficit variation is judgment.",
+"Books → floor → feet elevated → archer → one-arm negatives → ring push-ups.",
+"Muscle-up · Relative Strength")],
+["pull_a","PULL","pull","Table row","3 x 8-15","row",["Under a sturdy table, heels out, body straight","Pull the lower chest to the edge, pause 1s","Squeeze the blades together at the top","Feet elevated to make it harder"],"No bar until October, so horizontal pulling is the backbone. Take a bar when you find one.",0,
+E("Horizontal pulling. Mid-back, rear delts, elbow flexors, scapular retraction under load.",
+"Roughly 20 dips against 7-8 pull-ups means you are push-dominant. This is the correction, and it needs only furniture. It is also direct muscle-up preparation.",
+"Strong for the principle.",
+"Feet down → feet elevated → feet elevated plus pack → archer → one-arm negatives.",
+"Muscle-up · Relative Strength")],
+["knee_a","KNEE","knee","Bulgarian split squat","3 x 8-12 per leg","bulg",["Rear foot on a chair, laces down if the toe objects","Front shin roughly vertical, drop straight down","Drive through the front heel","Carry-on in the opposite hand to load it"],"",0,
+E("Single-leg knee-dominant strength with a large stability demand.",
+"The direct road to a pistol squat, and single-leg work exposes the side-to-side difference your ankle history probably created.",
+"Strong for single-leg training building lower body strength.",
+"Bodyweight → contralateral load → deficit → assisted pistol → full pistol.",
+"Pistol squat")],
+["hip_a","HIP","hip","Backpack RDL","3 x 8-12","rdl",["Loaded carry-on at the chest, or a bag in each hand","Push the hips back, soft knees, spine neutral","Hamstrings, not low back","Stand tall, squeeze the glutes at the top"],"This is the pattern that does not bother your back. Own it.",0,
+E("Hip hinge. Hamstrings, glutes, spinal erectors working isometrically.",
+"Loaded hinging is fine for you while sustained unbraced flexion provokes you. Training the hinge loaded makes the unloaded version automatic, which is what the sink demands.",
+"Moderate. Exercise reduces chronic low back pain with moderate-certainty evidence; hinge patterning specifically is reasoning.",
+"Bodyweight → broom on the spine → loaded → single leg → barbell once you have a gym.",
+"Relative Strength · Durability")],
+["trunk_a","TRUNK","trunk","Hollow body hold","4 x 30-45s","hollow",["Ribs down, low back glued to the floor","Shoulders and legs six inches up","Bend the knees if the back peels off","This is the chassis, not an ab exercise"],"Restored to full volume. I cut this to 2 sets by accident and should not have.",40,
+E("Anti-extension. The entire front of the trunk holding one shape under tension.",
+"The hollow body is the position underneath the handstand, the front lever and every ring movement. Get it wrong and your bodyweight leaks into the shoulder.",
+"Moderate for trunk training in back pain. The gymnastics rationale is convention with sound mechanics.",
+"Tuck → one leg → full → arms overhead → weighted → hollow rocks.",
+"Handstand · Front lever")],
+["ankle_a","ANKLE","ankle","Calf raise + tibialis","3 x 12-20 · 2 x 15-20","calf",["Calf raises off a step, full range, slow down","Tibialis: back to a wall, lift the toes toward the shins","Barefoot when you can","This is the tissue that absorbs landings"],"",0,
+E("Calf and shin strength — the tissue that absorbs landing forces.",
+"Repeated sprains on one side, and you are heading back to grappling. Also one of the more measurable things you own.",
+"Strong. Foot and ankle strengthening plus balance is effective for chronic ankle instability.",
+"Two legs → single leg → off a step → loaded → hopping.",
+"Mobility & Movement")],
+["pow_a","POWER","pow","Box jumps","4 x 3 · step down","box",["Land soft, absorb through hips and knees","Freeze for a beat before stepping off","Stop the set the moment height drops","Never jump down"],"Toe sore? Snap-downs: jump the feet apart, drop into a quarter squat.",0,
+E("Rate of force development. Producing force quickly, not just producing a lot of it.",
+"Power declines faster with age than maximal strength. If the long game is tackle football at eighty, this is the quality that decides it.",
+"Strong that power is separately trainable.",
+"Landings → low box → higher → broad jumps → single-leg hops.",
+"Power")],
+["carry_a","CARRY","carry","Suitcase carry","2 x 30s per side","carry",["Loaded carry-on in one hand, walk tall","Do not lean away from the weight","Ribs down, shoulder packed","Resisting the lean is the point"],"Direct human flag preparation. Also the carry I wrongly swapped out once.",30,
+E("Anti-lateral-flexion under load, plus grip.",
+"The flag is a lateral trunk problem before it is anything else. Every heavy suitcase carry is deposit in that account.",
+"Moderate for carries building trunk and grip.",
+"Heavier → longer → uneven ground → overhead when the shoulder allows.",
+"Human flag · Relative Strength")]]},
+B:{name:"Body B",x:[
+["hs_b","SKILL · HANDSTAND","skill","Wall walks","3 x 3-5","ww",["Start in a push-up position, feet at the wall","Walk the feet up while the hands walk in","Go as close as you can hold, then walk back down under control","Ribs down the whole way"],"Stop where you can still control the walk down.",0,
+E("Handstand entry, plus shoulder strength through the full range.",
+"Wall walks build the position and the confidence to be upside down. Pairs with the chest-to-wall holds in session A.",
+"Convention. Skill practice drives skill acquisition.",
+"Fewer steps → closer to the wall → longer holds at the top → freestanding attempts.",
+"Handstand")],
+["sa_b","STRAIGHT-ARM","sa","Tuck L-sit","4 x 10-20s","lsit",["Hands on books or the floor beside your hips","Push the floor down hard, shoulders away from the ears","Lift the hips clear, knees tucked to the chest","If the hips will not clear, press harder and lift less"],"Compression plus straight-arm support. Harder than it looks.",15,
+E("Straight-arm support strength and hip compression.",
+"The L-sit is the gateway skill for everything seated and every lever. It also demands the exact scapular depression that fixes desk posture.",
+"Convention.",
+"Feet supported → tuck 10s → tuck 20s → one leg out → full L-sit → V-sit.",
+"L-sit · Front lever")],
+["push_b","PUSH","push","Pike push-ups","3 x 6-10 · 2 RIR","pike",["Feet walked in, hips high, inverted V","Lower the crown of the head just ahead of the hands","Elbows track back at 45 degrees","Stage this back in gradually"],"The shoulder is the one to watch. Back off range before reps.",0,
+E("Vertical pressing. The strength that becomes a handstand push-up.",
+"This is the pressing pattern the handstand needs, and the one most likely to bother the Kimura shoulder — which is why it gets built gradually rather than avoided.",
+"Strong for the principle. The staged return is judgment from your day one response.",
+"Feet low → feet elevated → deficit → wall handstand push-up negatives.",
+"Handstand")],
+["pull_b","PULL","pull","Scap pulls + towel row","3 x 8 · 3 x 10-15","scap",["Scap pulls need a bar or rings: hang, shrug DOWN only, arms stay straight","No bar? Do scap push-ups instead: push-up position, let the chest sink between the blades, then push apart","Towel row: towel over the hinge side of a closed door, lean back, pull to the chest"],"Scapular control is its own quality. Everything hanging depends on it.",0,
+E("Scapular depression and retraction — moving the shoulder blade with the arm straight.",
+"Nearly every stalled pull-up and front lever is a scapular problem, not an arm problem. It is also the direct fix for a desk-driven upper back.",
+"Convention with sound mechanics.",
+"Scap push-ups → scap pulls on a bar → active hangs → weighted.",
+"Front lever · Muscle-up")],
+["knee_b","KNEE","knee","Backpack squat","3 x 8-15","bsq",["Loaded carry-on held at the chest","Sit between the hips, heels down","Full depth if it is comfortable","Slow down, drive up"],"",0,
+E("Bilateral knee-dominant strength through full range.",
+"Front-loading keeps the torso upright, which is easier on a back that dislikes flexion under load.",
+"Strong.",
+"Bodyweight → loaded → tempo → paused → single-leg progressions.",
+"Pistol squat")],
+["hip_b","HIP","hip","Single-leg RDL","3 x 8-12 per leg","slrdl",["Hinge at the hip, back leg extends behind","Spine neutral, hips square to the floor","Light load. Control, not strength","Fingertips toward the floor if you reach"],"",0,
+E("Single-leg hinge with a large balance demand.",
+"Hinge plus balance in one movement, and it loads the lateral hip on the standing side — the area where you feel the back pain starting.",
+"Moderate.",
+"Hand support → free → light load → heavy → deficit.",
+"Relative Strength · Mobility")],
+["lat_b","LATERAL","lat","Side plank + hip abduction","3 x 30s · 3 x 12 per side","side",["Side plank: elbow under shoulder, one line head to hips","Abduction: on your side, lift the top leg, toes forward not up","Do not let the hips roll backwards","Short holds beat long collapses"],"You feel the back pain originating at the top outer left glute. This loads exactly there.",30,
+E("Anti-lateral-flexion and lateral hip strength.",
+"Two jobs at once: the human flag's foundation, and the lateral hip work that was missing from your old physio program and from every version of this one until you mentioned the glute.",
+"Moderate for both trunk training in back pain and lateral hip strengthening.",
+"Knees bent → straight → top leg raised → loaded → flag progressions on a pole.",
+"Human flag · Durability")],
+["ankle_b","ANKLE","ankle","Balance + knee-to-wall","3 x 40s per side · 10 reps","bal",["Single-leg balance barefoot, let the foot work","Progress: eyes closed, then a cushion","Knee-to-wall: drive the knee past the toes, heel stays down","Measure the distance. It is a real number"],"Never straight after floor work — that is when the dizziness shows up.",40,
+E("Proprioception and ankle dorsiflexion range.",
+"The single best-supported item in your whole program.",
+"Strong. Balance training reduced sprain rates with a relative risk around 0.65, and roughly a 36 percent reduction in people with a prior sprain — which is you.",
+"Eyes open → eyes closed → cushion → reaching → single-leg hop landings.",
+"Mobility & Movement · Durability")],
+["pow_b","POWER","pow","Pogo hops","4 x 6","pogo",["Small fast bounces off the forefoot","Ground contact as short as possible","Ankles do the work, not the knees","Stop if the toe objects"],"Toe sore? Fast concentric squats instead.",0,
+E("Elastic stiffness through the foot and ankle.",
+"The tendon-spring end of power. Builds the tissue that absorbs cutting and landing in grappling.",
+"Moderate for plyometrics improving power and stiffness.",
+"In place → forward and back → lateral → single leg → depth work.",
+"Power")],
+["elbow_b","ELBOW","elbow","Triceps extension","3 x 8-12 · 3s down, 3s up","tri",["Hands on the wall at head height, lean in","Elbows stay high and pointed at the wall","STOP AT 90 DEGREES at the elbow","The last rep should be a genuine fight"],"Tingling toward the pinky, numbness or grip change is an appointment, not a training signal.",0,
+E("Elbow extension under slow controlled load, in a range that spares the nerve.",
+"Progressive loading, not rest, is what tendon problems respond to. The range cap exists because deep loaded elbow flexion is a plausible ulnar nerve provocateur and we still do not know which you have.",
+"Moderate and openly extrapolated. Heavy slow resistance has good trials in Achilles and patellar tendons, not elbows, and it matched eccentric work rather than beating it. Isometrics do not reliably reduce tendon pain despite the popular story.",
+"Steeper angle → floor position → added load. Range stays capped until assessed.",
+"Relative Strength")],
+["carry_b","CARRY","carry","Suitcase carry","2 x 40s per side","carry",["Loaded carry-on in one hand, walk tall","Do not lean away from the weight","Both sessions now, not just one",""],"",40,
+E("Anti-lateral-flexion under load, plus grip.",
+"In both sessions. It was always the better carry for you.",
+"Moderate.",
+"Heavier → longer → uneven ground.",
+"Human flag")]]},
+C:{name:"Aerobic",x:[
+["cardio","ENGINE","eng","Easy run or brisk walk","30-40 min conversational","run",["Conversational means you could hold a sentence","Build duration before intensity","Twice a week to start","Build toward 150-300 min weekly"],"",1800,
+E("Cardiorespiratory fitness. The engine.",
+"Missing entirely from every earlier version, which was the biggest single omission. Also the strongest lever you have on the Sexual Health domain, because erectile function is vascular.",
+"Very strong. Cardiorespiratory fitness has one of the largest associations with long-term health outcomes in the literature, with each extra MET linked to roughly 11-17 percent lower all-cause mortality. Aerobic training also improved erectile function by about 2.8 IIEF-EF points across 11 RCTs.",
+"Duration → frequency → one hard session weekly → tested by a 1.5 mile time trial.",
+"Aerobic Capacity · Sexual Health")]]}};
+var EX={};for(var k in PROG)PROG[k].x.forEach(function(e){EX[e[0]]=e});
+
+function R(n,c,p,e,b){return{n:n,c:c,p:p,e:e,b:b}}
+var SKILLS=[
+["hand","Handstand","Wall and floor. Trainable today.",[
+R("Wrist prep · 10 each way, daily",
+["Hands and knees, palms flat, arms locked straight. Press into the fingers to lift the heels of the hands, then lower slowly.","Then flip: backs of the hands on the floor, fingers pointing toward your knees, gently take some weight.","Finish with 30s in a wrist stretch each direction."],
+"10 clean reps each direction with straight arms, and no wrist ache the next morning.",
+"Bending the elbows to make it easier. The arm stays locked — the movement is entirely at the wrist.",
+"Wrist extension tolerance under load. This is the exact tissue that flared on session one, and it is the gatekeeper for every handstand rung after this."),
+R("Wall plank · 30s",
+["Feet on the wall, hands on the floor, body horizontal like a push-up position turned into the wall.","Push the floor away hard. Shoulders up toward the ears, not shrugged down.","Ribs pulled down, glutes squeezed. Flat line from heels to head."],
+"30 unbroken seconds with the ribs down and no sag in the hips.",
+"Letting the low back arch so the hips drop. If you cannot hold the line, walk the feet lower.",
+"The handstand shape horizontally, where falling costs nothing. Shoulder position and hollow bracing at the same time."),
+R("Chest-to-wall hold · 20s",
+["Face the wall. Hands about 20cm from it, walk the feet up the wall behind you.","Walk the hands in until your chest and hips are close to the wall and only the toes touch.","Ribs down, glutes on, push the floor away. Look at the floor between your hands, not at the wall."],
+"20 unbroken seconds with the stomach toward the wall and the body in one line.",
+"Arching so the hips hang back off the wall. That is a banana, not a handstand, and it puts the load into your low back.",
+"The actual handstand line, vertically, with the wall removing the balance problem so you can build the shape and the shoulder endurance."),
+R("Chest-to-wall hold · 45s",
+["Same position. Build with sets rather than one long grind — 3 x 30s beats one failed 45.","Breathe. If you are holding your breath you cannot hold the position.","Check the line: heels, hips, ribs, hands should stack."],
+"45 unbroken seconds with the line intact and a controlled walk down.",
+"Grinding past the point where the shape breaks. Come down while it is still good.",
+"Shoulder endurance in the overhead position. This is where the shoulder capacity for handstand push-ups starts to appear."),
+R("Chest-to-wall hold · 60s",
+["Sixty seconds is a real milestone. Most people never get here.","Add wrist shifts near the end: lean weight to the fingertips, then back.","Stay hollow the whole time."],
+"60 unbroken seconds, with the line held and no wall dependence at the hips.",
+"Sagging into the shoulders in the last 15 seconds. Push the floor away the whole time.",
+"The endurance base freestanding balancing requires. Balance is unlearnable while you are fighting to hold the position at all."),
+R("Heel pulls · 5 x 3s off the wall",
+["From chest-to-wall, pull one heel off the wall, then the other, and find the balance point.","Fingertips do the correcting. Press the fingers down when you tip past vertical.","Return the heels to the wall rather than falling."],
+"Five attempts holding 3 seconds off the wall with control back to the wall.",
+"Kicking away from the wall instead of peeling off it. The whole point is arriving at balance from a known good shape.",
+"Balance itself, isolated from the strength and shape work. This is where the handstand actually becomes a handstand."),
+R("Freestanding kick-up · 5s",
+["Away from the wall. Lunge, kick the back leg up, bring the second leg to meet it.","Fingertips grip the floor and do the balancing. Small corrections, constantly.","Learn the bail first: turn a shoulder and step out sideways."],
+"Five seconds freestanding, entered from a kick-up, exited on your feet.",
+"Kicking too hard and falling over the top. Kick to just under vertical and let the fingers catch you.",
+"The skill. From here it becomes duration, then shape, then handstand push-ups.")]],
+["lsit","L-sit","Floor. Trainable today.",[
+R("Support hold on books · 20s",
+["A book or block in each hand beside your hips. Arms locked straight.","Press down hard. Push your shoulders DOWN away from your ears.","Feet stay on the floor. Lift only your bodyweight into the arms."],
+"20 seconds with locked elbows and shoulders actively depressed.",
+"Shrugging up into the shoulders. The whole exercise is the opposite of a shrug.",
+"Straight-arm support strength and scapular depression — the position underneath every L-sit, dip and ring movement."),
+R("Tuck hold · 10s",
+["Same support. Now lift both feet and tuck the knees to the chest.","Push the floor down harder than feels necessary. Lean the shoulders slightly forward.","If the hips will not clear, press harder rather than pulling the knees higher."],
+"10 seconds with the backside clear of the floor.",
+"Trying to lift with the abs while the arms stay passive. It is a pressing exercise first.",
+"Support strength plus hip flexor compression. The first genuinely gymnastic position you will own."),
+R("Tuck hold · 20s",
+["Build with sets. Four sets of 8 becomes one set of 20 faster than grinding singles.","Elevate the hands less as you get stronger — books, then floor.","Keep the chest tall, do not round forward."],
+"20 unbroken seconds, hips clear, elbows locked.",
+"Letting the elbows bend as fatigue arrives. Stop the set when they do.",
+"The endurance to start extending the legs, which roughly doubles the difficulty."),
+R("One leg extended · 10s",
+["From the tuck, extend one leg straight while the other stays tucked.","Point the toes. Keep the extended leg at hip height or above.","Alternate legs between sets."],
+"10 seconds each side with one leg fully straight and level.",
+"Dropping the extended leg below the hip. If it sinks, come back to the tuck.",
+"The compression strength to hold a straight leg against gravity — the actual limiter for most people, not the arms."),
+R("Full L-sit · 10s",
+["Both legs straight, together, toes pointed, at or above hip height.","Shoulders down, chest tall, arms locked.","Hamstring flexibility matters here as much as strength."],
+"10 seconds with both legs straight and level, no bend at the knee.",
+"Bent knees and a rounded back. If both are happening, go back to one leg out.",
+"The skill. This is a legitimate calisthenics milestone that most people who train never reach."),
+R("Full L-sit · 20s",
+["Twenty seconds is a strong L-sit.","Add variation: L-sit on parallettes, then on rings once you have them.","Then start pressing the legs higher toward a V-sit."],
+"20 unbroken seconds with clean form.",
+"Chasing time at the cost of shape.",
+"The base for V-sits, manna work, and L-sit to handstand press.")]],
+["pistol","Pistol squat","Floor and a chair. Trainable today.",[
+R("Box squat to a chair · 10",
+["Stand in front of a chair, both feet down. Push the hips back and sit under control.","Touch and stand without rocking forward.","Heels stay down the whole time."],
+"10 controlled reps with no bounce off the chair.",
+"Dropping onto the chair instead of controlling down to it.",
+"Basic squat control and the hip-back pattern the pistol needs at depth."),
+R("Split squat · 12 per leg",
+["Feet in a long stance, rear heel up. Drop straight down, front shin near vertical.","Drive through the front heel.","Rear foot laces down if the toe objects."],
+"12 clean reps per leg with no wobble.",
+"Letting the front knee collapse inward. Track it over the middle toes.",
+"Single-leg strength and the ankle range the pistol demands, without the balance problem yet."),
+R("Assisted pistol · 5 per leg",
+["Hold a doorframe with one or both hands. One leg out in front.","Lower slowly to full depth, use as little arm assistance as you can.","Come up mostly through the leg."],
+"5 reps per leg to full depth with light assistance only.",
+"Pulling yourself up with the arms. The hands are for balance, not power.",
+"Full-range single-leg strength with the balance requirement removed."),
+R("Pistol to a chair · 5 per leg",
+["One leg out, sit back onto a chair or box, then stand from it on one leg.","Lower the surface as you get stronger.","Arms out in front as a counterweight."],
+"5 reps per leg standing up from the chair without pushing off the other foot.",
+"Rocking forward to generate momentum. Stand from a dead stop.",
+"The concentric strength of the pistol, staged so you can lower the target height gradually."),
+R("Full pistol · 1 per leg",
+["Free-standing, one leg out, all the way to the bottom and back up.","Arms forward, chest up, heel down.","Ankle dorsiflexion is usually the limiter — your knee-to-wall number matters here."],
+"One clean rep per leg, no support, no rocking.",
+"Heel lifting off the floor at the bottom. That is an ankle range problem, not a strength one.",
+"The skill. Also a direct readout of the ankle work you have been doing."),
+R("Full pistol · 5 per leg",
+["Now it becomes strength rather than a stunt.","Add load: hold the carry-on to the chest.","Then elevated pistols, then jumping pistols."],
+"5 clean reps per leg.",
+"Losing depth as reps accumulate.",
+"Real single-leg strength, and the base for weighted and plyometric variations.")]],
+["flever","Front lever","Needs a bar or rings. Build the base anywhere.",[
+R("Scap push-ups · 3 x 10",
+["Push-up position, elbows locked. Let the chest sink between the shoulder blades, then push apart.","Only the shoulder blades move. Arms stay straight.","Slow. This is a small movement."],
+"3 sets of 10 with no elbow bend and visible blade movement.",
+"Turning it into a tiny push-up. If the elbows bend, it is the wrong exercise.",
+"Scapular protraction and retraction with straight arms. Almost every stalled lever is a scapular problem."),
+R("Active hang · 30s",
+["Hang from a bar. Then pull the shoulders DOWN away from the ears without bending the arms.","Ribs down, legs together, body slightly hollow.","Hold that active position rather than dangling."],
+"30 seconds actively depressed, arms straight.",
+"Passive dangling. If your ears are near your shoulders, you are resting, not training.",
+"The starting position for every hanging skill. Also decompresses the spine and opens the shoulder."),
+R("Tuck front lever · 10s",
+["From an active hang, pull the knees to the chest and lean back until the back is parallel to the floor.","Arms stay straight. Push the bar away slightly.","Ribs down, back rounded, not arched."],
+"10 seconds with the torso horizontal and arms locked.",
+"Arching the back, which drops the hips and makes it a hang rather than a lever.",
+"Straight-arm pulling strength — the quality that has nothing to do with how many pull-ups you can do."),
+R("Advanced tuck · 10s",
+["Same position, but open the hips so the thighs come away from the chest toward 90 degrees.","Keep the back flat and horizontal.","Significantly harder than the tuck. Expect a long stay here."],
+"10 seconds with hips open and the torso still level.",
+"Letting the hips sag as the lever lengthens.",
+"Straight-arm strength at a longer lever. This is where the real strength gets built."),
+R("One leg out · 10s",
+["Advanced tuck, then extend one leg fully. Alternate sides.","Point the toe. Keep the hips level — do not let the extended side drop.","Squeeze the glutes."],
+"10 seconds each side with the body level.",
+"Rotating the hips to make the extended leg easier.",
+"Almost the full lever load, staged asymmetrically so you can progress gradually."),
+R("Straddle front lever · 10s",
+["Both legs out, wide apart. The width makes it easier than legs together.","Body flat, arms locked, ribs down.","Narrow the straddle over time toward a full lever."],
+"10 seconds horizontal in a straddle.",
+"Piking at the hips so the body is not actually flat.",
+"One narrow step from the full front lever.")]],
+["flag","Human flag","Needs a vertical pole. Build the base anywhere.",[
+R("Side plank · 30s per side",
+["Elbow under the shoulder, body in one straight line from head to heels.","Knees bent to start if needed. Hips lifted, not sagging.","Breathe normally."],
+"30 seconds each side with the line held.",
+"Letting the hips drift backwards so it becomes a twist.",
+"Anti-lateral-flexion — the trunk quality the entire flag is built on. Also loads the lateral hip you have been feeling."),
+R("Side plank · 60s per side",
+["Straight legs now. Stack the feet or stagger them.","Add a top-arm reach overhead to increase the demand.","Build with sets: 3 x 30 becomes 1 x 60."],
+"60 unbroken seconds each side.",
+"Holding the breath to brace. Learn to brace and breathe simultaneously.",
+"The endurance the flag needs. Most flag attempts fail at the trunk long before the arms."),
+R("Heavy suitcase carry · 40s per side",
+["The heaviest single-hand load you have. Walk tall, do not lean away from it.","Ribs down, shoulder packed, eyes forward.","Both sides equally."],
+"40 seconds per side with a genuinely heavy load and no lean.",
+"Leaning away from the weight, which removes the entire training effect.",
+"Loaded anti-lateral-flexion plus grip. This and the side plank are the flag base you can build in any Airbnb."),
+R("Pole support hold · 15s",
+["Find a vertical pole. Top hand high in an overhand grip, bottom hand low underhand.","Top arm pulls, bottom arm pushes. That opposition is the whole flag.","Feet stay on the floor. Just feel the two forces."],
+"15 seconds with genuine push-pull tension and locked bottom arm.",
+"Gripping with both hands the same way. The grips are opposite for a reason.",
+"The hand and arm mechanics, learned before any bodyweight is added."),
+R("Tuck flag · 5s",
+["Same grip. Kick the hips up and tuck the knees tight to the chest.","Push hard with the bottom arm. Keep the bottom elbow locked.","Start by jumping into it rather than pressing up."],
+"5 seconds with the hips level and knees tucked.",
+"A bent bottom arm, which collapses the whole structure.",
+"The first real flag. Enormously demanding on the obliques and the bottom shoulder."),
+R("Straddle flag · 5s",
+["From the tuck, open the legs into a wide straddle.","Wide legs are easier than legs together. Narrow over months, not weeks.","Body horizontal, not angled up."],
+"5 seconds horizontal in a straddle.",
+"Angling the body upward to cheat the leverage.",
+"One step from the full flag, and one of the most visually absurd things a human body does.")]],
+["mu","Muscle-up","Needs a bar. Build the base anywhere.",[
+R("Table rows · 3 x 15",
+["Under a table, heels out, body straight. Pull the lower chest to the edge.","Pause one second at the top with the blades squeezed.","Feet elevated to progress."],
+"3 sets of 15 with a full pause at the top.",
+"Pulling with the arms while the shoulder blades stay still.",
+"Horizontal pulling volume. You are push-dominant at roughly 20 dips to 8 pull-ups, and this is the correction you can do without a bar."),
+R("8 strict pull-ups",
+["Full dead hang at the bottom, chin clearly over the bar.","No kipping, no swing. Lower under control.","Build with sets across the week rather than testing constantly."],
+"8 strict reps in one set from a dead hang.",
+"Cutting the bottom range to add reps. Full extension every time.",
+"Baseline vertical pulling strength. Below this the muscle-up transition is not realistically trainable."),
+R("12 strict pull-ups",
+["Add tempo before adding reps: 3s lowering, then a 2s hold at the top.","Then add load with the carry-on before chasing more reps.","Twelve strict is a strong pull-up."],
+"12 strict reps in one set.",
+"Grinding to failure every session. Stop two short and come back.",
+"The strength reserve the muscle-up pull requires. You need to clear the bar, not just reach it."),
+R("12 straight-bar dips",
+["On a bar rather than parallel bars — the muscle-up finishes in this position.","Lean the torso slightly forward, keep the bar close to the body.","Full lockout at the top."],
+"12 clean reps on a straight bar.",
+"Going too deep too early. With your shoulder history, stop at parallel and build from there.",
+"The pressing half. Most people have the pull and not the dip, or the reverse."),
+R("Explosive high pull to the sternum",
+["From a dead hang, pull as hard and fast as you can, aiming to bring the bar to your lower chest.","Lean back slightly at the top of the pull.","Sets of 3. This is power work, not endurance."],
+"Bar reaches sternum height on a strict, non-kipping pull.",
+"Using a big kip to fake the height. If it needs a swing, you are not there yet.",
+"Rate of force development in the pull. The transition happens in the space that explosive pull creates."),
+R("Transition on low rings",
+["Rings at chest height, feet on the floor to assist. Pull, then roll the wrists and drive the elbows back.","The turnover is a movement to learn, not strength to force.","Assist with the legs as much as you need."],
+"10 controlled transitions with minimal leg assistance.",
+"Trying to muscle through the turnover instead of learning the wrist and elbow path.",
+"The technical piece. The muscle-up is a skill wearing a strength costume."),
+R("Strict muscle-up",
+["Explosive pull, chest to the bar, fast turnover, press out.","Strict means no kip and no swing.","On rings first if that is what you have — it is kinder on the wrists."],
+"One strict rep, dead hang to full lockout.",
+"Chasing it before the dip and the high pull are both there. That is how shoulders get hurt.",
+"The skill. Genuinely rare, and it sits at the top of the beginner-to-intermediate calisthenics ladder.")]]];
+var DAILY=[
+["morning","Morning Prime","4 min · before the desk",[
+["ankle","Ankle circles","Sit, hug the knee, trace the largest slow circle your toes can make. 30s each way, each side.|Keeps dorsiflexion, which is the range your squat and your landings need."],
+["hinge","Hip hinge rehearsal","Hands on hips. Push the hips back, let the chest fall, knees soft. Spine stays neutral. 10 slow.|This is the pattern for the sink and the massage table. Rehearse it before you need it."],
+["wristm","Wrist and finger extensions","Hands and knees, palms flat, arms straight. Press into the fingers to lift the heels of the hands. Lower slowly. 10.|This is your handstand prep and your session-one wrist flare, handled by the same movement."],
+["light","Two minutes of daylight","Outside beats a window. Face roughly toward the sky, not the sun.|Morning light is one of the cheapest levers on sleep timing."]]],
+["desk1","Desk Break 1","2 min",[
+["stand1","Stand and walk 60s","Just stand up and move. Sixty seconds.|Sustained sitting is what drives your trap and provokes your back."],
+["hinge1","Three hip hinges","Hands on hips, hips back, chest falls, stand tall. Three slow reps.|The antidote to the position you have been in for the last two hours."],
+["trap1","Trap shrug and release","Shrug both shoulders up as hard as you can for 10s, then let them drop completely limp. 3 rounds.|The release half is the part that works. Maximum contraction lets the muscle let go afterwards."]]],
+["desk2","Desk Break 2","2 min",[
+["hollow1","Seated hollow brace","Sit tall on the edge of the chair. Tuck the pelvis under, pull the ribs down, lift both feet an inch off the floor. Hold 20s.|The hollow position, at your desk, invisible. Same bracing as the floor version."],
+["chin1","Chin tuck","Slide the head straight backwards, making a double chin. Not tilting down. Hold 5s. 5 reps.|Undoes the forward head position screens produce."],
+["eyes1","Look far","Twenty seconds focused on something as far away as you can find.|Relaxes the focusing muscles that hold one distance all day."]]],
+["desk3","Desk Break 3","2 min",[
+["wrist2","Wrist extensions","Palms flat on the desk, arms straight, lift the heels of the hands using the fingers. 10 slow.|Second dose. Wrist tissue responds to frequency more than intensity."],
+["stand2","Stand and walk 60s","Up, move, sit back down.|Frequency beats duration for breaking up sitting."],
+["grip2","Open-hand release","Spread the fingers as wide as they go against a rubber band, or just against air. 10 reps.|Everything you do grips. Almost nothing opens. This balances it."]]],
+["evening","Evening Downshift","5 min",[
+["squate","Deep squat hold","Heels down, sit in the bottom, breathe. Break it into pieces if you like. COME UP IN STAGES: squat, kneel, stand. Pump the calves first.|The position is worth owning. The stand-up is what makes you dizzy, so it gets handled deliberately."],
+["pfm","Pelvic floor set","Standing. Ten slow contractions held 10s each, then ten fast ones. Complete release between every single rep.|The release half is where most men fail. A permanently gripped pelvic floor is its own problem. Sexual health domain."],
+["screens","Screens off 60 min before bed","All of them. Book or audiobook instead.|The highest-leverage item in this entire system, and the one with the biggest effect on tomorrow."]]]];
+
+var DPROG=[
+["Wrist extensions","10 slow, knees down","15, more weight forward","Add a hold at the top"],
+["Seated hollow","20s","30s, straighter legs","30s, arms overhead"],
+["Deep squat","3 x 40s","2 x 90s","2 min unbroken"],
+["Hip hinge","Bodyweight, hands on hips","Broom on the spine","Loaded pack"],
+["Pelvic floor","10 x 10s holds","Add 10 fast","Standing, then single leg"]];
+
+var LEARN={
+bfr:["Blood flow restriction bands",
+["A cuff or band goes high on the arm or thigh, tightened enough to slow venous return but not arterial flow. You then train with very light load, around 20-30 percent of your max, for high reps.",
+"Why it is interesting for you: it produces hypertrophy comparable to heavy training and better than light training without it, which means you can build muscle around a joint that will not tolerate heavy load. It also works with almost no equipment, which suits the nomadic setup.",
+"How it feels: a deep burn far earlier than the load suggests. That is expected. Numbness, tingling or the limb going cold is not — release immediately.",
+"Starting protocol: 30 reps, rest 30s, then 15, 15, 15. Band stays on through the whole cluster, comes off between exercises. Perceived tightness around 7 out of 10 for legs, 5 to 6 for arms.",
+"Honest grading: meta-analyses find hypertrophy comparable to high-load training and superior to low-load without restriction, though strength gains are generally below heavy training. Certainty is low to moderate and the methodology across studies is uneven. Worth 20 dollars, not worth replacing your main lifts."],
+"Moderate evidence · low-to-moderate certainty"],
+vitd:["Vitamin D",
+["Canadian latitude, winter, indoor work. Deficiency is common and worth correcting.",
+"You already have the pills in Alberta, so this is a logistics item rather than a decision.",
+"Honest grading: correcting a real deficiency matters. Supplementing without knowing your level is guessing, so a blood test at your next appointment turns this from a guess into a decision."],
+"Worth testing"],
+creatine:["Creatine HCl — tracked experiment",
+["Almost all creatine evidence is on monohydrate, not HCl. HCl is marketed on solubility and reduced bloating; those claims have far less research behind them, and there is no separate body of outcome data.",
+"You had rectal bleeding on monohydrate that stopped when you stopped. Nobody knows whether the form caused it, so trying HCl is a reasonable experiment but it is an experiment, not a plan.",
+"Stop rule: any return of bleeding, stop immediately and mention it to your doctor. Worth mentioning at your next appointment regardless, because the common causes of that symptom have nothing to do with supplements and attributing it to creatine is how something else gets missed.",
+"Dose if you proceed: 3-5 g daily, no loading phase."],
+"Experiment with a stop rule"]};
+
+var CONSTRAINTS=[
+["Left elbow","Triceps extension stops at 90 degrees. Tingling toward the pinky, numbness or grip change is an appointment, not a training signal."],
+["Right shoulder","Stage pike pressing back gradually. Back off range before reps."],
+["Wrists","Fists or gripped handles if extension bites. Cleared in six hours on session one, so this is conditioning, not injury."],
+["Big toe","Push-ups from the knees or toes off a step edge. Box jumps become step-ups while sore."],
+["Ankles","Balance work is athletic development, not rehab. Never immediately after floor work."],
+["Low back / left glute","Loaded hinging is fine. Sustained unbraced flexion is the provocation. Symptoms may originate around the top outer left glute rather than the spine — say that at an assessment, it changes what gets examined."],
+["Dizziness","Come up from the floor in stages: squat, kneel, stand. Pump the calves first."],
+["No pull-up bar until October","Horizontal pulling is the backbone. Take vertical pulling opportunistically when you find a bar."]];
+
+var DOMAINS=[
+["str","Relative Strength","Bracers",[["pullup_max","Max strict pull-ups","reps"],["pistol_max","Pistol squats per leg","reps"],["row_max","Max inverted rows","reps"],["pushup_max","Max push-ups","reps"],["hang","Dead hang","sec"]]],
+["body","Physique","Build",[["bw","Bodyweight","lb"],["waist","Waist","in"]]],
+["eng","Aerobic Capacity","Sandals",[["run15","1.5 mile run","min"],["longrun","Longest easy run","min"]]],
+["pow","Power","Spear",[["broad","Broad jump","cm"],["vert","Vertical jump","cm"]]],
+["mov","Mobility & Movement","Greaves",[["hs_hold","Chest-to-wall handstand","sec"],["lsit_hold","L-sit hold","sec"],["ktw_l","Knee-to-wall L","cm"],["ktw_r","Knee-to-wall R","cm"],["bal_l","Balance eyes closed L","sec"],["bal_r","Balance eyes closed R","sec"],["calfcap","Single-leg calf raises","reps"]]],
+["sex","Sexual Health","Belt",[["iief","IIEF-5 score","/25"],["pfm_hold","Pelvic floor slow hold","sec"]]],
+["dur","Durability","Shield",[["cleanwk","Weeks without a worse-morning","wk"]]]];
+var EVMAP={};DOMAINS.forEach(function(d){d[3].forEach(function(e){EVMAP[e[0]]=[e[1],e[2],d[1]]})});
+var LOWER={run15:1,waist:1};
+var TIERS=[["Initiate",0],["Athlete",1500],["Hoplite",5000],["Spartan",12000],["Olympian",25000]];
+var FUEL=[["Protein","150-185 g"],["Water","3-4 L"],["Deficit","~0.5% bodyweight/week"],["Vitamin D","Daily · test your level"],["Creatine HCl","3-5 g · experiment"]];
+var VAULT=["The plan bends. The floor does not.","Confident delivery is not correct information.","A protocol whose only failure mode is total failure will fail totally.","Consistency over eight months beats intensity over five weeks.","Rest when rest is the plan. That is full compliance."];
+
+var FRAME="Thirty minutes for the week we are living in. Marriage, kids and timing are not on this agenda — those go to the couples therapist, whose job it is. Either of us can say \"that is a therapy one\" and we move on, no penalty, no argument about whether it should have been. This meeting is for the week.";
+var MEET=[
+["1 · Frame and landing · 3 min","Phones face down and away. Sit facing each other. Read the frame out loud, both of you hear it. Then thirty seconds of actual eye contact before anyone speaks.",
+"Tatkin calls the transitions in and out of contact launchings and landings. Reading the frame aloud each week is what stops this drifting back into the four-hour version.",""],
+["2 · Appreciations · 3 min","One specific thing each. Not \"you have been great\" — name the moment. No follow-up discussion, no rebuttals.",
+"Gottman's positive start-up. His research finds how a conversation opens predicts where it ends up.",""],
+["3 · Commitments · 4 min","Read back what you each committed to. Recurring ones: the actual consistency, the number. One-offs: done or not. Status only. No defending, no explaining.",
+"This exists so \"you never do anything\" and \"I do plenty\" stop being the argument. The record answers it instead of either of you.",""],
+["4 · Her items · 8 min","One at a time. She says: I feel ___ about ___, and what I need is ___. You say it back in your own words BEFORE responding. Then one specific action, or carry it.",
+"Softened start-up plus reflecting back. Terry Real would add that the request has to be specific and behavioural — \"be more present\" is a complaint, \"phone in the drawer at dinner\" is a request.",
+"If you cannot say it back to her satisfaction, you have not understood it yet. Do not respond until you can."],
+["5 · Your items · 4 min","Yours, from your prep. Same structure. She says it back. One specific action, or carry it.",
+"You prepped these already, which is the point. Bringing items reliably every week is the demonstration — not a speech about leadership, a repeated behaviour.",""],
+["6 · Repair and close · 3 min","Each name ONE moment this week you would do differently. Yours only — do not name hers. Then one commitment each for the week, written down. Then stop.",
+"Gottman found the ability to repair is among the strongest predictors of a relationship lasting. Owning your own moment is repair. Naming hers is Terry Real's first losing strategy.",
+"Stop when the timer ends, even mid-agenda. Unfinished is fine. Weekly and short beats thorough and dreaded."]];
+
+var PREP=[
+["appr","What do I appreciate","Name one specific moment from this week. Not a general compliment — a thing that happened."],
+["review","How did I actually do","Look at your commitments honestly before she does. Where were you good, where were you not."],
+["item","What do I want to raise","Draft it now: I feel ___ about ___, and what I need is ___. Specific and behavioural. Write the actual sentence."],
+["repair","One thing I would do differently","One moment this week. Yours, not hers. Having it ready means you lead with it rather than reaching for it under pressure."],
+["carry","What belongs in therapy, not here","Anything that is really about marriage, kids or timing. Name it now so you recognise it when it shows up tonight."]];
+
+var LOSING=[["Being right","Turning it into a case to win. Real's answer to who is right: who cares."],
+["Controlling","Trying to make her listen, agree, or behave. Compliance bought this way turns into resentment."],
+["Unbridled self-expression","Saying everything you feel at full volume because it is true. True and useful are different things."],
+["Retaliation","Getting your own back. Withholding, jabs, keeping score."],
+["Withdrawal","Leaving the field. Stonewalling, the computer, the headphones, silence."]];
+
+var FLOOD="If either of you floods — heart pounding, going blank, wanting out — call it and take twenty minutes. The research on emotional flooding puts the return to baseline at roughly that long. Coming back is the repair. Pushing through while flooded is not toughness, it is how the four-hour version happens.";
+var D={sessions:[],sets:[],levels:{},events:[],daily:{},fuel:{},mind:{},rel:[],ther:[],cap:[],rest:[],swap:{},exnote:{},rungs:{},skillsets:[],cstat:{},meets:[],prep:{},theme:"light",lastPlan:"A"};
+var LOADERR=null;
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);for(var f in p)D[f]=p[f]}}
+catch(e){LOADERR="Saved data could not be read. A copy was kept — open More and use Recover.";try{localStorage.setItem(KEY+"-corrupt",localStorage.getItem(KEY))}catch(e2){}}
+if(!D.settings)D.settings={rest:90,tStr:3,tEng:2,start:today(),meetDay:3,meetHr:18};
+if(D.settings.meetDay==null){D.settings.meetDay=3;D.settings.meetHr=18}
+function today(){var d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)}
+function ago(n){var d=new Date();d.setDate(d.getDate()-n);return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)}
+document.documentElement.setAttribute("data-t",D.theme);
+var saveN=0;
+function save(){try{var j=JSON.stringify(D);localStorage.setItem(KEY,j);
+if(++saveN%10===0)localStorage.setItem(KEY+"-bak",j)}catch(e){alert("Storage is full or blocked. Copy a backup from More before you lose anything.")}}
+function wkStart(){var d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)}
+function esc(s){return String(s).replace(/&(?!amp;)/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+var S={relFreq:"once",relKind:"raised",meet:null,day:null,tab:"train",plan:D.lastPlan,ex:null,info:null,swapUI:null,dur:"none",flash:null,pop:null,learn:null,openBlk:null,openD:null,vt:0,showV:false,mindsec:"adhd",skill:null,rung:null};
+var T={id:null,left:0,lab:"",kind:""};
+
+function toggleTheme(){D.theme=D.theme==="light"?"dark":"light";document.documentElement.setAttribute("data-t",D.theme);save();render()}
+function flash(m){S.flash=m;render();setTimeout(function(){S.flash=null;render()},2600)}
+function pop(big,small){S.pop=[big,small||""];render();setTimeout(function(){S.pop=null;render()},2200)}
+function go(t){S.tab=t;stopT();render()}
+function setPlan(p){S.plan=p;S.ex=null;D.lastPlan=p;save();render()}
+function tog(id){S.ex=S.ex===id?null:id;stopT();render()}
+function pick(k,v){S[k]=v;render()}
+function openLearn(k){S.learn=S.learn===k?null:k;render()}
+function togBlk(b){S.openBlk=S.openBlk===b?null:b;render()}
+function tapTitle(){S.vt++;if(S.vt>=3){S.vt=0;S.showV=!S.showV;render()}}
+function swapKey(){return today()}
+function setSwap(ex,name){var k=swapKey();D.swap[k]=D.swap[k]||{};if(name===null)delete D.swap[k][ex];else D.swap[k][ex]=name;save();
+pop(name===null?"Back to the prescribed movement":"Swapped to "+name,"Today only. Tomorrow it resets.")}
+function customSwap(ex){var el=document.getElementById("cs_"+ex);if(!el||!el.value.trim())return;setSwap(ex,el.value.trim())}
+function swapOf(ex){var k=swapKey();return D.swap[k]&&D.swap[k][ex]?D.swap[k][ex]:null}
+function setNote(ex){var el=document.getElementById("nt_"+ex);if(!el)return;
+D.exnote[today()+"|"+ex]=el.value;save()}
+function noteOf(ex){return D.exnote[today()+"|"+ex]||""}
+var SKEV={hand:["hs_hold","sec"],lsit:["lsit_hold","sec"],pistol:["pistol_max","reps"]};
+function toggleC(i){D.cstat[i]=!D.cstat[i];save();render()}
+function viewDay(d){S.day=d;S.tab="day";render()}
+function dayData(d){return{sets:D.sets.filter(function(x){return x.date===d}),
+sess:D.sessions.filter(function(x){return x.date===d}),
+sk:D.skillsets.filter(function(x){return x.date===d}),
+blocks:D.daily[d]||[],fuel:D.fuel[d],mind:D.mind[d],rest:D.rest.indexOf(d)>=0}}
+function allDays(){var s={};D.sets.forEach(function(x){s[x.date]=1});D.sessions.forEach(function(x){s[x.date]=1});
+D.skillsets.forEach(function(x){s[x.date]=1});Object.keys(D.daily).forEach(function(d){if((D.daily[d]||[]).length)s[d]=1});
+return Object.keys(s).sort().reverse()}
+function addSkillSet(sk,rung){var el=document.getElementById("sk_"+sk);if(!el)return;
+var v=parseInt(el.value,10);if(!v||v<1)return;
+var t=today(),todaysForSkill=D.skillsets.filter(function(x){return x.date===t&&x.skill===sk}).length;
+var firstOfDay=!D.skillsets.some(function(x){return x.date===t});
+D.skillsets.unshift({id:Date.now(),date:t,skill:sk,rung:rung,v:v});save();el.value="";
+var gain=(todaysForSkill<5?20:0)+(firstOfDay?50:0),extra="";
+if(SKEV[sk]){var code=SKEV[sk][0],prev=D.events.filter(function(e){return e.code===code}),
+best=prev.length?Math.max.apply(null,prev.map(function(e){return e.v})):null;
+if(best===null||v>best){D.events.unshift({id:Date.now()+1,date:t,code:code,v:v});save();
+gain+=250;extra=" New record on "+EVMAP[code][0]+", logged to Events."}}
+pop(gain?"+"+gain+" XP":"Logged",(firstOfDay?"First practice today. Frequency beats volume for skills.":(todaysForSkill<5?"Set "+(todaysForSkill+1)+" logged.":"Logged. XP cap reached for this skill today."))+extra)}
+function rmSkillSet(i){if(!confirm("Remove this practice set?"))return;D.skillsets=D.skillsets.filter(function(x){return x.id!==i});save();render()}
+function skillDays(sk){var d={};D.skillsets.filter(function(x){return x.skill===sk&&x.date>=ago(7)}).forEach(function(x){d[x.date]=1});return Object.keys(d).length}
+function skillToday(sk){return D.skillsets.filter(function(x){return x.date===today()&&x.skill===sk})}
+function setRung(sk,i){if(i<0){delete D.rungs[sk];save();pop("Unmarked","Back a rung. No shame in it.");return}
+var prev=D.rungs[sk]!=null?D.rungs[sk]:-1;D.rungs[sk]=i;save();
+pop(i>prev?"+"+((i-prev)*100)+" XP":"Updated",(i>prev?"Rung "+(i+1)+" reached.":"Moved back to rung "+(i+1)+"."))}
+
+function exLabel(id){return swapOf(id)||EX[id][3]}
+function todaySets(id){return D.sets.filter(function(s){return s.exId===id&&s.date===today()})}
+function setsFor(id){return D.sets.filter(function(s){return s.exId===id&&!s.swap})}
+function bestByDate(id){var m={};setsFor(id).forEach(function(s){m[s.date]=Math.max(m[s.date]||0,s.value)});
+return Object.keys(m).sort().map(function(d){return[d,m[d]]})}
+function stats(id){var ser=bestByDate(id);if(!ser.length)return null;var rs=D.levels[id];
+var use=rs?ser.filter(function(a){return a[0]>=rs}):ser;if(!use.length)use=ser;
+var b=use[0][1],c=use[use.length-1][1];
+return{base:b,cur:c,pct:b>0?Math.round((c-b)/b*100):0,all:Math.max.apply(null,ser.map(function(a){return a[1]})),ser:use.map(function(a){return a[1]}),n:ser.length}}
+function addSet(id){var v=document.getElementById("v_"+id),r=document.getElementById("r_"+id),l=document.getElementById("l_"+id);
+var val=parseInt(v.value,10);if(!val||val<1)return;
+var prev=setsFor(id).reduce(function(a,s){return Math.max(a,s.value)},0);
+D.sets.push({id:Date.now(),date:today(),plan:S.plan,exId:id,swap:swapOf(id),value:val,rir:parseInt(r.value,10),load:parseInt(l.value,10)||0});
+save();v.value="";pop((prev>0&&val>prev&&!swapOf(id))?"Personal best":"Set logged",exLabel(id)+" · "+val+(l.value?" · "+l.value+" lb":""));startRest();}
+function rmSet(i){if(!confirm("Remove this set?"))return;D.sets=D.sets.filter(function(s){return s.id!==i});save();render()}
+function lvl(id){D.levels[id]=today();save();pop("+150 XP","Level up: "+exLabel(id)+". Baseline resets.")}
+
+function loggedToday(){return D.sessions.some(function(s){return s.date===today()&&s.plan===S.plan})}
+function logSession(mod){if(loggedToday()){pop("Already logged","You logged "+PROG[S.plan].name+" today. Delete it below if that was a mistake.");return}
+var n=document.getElementById("snote");
+var ex=[];D.sets.filter(function(s){return s.date===today()}).forEach(function(s){if(ex.indexOf(s.exId)<0)ex.push(s.exId)});
+D.sessions.unshift({id:Date.now(),date:today(),plan:S.plan,during:S.dur,am:null,ex:ex,mod:!!mod,note:n?n.value.trim():""});
+save();S.dur="none";pop("+"+(100+(mod?75:0))+" XP","Session logged. The app will ask how it feels tomorrow.")}
+function setAM(sid,v){var s=D.sessions.filter(function(x){return x.id===sid})[0];if(!s)return;s.am=v;save();
+pop("+75 XP",v==="worse"?"Repeat or reduce that dose next time.":"Response logged.")}
+function rmSession(i){if(!confirm("Delete this session and its response data? This cannot be undone."))return;D.sessions=D.sessions.filter(function(s){return s.id!==i});save();render()}
+function pendingAM(){return D.sessions.filter(function(s){return s.am==null&&s.date<today()&&s.date>=ago(3)})[0]}
+function claimRest(){if(D.rest.indexOf(today())<0){D.rest.push(today());save();pop("+50 XP","Rest day claimed. That is full compliance.")}}
+
+function dayDone(){return D.daily[today()]||[]}
+function dTog(k){var t=today(),a=D.daily[t]||[];var i=a.indexOf(k);
+if(i<0)a.push(k);else a.splice(i,1);D.daily[t]=a;save();render()}
+function blockDone(b){var d=dayDone();return b[3].every(function(x){return d.indexOf(x[0])>=0})}
+function blocksToday(){return DAILY.filter(blockDone).length}
+
+function saveFuel(){var p=document.getElementById("fp"),w=document.getElementById("fw"),b=document.getElementById("fb");
+var f=D.fuel[today()]||{};f.p=parseInt(p.value,10)||0;f.w=parseFloat(w.value)||0;f.bw=parseFloat(b.value)||0;
+D.fuel[today()]=f;save();flash("Fuel logged")}
+function togSup(k){var f=D.fuel[today()]||{};f[k]=!f[k];D.fuel[today()]=f;save();render()}
+function saveMind(v){D.mind[today()]=Object.assign({},D.mind[today()]||{},v);save();render()}
+function bumpBlock(n){var t=today(),m=D.mind[t]||{};m.blocks=Math.max(0,(m.blocks||0)+n);D.mind[t]=m;save();render()}
+function addCap(){var el=document.getElementById("capin");if(!el.value.trim())return;
+D.cap.unshift({id:Date.now(),date:today(),t:el.value.trim(),done:false});el.value="";save();render()}
+function capDone(i){var c=D.cap.filter(function(x){return x.id===i})[0];if(c)c.done=!c.done;save();render()}
+function rmCap(i){if(!confirm("Delete?"))return;D.cap=D.cap.filter(function(x){return x.id!==i});save();render()}
+function addRel(){var el=document.getElementById("relin");if(!el||!el.value.trim())return;
+var kind=S.relKind;
+D.rel.unshift({id:Date.now(),date:today(),kind:kind,t:el.value.trim(),done:false,freq:(kind==="commit"?S.relFreq:null),log:{}});el.value="";save();
+pop(kind==="commit"?"Commitment logged":"Noted",kind==="commit"?"The app will nudge you until it is done.":(kind==="raised"?"Act on it this week, not next month.":"Written down while it was true."))}
+function tickRec(i,d){var r=D.rel.filter(function(x){return x.id===i})[0];if(!r)return;
+r.log=r.log||{};r.log[d]=!r.log[d];save();render()}
+function recStreak(r){var n=0,hit=0;for(var i=0;i<14;i++){var d=ago(i);
+if(r.freq==="weekday"){var dow=new Date(d+"T00:00:00").getDay();if(dow===0||dow===6)continue}
+n++;if(r.log&&r.log[d])hit++}
+return{n:n,hit:hit,pct:n?Math.round(hit/n*100):0}}
+function recDueToday(r){if(r.freq==="daily")return true;
+if(r.freq==="weekday"){var dow=new Date().getDay();return dow>0&&dow<6}
+if(r.freq==="often"){var c=0;for(var i=0;i<7;i++)if(r.log&&r.log[ago(i)])c++;return c<3}
+return false}
+function openRecs(){return D.rel.filter(function(r){return r.kind==="commit"&&r.freq&&r.freq!=="once"})}
+function editRel(i){var r=D.rel.filter(function(x){return x.id===i})[0];if(!r)return;
+var v=prompt("Edit",r.t);if(v===null)return;if(!v.trim()){rmRel(i);return}r.t=v.trim();save();pop("Updated","")}
+function editTher(i){var x=D.ther.filter(function(y){return y.id===i})[0];if(!x)return;
+var v=prompt("Edit",x.t);if(v===null)return;if(!v.trim()){rmTher(i);return}x.t=v.trim();save();pop("Updated","")}
+function editCap(i){var c=D.cap.filter(function(x){return x.id===i})[0];if(!c)return;
+var v=prompt("Edit",c.t);if(v===null)return;if(!v.trim()){rmCap(i);return}c.t=v.trim();save();pop("Updated","")}
+var DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function daysToMeet(){var t=new Date().getDay(),m=D.settings.meetDay;var d=(m-t+7)%7;return d}
+function meetLabel(){var d=daysToMeet();
+return d===0?"Partnership meeting today at "+D.settings.meetHr+":00":(d===1?"Partnership meeting tomorrow":"Partnership meeting "+DAYS[D.settings.meetDay])+" at "+D.settings.meetHr+":00"}
+function prepSet(f,v){D.prep[f]=v;D.prep.date=today();save()}
+function prepDone(){var n=0;PREP.forEach(function(p){if(D.prep[p[0]]&&D.prep[p[0]].trim())n++});return n}
+function clearPrep(){if(!confirm("Clear this week\'s prep?"))return;D.prep={};save();render()}
+function startMeet(){D.meets.unshift({id:Date.now(),date:today(),step:0,appr:"",parked:[],commit:"",notes:""});save();
+S.meet=D.meets[0].id;startT(1500,"Partnership meeting","meet");render()}
+function meetField(f,v){var m=D.meets.filter(function(x){return x.id===S.meet})[0];if(!m)return;m[f]=v;save()}
+function meetStep(n){var m=D.meets.filter(function(x){return x.id===S.meet})[0];if(!m)return;
+m.step=Math.max(0,Math.min(MEET.length-1,n));save();render()}
+function carryIt(){var el=document.getElementById("parkin");if(!el||!el.value.trim())return;
+var m=D.meets.filter(function(x){return x.id===S.meet})[0];if(!m)return;
+m.parked.push(el.value.trim());el.value="";save();
+D.ther.unshift({id:Date.now(),date:today(),kind:"cpl",t:el.value||"carried item"});save();
+pop("Carried","Added to the couples therapy list. Not avoided — routed.")}
+function parkIt(){var el=document.getElementById("parkin");if(!el||!el.value.trim())return;
+var m=D.meets.filter(function(x){return x.id===S.meet})[0];if(!m)return;
+m.parked.push(el.value.trim());el.value="";save();pop("Parked","It goes to the couples therapist, not the kitchen table.")}
+function endMeet(){var m=D.meets.filter(function(x){return x.id===S.meet})[0];
+if(m){var a=document.getElementById("mnotes");if(a)m.notes=a.value;save()}
+stopT();S.meet=null;pop("Meeting closed","Thirty minutes. That was the whole point.");}
+function openMeet(id){S.meet=id;render()}
+function relDone(i){var r=D.rel.filter(function(x){return x.id===i})[0];if(r)r.done=!r.done;save();render()}
+function rmRel(i){if(!confirm("Delete this entry?"))return;D.rel=D.rel.filter(function(x){return x.id!==i});save();render()}
+function addTher(kind){var el=document.getElementById("therin");if(!el.value.trim())return;
+D.ther.unshift({id:Date.now(),date:today(),kind:kind,t:el.value.trim()});el.value="";save();render()}
+function rmTher(i){if(!confirm("Delete this entry?"))return;D.ther=D.ther.filter(function(x){return x.id!==i});save();render()}
+function openHWF(){window.open("https://howwefeel.org","_blank")}
+
+function evBest(c){var p=D.events.filter(function(e){return e.code===c});if(!p.length)return null;
+var v=p.map(function(e){return e.v});return LOWER[c]?Math.min.apply(null,v):Math.max.apply(null,v)}
+function evLast(c){var p=D.events.filter(function(e){return e.code===c});return p.length?p[0]:null}
+function saveEvent(c){var el=document.getElementById("ev_"+c);var v=parseFloat(el.value);if(isNaN(v))return;
+var prev=D.events.filter(function(e){return e.code===c});var b=evBest(c);
+D.events.unshift({id:Date.now(),date:today(),code:c,v:v});save();el.value="";
+if(prev.length&&(LOWER[c]?v<b:v>b))pop("+250 XP","New record: "+EVMAP[c][0]);else pop("+250 XP","Logged: "+EVMAP[c][0])}
+
+function week(){var ws=wkStart();var ss=D.sessions.filter(function(s){return s.date>=ws});
+return{st:ss.filter(function(s){return s.plan!=="C"}).length,ca:ss.filter(function(s){return s.plan==="C"}).length,ss:ss}}
+function verdict(){if(pendingAM())return null;
+var r=D.sessions.filter(function(s){return s.am!=null}).slice(0,3);
+if(!r.length)return["g","No response data yet. Log a session, then answer the morning-after prompt. That loop is the whole point, and it pays the most XP for a reason."];
+var l=r[0];
+if(l.during==="severe")return["r","Severe symptoms last session. Stop that pathway and get it assessed, especially anything neurological."];
+if(l.am==="worse")return["y",(r[1]&&r[1].am==="worse")?"Two in a row worse the next morning. Reduce the dose properly: cut a set, cut range, change the variation. Training hard today earns no XP.":"Worse next morning. Repeat the same dose rather than progressing."];
+return["g","Settled by the next morning. Progress: add a rep, add load, or take the harder variation."]}
+function backOff(){var v=verdict();return v&&v[0]!=="g"}
+
+function xp(){var x=0;
+D.sessions.forEach(function(s){x+=100;if(s.am!=null)x+=75;if(s.mod)x+=75;if(s.plan==="C")x+=0});
+D.sessions.filter(function(s){return s.plan==="C"}).forEach(function(){x+=0});
+x+=D.rest.length*50;
+Object.keys(D.daily).forEach(function(d){DAILY.forEach(function(b){if(b[3].every(function(i){return (D.daily[d]||[]).indexOf(i[0])>=0}))x+=25})});
+Object.keys(D.fuel).forEach(function(d){if(D.fuel[d].p>=150)x+=25});
+Object.keys(D.mind).forEach(function(d){if(D.mind[d].sleep)x+=15});
+x+=Object.keys(D.levels).length*150;
+x+=D.events.length*250;
+Object.keys(D.rungs).forEach(function(k){x+=(D.rungs[k]+1)*100});
+var byd={},days={};D.skillsets.forEach(function(ss){var k=ss.date+"|"+ss.skill;byd[k]=(byd[k]||0)+1;days[ss.date]=1});
+Object.keys(byd).forEach(function(k){x+=Math.min(byd[k],5)*20});
+x+=Object.keys(days).length*50;
+return x}
+function tier(){var x=xp(),t=0;TIERS.forEach(function(v,i){if(x>=v[1])t=i});return t}
+function nextTier(){var t=tier();return t<TIERS.length-1?TIERS[t+1]:null}
+function kits(){var o={};DOMAINS.forEach(function(d){o[d[0]]=d[3].some(function(e){return evBest(e[0])!=null})});return o}
+
+function quests(){var q=[],t=today(),w=week();
+if(pendingAM())q.push(["Answer the morning-after prompt",75,"respond"]);
+if(blocksToday()<5)q.push(["Complete "+(5-blocksToday())+" more daily blocks",25,"daily"]);
+if(w.ca<D.settings.tEng)q.push(["Get an aerobic session in",100,"train"]);
+if(w.st<D.settings.tStr&&!backOff())q.push(["Strength session: "+PROG[S.plan].name,100,"train"]);
+if(backOff())q.push(["Back-off day. Claim rest, run the daily blocks",50,"daily"]);
+if(!D.fuel[t]||!D.fuel[t].p)q.push(["Log protein",25,"fuel"]);
+if(!D.mind[t]||!D.mind[t].sleep)q.push(["Log sleep",15,"mind"]);
+if(!D.skillsets.some(function(x){return x.date===t}))q.push(["Practise a skill · first set today is worth a bonus",70,"skills"]);
+openRecs().forEach(function(r){if(recDueToday(r)&&!(r.log&&r.log[today()]))q.push([esc(r.t),0,"mind"])});
+var open=D.rel.filter(function(r){return r.kind==="commit"&&!r.freq&&!r.done});
+if(open.length)q.push(["Follow up: "+open[0].t.slice(0,34),0,"mind"]);
+return q.slice(0,4)}
+
+function fmt(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x}
+function paint(){var el=document.getElementById("tdisp");if(el)el.textContent=fmt(T.left)}
+function startT(sec,lab,kind){stopT();T.left=sec;T.lab=lab;T.kind=kind||"hold";
+T.id=setInterval(function(){T.left--;paint();
+if(T.left<=0){clearInterval(T.id);T.id=null;pop(T.kind==="rest"?"Rest done":"Time","+ "+T.lab);render()}},1000);render()}
+function startRest(){if(D.settings.rest>0)startT(D.settings.rest,"Next set","rest")}
+function addRest(n){if(T.id&&T.kind==="rest"){T.left=Math.max(5,T.left+n);paint()}}
+function stopT(){if(T.id){clearInterval(T.id);T.id=null}}
+function setOpt(k,v){D.settings[k]=v;save();pop("Saved",k==="rest"?"Rest timer "+(v?v+"s":"off"):"Target updated")}
+function weekNo(){var s=new Date(D.settings.start+"T00:00:00"),n=new Date(today()+"T00:00:00");
+return Math.floor((n-s)/6048e5)+1}
+function deloadDue(){return weekNo()%4===0}
+function doImport(){var el=document.getElementById("imp");if(!el||!el.value.trim())return;
+if(!confirm("Replace ALL current data with this backup?"))return;
+try{var p=JSON.parse(el.value);for(var f in p)D[f]=p[f];save();pop("Restored","Backup loaded.");}catch(e){alert("That does not look like a valid backup.")}}
+function recover(){var b=localStorage.getItem(KEY+"-bak");if(!b){alert("No backup found on this device.");return}
+if(!confirm("Restore the last automatic backup? Current data will be replaced."))return;
+try{var p=JSON.parse(b);for(var f in p)D[f]=p[f];save();pop("Recovered","Last automatic backup restored.")}catch(e){alert("The backup could not be read.")}}
+function editSet(i){var s=D.sets.filter(function(x){return x.id===i})[0];if(!s)return;
+var v=prompt("Value for "+exLabel(s.exId)+" on "+s.date,s.value);if(v===null)return;
+var n=parseInt(v,10);if(!n||n<1)return;s.value=n;save();pop("Updated","Set corrected.")}
+function expo(){var t=document.createElement("textarea");t.value=JSON.stringify(D);document.body.appendChild(t);t.select();
+try{document.execCommand("copy");flash("Backup copied. Paste it somewhere safe.")}catch(e){flash("Select and copy")}
+setTimeout(function(){document.body.removeChild(t)},150)}
+function figure(t,k,big){
+var b=t,w=9+b*1.9,sh=13+b*2.4,neck=b*0.4;
+var lau=t>=4?'<path d="M50 9 C41 5 31 10 31 18 C42 22 50 17 50 9 Z" fill="var(--lau)"/><path d="M50 9 C59 5 69 10 69 18 C58 22 50 17 50 9 Z" fill="var(--lau)"/>':'';
+var plinth=big?'<rect x="26" y="128" width="48" height="6" fill="var(--pan2)" stroke="var(--edge)"/><rect x="30" y="122" width="40" height="6" fill="var(--pan2)" stroke="var(--edge)"/>':'';
+return '<svg viewBox="0 0 100 140" style="width:100%;height:100%">'+plinth+lau+
+(k.dur?'<ellipse cx="20" cy="72" rx="14" ry="19" fill="var(--pan2)" stroke="var(--br)" stroke-width="2.5"/><circle cx="20" cy="72" r="5" fill="none" stroke="var(--br)" stroke-width="1.6"/>':'')+
+(k.pow?'<line x1="82" y1="12" x2="82" y2="126" stroke="var(--br2)" stroke-width="2.6"/><path d="M82 6 L86 18 L78 18 Z" fill="var(--br2)"/>':'')+
+'<circle cx="50" cy="25" r="8.5" fill="var(--skin)"/>'+
+'<path d="M46 33 h8 v'+(3+neck)+' h-8 Z" fill="var(--skin)"/>'+
+'<path d="M'+(50-sh)+' 40 Q50 35 '+(50+sh)+' 40 L'+(50+w)+' 74 Q50 80 '+(50-w)+' 74 Z" fill="var(--skin)"/>'+
+(k.body?'<path d="M50 44 V72 M'+(50-w*.7)+' 58 H'+(50+w*.7)+'" stroke="var(--bg2)" stroke-width="1.3" opacity=".55" fill="none"/>':'')+
+'<line x1="'+(50-sh+2)+'" y1="42" x2="'+(50-sh-4)+'" y2="70" stroke="var(--skin)" stroke-width="'+(6+b*0.9)+'" stroke-linecap="round"/>'+
+'<line x1="'+(50+sh-2)+'" y1="42" x2="'+(50+sh+4)+'" y2="70" stroke="var(--skin)" stroke-width="'+(6+b*0.9)+'" stroke-linecap="round"/>'+
+(k.str?'<rect x="'+(50-sh-9)+'" y="56" width="9" height="11" rx="1" fill="var(--br)"/><rect x="'+(50+sh)+'" y="56" width="9" height="11" rx="1" fill="var(--br)"/>':'')+
+(k.sex?'<rect x="'+(50-w-1)+'" y="72" width="'+(w*2+2)+'" height="5" fill="var(--br)"/>':'')+
+'<line x1="45" y1="78" x2="42" y2="112" stroke="var(--skin)" stroke-width="'+(7+b*0.9)+'" stroke-linecap="round"/>'+
+'<line x1="55" y1="78" x2="58" y2="112" stroke="var(--skin)" stroke-width="'+(7+b*0.9)+'" stroke-linecap="round"/>'+
+(k.mov?'<path d="M37 92 h10 v17 h-10 Z" fill="var(--br)" opacity=".85"/><path d="M53 92 h10 v17 h-10 Z" fill="var(--br)" opacity=".85"/>':'')+
+'<path d="M38 112 h9 v6 h-9 Z" fill="var(--skin)"/><path d="M53 112 h9 v6 h-9 Z" fill="var(--skin)"/>'+
+(k.eng?'<path d="M36 116 h13 v4 h-13 Z M53 116 h13 v4 h-13 Z" fill="var(--br2)"/><path d="M42 108 l2 8 M58 108 l-2 8" stroke="var(--br2)" stroke-width="1.6"/>':'')+
+'</svg>'}
+function render(){
+var t=today(),w=week(),h="",P=PROG[S.plan],TI=tier(),K=kits(),X=xp(),NT=nextTier();
+h+='<div class="mast"><div class="av" onclick="go(\'hero\')">'+figure(TI,K,0)+'<div class="avlv">'+TIERS[TI][0]+'</div></div>'+
+'<div class="mtitle"><svg class="lau" viewBox="0 0 104 20"><path d="M52 18 L52 4" stroke="var(--lau)" stroke-width="1.6" fill="none"/>'+
+[0,1,2].map(function(i){var y=5+i*4,ww=10+i*6;return '<path d="M52 '+y+' C'+(52-ww*.6)+' '+(y-2)+' '+(52-ww)+' '+(y+2)+' '+(52-ww)+' '+(y+4)+' C'+(52-ww*.5)+' '+(y+5)+' 52 '+(y+2)+' 52 '+y+' Z" fill="var(--lau)" opacity="'+(.6+i*.13)+'"/>'+
+'<path d="M52 '+y+' C'+(52+ww*.6)+' '+(y-2)+' '+(52+ww)+' '+(y+2)+' '+(52+ww)+' '+(y+4)+' C'+(52+ww*.5)+' '+(y+5)+' 52 '+(y+2)+' 52 '+y+' Z" fill="var(--lau)" opacity="'+(.6+i*.13)+'"/>'}).join("")+
+'</svg><h1 class="ser" onclick="tapTitle()">Life Olympics</h1></div>'+
+'<button class="tt" onclick="toggleTheme()">'+(D.theme==="light"?"Night":"Day")+'</button></div>';
+h+='<div class="rule"><i></i></div><div class="sub">Phase I · Reconditioning</div>';
+if(LOADERR)h+='<div class="verdict r">'+esc(LOADERR)+'</div>';
+if(S.pop)h+='<div class="xpop">'+esc(S.pop[0])+(S.pop[1]?'<small>'+esc(S.pop[1])+'</small>':'')+'</div>';
+if(S.flash)h+='<div class="verdict g">'+esc(S.flash)+'</div>';
+if(S.showV)h+='<div class="card"><h2>The Vault</h2><div class="ser" style="font-size:16px;color:var(--br2);line-height:1.5">'+
+VAULT[Math.floor(Date.now()/864e5)%VAULT.length]+'</div><div class="tiny" style="margin-top:11px">Sessions '+D.sessions.length+' · sets '+D.sets.length+' · level ups '+Object.keys(D.levels).length+' · records '+D.events.length+' · rest days claimed '+D.rest.length+'</div></div>';
+
+h+='<div class="xpbar"><div class="r1"><span>'+TIERS[TI][0]+'</span><span class="num">'+X+' XP</span></div>'+
+(NT?'<div class="bar"><div style="width:'+Math.min(100,Math.round((X-TIERS[TI][1])/(NT[1]-TIERS[TI][1])*100))+'%"></div></div><div class="tiny" style="margin-top:5px">'+(NT[1]-X)+' to '+NT[0]+'</div>':'<div class="tiny" style="margin-top:5px">Top tier.</div>')+'</div>';
+
+var pend=pendingAM(),pendN=D.sessions.filter(function(x){return x.am==null&&x.date<today()&&x.date>=ago(3)}).length;
+if(pend){h+='<div class="prompt" style="border-width:2px"><div class="cap">Morning after · 75 XP'+(pendN>1?' · '+pendN+' waiting':'')+'</div><div style="font-size:15px;margin:7px 0 11px">'+
+(PROG[pend.plan]?PROG[pend.plan].name:pend.plan)+' on '+pend.date+'. How does it feel now compared with before that session?</div><div class="opts">'+
+[["better","Better"],["same","Same"],["worse","Worse"]].map(function(o){return '<button onclick="setAM('+pend.id+',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div></div>'}
+var v=verdict();if(v)h+='<div class="verdict '+v[0]+'">'+esc(v[1])+'</div>';
+
+h+='<h2>Today\'s quests</h2>';
+if(!D.sessions.length&&!D.sets.length)h+='<div class="card"><div class="tiny">Nothing logged yet. Start anywhere — a wall handstand hold in Skills, or one movement in Train. The morning-after prompt appears tomorrow and that is where this becomes useful.</div></div>';
+quests().forEach(function(qq){h+='<div class="q" onclick="go(\''+qq[2]+'\')"><div style="flex:1;font-size:14px">'+esc(qq[0])+'</div>'+(qq[1]?'<div class="xp">+'+qq[1]+'</div>':'')+'</div>'});
+if(backOff()&&D.rest.indexOf(t)<0)h+='<button class="wide" onclick="claimRest()">Claim a rest day · +50 XP</button>';
+h+='<div class="frieze"></div>';
+h+='<div class="tabs">'+[["train","Train"],["skills","Skills"],["events","Events"],["daily","Daily"],["mind","Mind"],["fuel","Fuel"],["day","Days"],["stats","More"]].map(function(x){
+return '<button class="'+(S.tab===x[0]?"on":"")+'" onclick="go(\''+x[0]+'\')">'+x[1]+'</button>'}).join("")+'</div>';
+
+if(S.tab==="hero"){
+h+='<div class="card"><div class="heroav">'+figure(TI,K,1)+'</div>'+
+'<div style="text-align:center;margin-top:8px"><div class="ser" style="font-size:24px">'+TIERS[TI][0]+'</div><div class="tiny">'+X+' XP'+(NT?' · '+(NT[1]-X)+' to '+NT[0]:'')+'</div></div>'+
+'<div class="kit">'+DOMAINS.map(function(d){return '<div class="kitx'+(K[d[0]]?" on":"")+'">'+d[2]+'</div>'}).join("")+
+'<div class="kitx'+(DOMAINS.every(function(d){return K[d[0]]})?" on":"")+'">Laurel</div></div>'+
+'<div class="tiny" style="margin-top:11px">Kit unlocks when a domain has a logged record. Neglect the Engine and you are a Spartan with no sandals. Tiers come from XP, and XP rewards decision quality — answering the morning-after prompt, claiming a planned rest day, logging a modification when a joint objected. Training on a back-off day earns nothing.</div></div>';
+h+='<div class="card"><h2>XP sources</h2>'+
+[["Session logged",100],["Morning-after answered",75],["Modified for a joint",75],["Planned rest day",50],["Daily block",25],["Protein target",25],["Sleep logged",15],["Level up",150],["New record",250]].map(function(r){
+return '<div class="tgt"><span>'+r[0]+'</span><b>+'+r[1]+'</b></div>'}).join("")+'</div>'}
+
+if(S.tab==="train"){
+h+='<div class="wkbar"><span>Week '+weekNo()+' · Phase I</span><span class="tiny">'+(deloadDue()?'Deload week — cut sets by about 40%, keep the tempo':'Build week')+'</span></div>';
+var totalEx=P.x.length,doneEx=P.x.filter(function(e){return todaySets(e[0]).length}).length;
+h+='<div class="prog">'+P.x.map(function(e){return '<i class="'+(todaySets(e[0]).length?"on":"")+'"></i>'}).join("")+'</div>';
+h+='<div class="tiny" style="margin:-8px 0 12px">'+doneEx+' of '+totalEx+' movements logged today'+(doneEx===totalEx?' · session complete, log it below':'')+'</div>';
+h+='<div class="opts" style="margin-bottom:12px">'+[["A","Body A"],["B","Body B"],["C","Aerobic"]].map(function(o){
+return '<button class="'+(S.plan===o[0]?"sel":"")+'" onclick="setPlan(\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>';
+P.x.forEach(function(e){var id=e[0],ts=todaySets(id),st=stats(id),sw=swapOf(id);
+h+='<div class="item'+(ts.length?" doneEx":"")+'"><div class="head"><div class="row"><div class="cap">'+e[1]+'</div>'+
+(st?'<span class="pct num '+(st.pct>=0?"up":"dn")+'">'+(st.pct>=0?"+":"")+st.pct+'%</span>':'')+'</div>'+
+'<div class="name ser">'+esc(exLabel(id))+(sw?' <span class="tiny">· swapped today</span>':'')+'</div><div class="rx">'+esc(e[4])+'</div>';
+if(ts.length)h+='<div class="chips">'+ts.map(function(x){return '<span class="chip num">'+x.value+(x.load?"·"+x.load+"lb":"")+(isNaN(x.rir)?"":" @"+x.rir+"R")+'</span>'}).join("")+'</div>';
+h+='</div>';
+h+='<div class="logrow"><input id="v_'+id+'" type="number" inputmode="numeric" placeholder="reps/secs"><input id="r_'+id+'" class="n" type="number" inputmode="numeric" placeholder="RIR"><input id="l_'+id+'" class="n" type="number" inputmode="numeric" placeholder="lb"><button onclick="addSet(\''+id+'\')">Log</button></div>';
+h+='<div class="minirow"><button class="'+(S.info===id?"on":"")+'" onclick="pick(\'info\',\''+(S.info===id?"":id)+'\')">Info</button>'+
+'<button class="'+(S.swapUI===id?"on":"")+'" onclick="pick(\'swapUI\',\''+(S.swapUI===id?"":id)+'\')">Swap</button>'+
+(e[9]>0?'<button onclick="startT('+e[9]+',\''+esc(e[3])+'\',\'hold\')">Timer</button>':'<button onclick="startRest()">Rest</button>')+
+'<button onclick="lvl(\''+id+'\')">Level up</button></div>';
+if(ts.length){h+='<div style="padding:0 12px 10px;background:var(--bg2)">';
+ts.forEach(function(x){h+='<div class="row" style="padding:5px 0"><span class="tiny num">'+x.value+(x.load?" · "+x.load+" lb":"")+(isNaN(x.rir)?"":" · "+x.rir+" RIR")+'</span><button class="del" onclick="rmSet('+x.id+')">Remove</button></div>'});
+h+='<textarea id="nt_'+id+'" rows="1" placeholder="note on this movement today" oninput="setNote(\''+id+'\')" style="font-size:13px;padding:8px">'+esc(noteOf(id))+'</textarea></div>'}
+if(S.swapUI===id){h+='<div class="body"><h2>Swap for today only</h2><div class="tiny" style="margin-bottom:8px">Resets tomorrow. Swapped sets are kept out of your progress numbers so a substitute never corrupts the baseline.</div>';
+(SW[e[2]]||[]).forEach(function(a){h+='<div class="alt'+(sw===a?" on":"")+'"><div style="flex:1">'+a+'</div><button onclick="setSwap(\''+id+'\',\''+a+'\')">Use</button></div>'});
+h+='<div class="inline" style="margin-top:8px"><input id="cs_'+id+'" placeholder="or type your own"><button class="go" onclick="customSwap(\''+id+'\')">Set</button></div>';
+if(sw)h+='<button class="wide" onclick="setSwap(\''+id+'\',null)">Back to '+esc(e[3])+'</button>';
+h+='</div>'}
+if(S.info===id){h+='<div class="body">';
+if(SVG[e[5]])h+='<div class="fig">'+SVG[e[5]]+'</div>';
+h+='<div class="how"><ul>'+e[6].filter(function(l){return l}).map(function(l){return "<li>"+esc(l)+"</li>"}).join("")+'</ul>'+
+(e[7]?'<div class="warn">'+esc(e[7])+'</div>':'');
+if(e[10]){var X2=e[10];h+='<div class="exp"><b>Trains</b><p>'+esc(X2.t)+'</p><b>Why it is here for you</b><p>'+esc(X2.w)+'</p><b>Evidence</b><p>'+esc(X2.e)+'</p><b>Progression</b><p>'+esc(X2.p)+'</p><b>Feeds</b><p>'+esc(X2.f)+'</p></div>'}
+h+='</div>';
+if(st)h+='<div class="tiny">Best '+st.cur+' · baseline '+st.base+' · all-time '+st.all+' · '+st.n+' sessions</div>';
+h+='</div>'}
+h+='</div>'});
+
+h+='<div class="card" style="margin-top:14px"><h2>Log this session</h2><div class="opts" style="margin-bottom:7px">'+
+[["none","None","g"],["mild","Mild","g"],["mod","Moderate","y"],["severe","Severe","r"]].map(function(o){
+return '<button class="'+(S.dur===o[0]?"sel "+o[2]:"")+'" onclick="pick(\'dur\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>'+
+'<div class="tiny" style="margin-bottom:11px">Symptoms during. Severe means rapidly worsening pain, numbness, tingling, weakness or loss of function — that stops the session and earns an appointment.</div>'+
+'<textarea id="snote" rows="2" placeholder="What spoke up, what you changed."></textarea><div style="height:10px"></div>'+
+(loggedToday()?'<div class="verdict g">'+PROG[S.plan].name+' already logged today.</div>':'<button class="save" onclick="logSession(0)">Log session · +100</button><button class="wide" onclick="logSession(1)">Log with a modification · +175</button>')+'</div>';
+h+='<h2 style="margin-top:18px">Learn</h2>';
+["bfr","vitd","creatine"].forEach(function(k){var L=LEARN[k];
+h+='<div class="card" style="padding:13px"><div class="row"><span class="link" onclick="openLearn(\''+k+'\')">'+L[0]+'</span><span class="tiny">'+L[2]+'</span></div>'+
+(S.learn===k?'<div style="margin-top:10px">'+L[1].map(function(p){return '<p class="tiny" style="margin-bottom:8px">'+esc(p)+'</p>'}).join("")+'</div>':'')+'</div>'});
+h+='<h2 style="margin-top:18px">Constraints</h2>';
+h+='<div class="tiny" style="margin:-4px 0 8px">Tap one to mark it settled. Settled constraints collapse but stay here — nothing gets deleted.</div>';
+CONSTRAINTS.forEach(function(c,ci){var off=D.cstat[ci];
+h+='<div class="card" style="padding:12px;opacity:'+(off?".5":"1")+'" onclick="toggleC('+ci+')"><div class="row"><div style="font-size:14px"'+(off?' class="done"':'')+'>'+c[0]+'</div><div class="tiny">'+(off?"settled":"active")+'</div></div>'+
+(off?'':'<div class="tiny" style="margin-top:3px">'+esc(c[1])+'</div>')+'</div>'});
+h+='<h2 style="margin-top:18px">History</h2>';
+if(!D.sessions.length)h+='<div class="empty">Nothing logged yet.</div>';
+D.sessions.slice(0,20).forEach(function(s){var c=s.during==="severe"?"r":(s.am==="worse"||s.during==="mod")?"y":"g";
+h+='<div class="entry"><div class="stripe" style="background:var(--'+c+')"></div><div style="flex:1;min-width:0"><div class="row"><span style="font-size:14px">'+(PROG[s.plan]?PROG[s.plan].name:s.plan)+(s.mod?' · modified':'')+'</span><span class="tiny num">'+s.date+'</span></div>'+
+'<div class="tiny" style="margin-top:3px">during: '+s.during+' · next morning: '+(s.am||"pending")+'</div>'+
+(s.note?'<div style="font-size:13px;color:var(--mut);margin-top:5px">'+esc(s.note)+'</div>':'')+
+'</div><button class="del" onclick="rmSession('+s.id+')">Delete</button></div>'})}
+
+if(S.tab==="daily"){
+h+='<div class="tiny" style="margin-bottom:12px">This is the part that changes your trap, your wrists and your back, because it changes the other fourteen hours. Each completed block is 25 XP. Resets at midnight.</div>';
+DAILY.forEach(function(b){var done=blockDone(b),d=dayDone();
+h+='<div class="blk"><div class="row" onclick="togBlk(\''+b[0]+'\')"><div><h3>'+b[1]+'</h3><div class="tiny">'+b[2]+'</div></div><div class="tiny">'+
+b[3].filter(function(x){return d.indexOf(x[0])>=0}).length+'/'+b[3].length+(done?' ✓':'')+'</div></div>';
+if(S.openBlk===b[0]||done===false&&S.openBlk===null&&b[0]==="morning"){h+='<div style="margin-top:10px">';
+b[3].forEach(function(x){var on=d.indexOf(x[0])>=0,parts=String(x[2]).split("|");
+h+='<div class="dki"><div class="box '+(on?"on":"")+'" onclick="dTog(\''+x[0]+'\')"></div><div style="flex:1" onclick="pick(\'openD\',\''+(S.openD===x[0]?"":x[0])+'\')"><div class="'+(on?"done":"")+'" style="font-size:14px">'+esc(x[1])+'</div>'+
+'<div class="tiny" style="margin-top:2px">'+esc(parts[0])+'</div>'+
+(S.openD===x[0]&&parts[1]?'<div class="tiny" style="margin-top:6px;color:var(--br2)">'+esc(parts[1])+'</div>':'')+'</div></div>'});
+h+='</div>'}
+h+='</div>'});
+h+='<div class="card"><h2>8-week progression</h2>'+DPROG.map(function(p){
+return '<div style="border-bottom:1px solid var(--line);padding:8px 0"><div style="font-size:14px">'+p[0]+'</div><div class="tiny">Wk 1-2: '+p[1]+' · Wk 3-4: '+p[2]+' · Wk 5-8: '+p[3]+'</div></div>'}).join("")+'</div>'}
+
+if(S.tab==="day"){var days=allDays();
+h+='<h2>Past days</h2>';
+if(!days.length)h+='<div class="empty">Nothing logged yet.</div>';
+h+='<div class="chips" style="margin-bottom:14px">'+days.slice(0,21).map(function(d){
+return '<span class="chip num" style="padding:6px 10px'+(S.day===d?";border-color:var(--br);color:var(--br2)":"")+'" onclick="viewDay(\''+d+'\')">'+d.slice(5)+'</span>'}).join("")+'</div>';
+if(S.day){var DD=dayData(S.day);
+h+='<div class="card"><div class="ser" style="font-size:20px">'+S.day+'</div>'+
+'<div class="tiny" style="margin-top:4px">'+(DD.rest?"Rest day claimed · ":"")+DD.sets.length+' sets · '+DD.sk.length+' skill sets · '+DD.blocks.length+' daily items</div></div>';
+DD.sess.forEach(function(x){h+='<div class="card"><h2>'+(PROG[x.plan]?PROG[x.plan].name:x.plan)+(x.mod?" · modified":"")+'</h2>'+
+'<div class="tiny">symptoms during: '+x.during+' · next morning: '+(x.am||"never answered")+'</div>'+
+(x.note?'<div style="font-size:13px;color:var(--mut);margin-top:6px">'+esc(x.note)+'</div>':'')+'</div>'});
+if(DD.sets.length){h+='<h2>Sets</h2>';
+var by={};DD.sets.forEach(function(x){(by[x.exId]=by[x.exId]||[]).push(x)});
+Object.keys(by).forEach(function(k){h+='<div class="card" style="padding:11px 13px"><div style="font-size:14px">'+esc(by[k][0].swap||(EX[k]?EX[k][3]:k))+'</div>'+
+'<div class="chips" style="margin-top:6px">'+by[k].map(function(x){return '<span class="chip num">'+x.value+(x.load?"·"+x.load+"lb":"")+'</span>'}).join("")+'</div>'+
+(D.exnote[S.day+"|"+k]?'<div class="tiny" style="margin-top:6px">'+esc(D.exnote[S.day+"|"+k])+'</div>':'')+'</div>'})}
+if(DD.sk.length){h+='<h2>Skill practice</h2><div class="card" style="padding:11px 13px">'+
+DD.sk.map(function(x){var S2=SKILLS.filter(function(y){return y[0]===x.skill})[0];
+return '<div class="set"><span style="font-size:13px">'+(S2?S2[1]:x.skill)+'</span><span class="tiny num">'+x.v+'</span></div>'}).join("")+'</div>'}
+if(DD.fuel)h+='<div class="card"><h2>Fuel</h2><div class="tiny num">protein '+(DD.fuel.p||"–")+' g · water '+(DD.fuel.w||"–")+' L · bodyweight '+(DD.fuel.bw||"–")+' lb</div></div>';
+if(DD.mind)h+='<div class="card"><h2>Mind</h2><div class="tiny num">deep work blocks '+(DD.mind.blocks||0)+' · sleep '+(DD.mind.sleep||"–")+' h · energy '+(DD.mind.energy||"–")+'</div></div>';
+if(DD.blocks.length)h+='<div class="card"><h2>Daily</h2><div class="tiny">'+DD.blocks.length+' items completed</div></div>'}}
+
+if(S.tab==="skills"){
+h+='<div class="tiny" style="margin-bottom:12px">Six skills. Handstand, L-sit and pistol need only your wall and floor and are trainable today. The other three you build the base for now and attempt when a bar or a pole shows up. Tap any rung to read it. Marking one reached pays XP and can be undone.</div>';
+SKILLS.forEach(function(sk){var cur=D.rungs[sk[0]]!=null?D.rungs[sk[0]]:-1;
+h+='<div class="lad"><div class="row" onclick="pick(\'skill\',\''+(S.skill===sk[0]?"":sk[0])+'\')"><div><div class="ser" style="font-size:18px">'+sk[1]+'</div><div class="tiny">'+sk[2]+'</div></div>'+
+'<div class="tiny num">'+(cur+1)+'/'+sk[3].length+'</div></div>'+
+'<div class="bar" style="margin-top:8px"><div style="width:'+Math.round((cur+1)/sk[3].length*100)+'%"></div></div>';
+var work=Math.min(cur+1,sk[3].length-1),ts=skillToday(sk[0]),d7=skillDays(sk[0]);
+h+='<div class="tiny" style="margin-top:7px">Working rung: '+esc(sk[3][work].n)+' · practised '+d7+' of the last 7 days</div>';
+h+='<div class="logrow" style="margin-top:8px"><input id="sk_'+sk[0]+'" type="number" inputmode="numeric" placeholder="secs or reps"><button onclick="addSkillSet(\''+sk[0]+'\','+work+')">Log set</button></div>';
+if(SKEV[sk[0]])h+='<div class="tiny" style="padding-top:6px">Beat your best here and it records to Events automatically. No double entry.</div>';
+if(ts.length)h+='<div class="chips" style="padding:8px 0 0">'+ts.map(function(x){return '<span class="chip num" onclick="rmSkillSet('+x.id+')">'+x.v+'</span>'}).join("")+'<span class="tiny" style="align-self:center;margin-left:4px">'+ts.length+' today'+(ts.length>=5?' · XP cap':'')+'</span></div>';
+if(S.skill===sk[0]){sk[3].forEach(function(r,i){var key=sk[0]+"_"+i;
+h+='<div class="rung '+(i<=cur?"done":"")+(i===cur+1?" cur":"")+'"><div class="n" onclick="pick(\'rung\',\''+(S.rung===key?"":key)+'\')">'+(i+1)+'</div>'+
+'<div style="flex:1"><div style="font-size:14px" class="'+(i<=cur?"done2":"")+'" onclick="pick(\'rung\',\''+(S.rung===key?"":key)+'\')">'+esc(r.n)+'</div>';
+if(S.rung===key){h+='<div class="exp" style="margin-top:8px">'+
+'<b>How</b><ul style="margin:0;padding-left:16px">'+r.c.map(function(c){return '<li style="font-size:13px;color:var(--mut);line-height:1.45;margin-bottom:4px">'+esc(c)+'</li>'}).join("")+'</ul>'+
+'<b>You have it when</b><p>'+esc(r.p)+'</p>'+
+'<b>Most common error</b><p>'+esc(r.e)+'</p>'+
+'<b>What it builds</b><p>'+esc(r.b)+'</p></div>';
+h+=(i<=cur?'<button class="wide" onclick="setRung(\''+sk[0]+'\','+(i-1)+')">Unmark this rung</button>':'<button class="wide" onclick="setRung(\''+sk[0]+'\','+i+')">Mark reached · +100 XP</button>')}
+h+='</div></div>'})}
+h+='</div>'})}
+
+if(S.tab==="mind"){var m=D.mind[t]||{};
+h+='<div class="opts" style="margin-bottom:12px">'+[["adhd","ADHD"],["dep","Mood"],["ther","Therapy"],["rel","Us"]].map(function(o){
+return '<button class="'+(S.mindsec===o[0]?"sel":"")+'" onclick="pick(\'mindsec\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>';
+if(S.mindsec==="adhd"){
+h+='<div class="card"><h2>Deep work</h2><div class="tmr"><div class="t num ser">'+fmt(T.id&&T.kind==="deep"?T.left:2700)+'</div></div><div class="tmrb">'+
+(T.id?'<button style="background:var(--pan2);color:var(--tx);border:1px solid var(--edge)" onclick="stopT();render()">Stop</button>':
+'<button style="background:var(--br);color:#FFF9EC" onclick="startT(2700,\'45-minute block\',\'deep\')">Start 45</button>')+
+'<button style="background:var(--pan2);color:var(--tx);border:1px solid var(--edge)" onclick="bumpBlock(1)">Log a block</button></div>'+
+'<div class="tiny" style="margin-top:10px;text-align:center">'+(m.blocks||0)+' today · target 2. Start ritual: phone in another room, one tab, timer visible, write the sentence "this block is for ___".</div></div>';
+h+='<h2>Capture</h2><div class="tiny" style="margin-bottom:8px">Anything that tries to hijack a block goes here instead of stealing it.</div>';
+h+='<div class="inline"><input id="capin" placeholder="the thought that just showed up"><button class="go" onclick="addCap()">Add</button></div>';
+D.cap.slice(0,25).forEach(function(c){h+='<div class="dki"><div class="box '+(c.done?"on":"")+'" onclick="capDone('+c.id+')"></div><div style="flex:1;font-size:14px" class="'+(c.done?"done":"")+'" onclick="editCap('+c.id+')">'+esc(c.t)+'</div><button class="del" onclick="rmCap('+c.id+')">×</button></div>'});
+if(!D.cap.length)h+='<div class="empty">Empty is good. It means nothing is circling.</div>'}
+if(S.mindsec==="dep"){
+h+='<div class="card"><h2>Mood lives in How We Feel</h2><div class="tiny">You already use it and it does this better than I would. Tap to open. The only thing this app asks is the question a mood tracker does not: what did you do about it.</div>'+
+'<button class="wide" onclick="openHWF()">Open How We Feel</button></div>';
+h+='<h2>Sleep last night</h2><div class="sl" style="margin-bottom:14px">'+[5,6,7,8,9].map(function(i){
+return '<button class="'+(m.sleep===i?"sel":"")+'" onclick="saveMind({sleep:'+i+'})">'+i+'</button>'}).join("")+'</div>';
+h+='<h2>Energy today</h2><div class="sl" style="margin-bottom:14px">'+[1,2,3,4,5].map(function(i){
+return '<button class="'+(m.energy===i?"sel":"")+'" onclick="saveMind({energy:'+i+'})">'+i+'</button>'}).join("")+'</div>';
+h+='<div class="card"><h2>The action, not the number</h2><div class="tiny">Behavioural activation is the shape this whole app already has: scheduled, achievable, values-linked action, done regardless of how you feel about it beforehand. Which means a daily block completed on a bad day is not a consolation prize. It is the intervention.</div></div>';
+var md=Object.keys(D.mind).sort().slice(-14),sl=md.map(function(d){return D.mind[d].sleep}).filter(function(x){return x});
+if(sl.length>1)h+='<div class="card"><h2>Sleep, last '+sl.length+'</h2><div class="spark" style="height:40px">'+sl.map(function(x){return '<div style="height:'+x*11+'%"></div>'}).join("")+'</div></div>'}
+if(S.mindsec==="ther"){
+h+='<div class="card"><h2>Things to bring</h2><div class="tiny">What feels urgent Tuesday is gone by Friday. Write it when it happens.</div></div>';
+h+='<div class="inline"><input id="therin" placeholder="something to raise"><button class="go" onclick="addTher(\'ind\')">Solo</button><button class="go" onclick="addTher(\'cpl\')">Couples</button></div>';
+["ind","cpl"].forEach(function(kind){var list=D.ther.filter(function(x){return x.kind===kind});
+h+='<h2 style="margin-top:14px">'+(kind==="ind"?"Individual therapy":"Couples therapy")+'</h2>';
+if(!list.length)h+='<div class="empty">Nothing yet.</div>';
+list.slice(0,25).forEach(function(x){h+='<div class="dki"><div style="flex:1" onclick="editTher('+x.id+')"><div style="font-size:14px">'+esc(x.t)+'</div><div class="tiny">'+x.date+' · tap to edit</div></div><button class="del" onclick="rmTher('+x.id+')">×</button></div>'});});}
+if(S.mindsec==="rel"){
+if(S.meet){var M=D.meets.filter(function(x){return x.id===S.meet})[0];
+if(M){var st=MEET[M.step];
+h+='<div class="wkbar"><span>Partnership meeting · '+M.date+'</span><span class="tiny">step '+(M.step+1)+' of '+MEET.length+'</span></div>';
+h+='<div class="prog">'+MEET.map(function(x,ix){return '<i class="'+(ix<=M.step?"on":"")+'"></i>'}).join("")+'</div>';
+if(M.step===0)h+='<div class="card" style="border-left:3px solid var(--br)"><h2>The frame</h2><p style="font-size:15px;color:var(--tx);margin:0">'+esc(FRAME)+'</p></div>';
+h+='<div class="card"><h2>'+esc(st[0])+'</h2><p style="font-size:15px;color:var(--tx);margin:0 0 10px">'+esc(st[1])+'</p>'+
+'<div class="tiny" style="border-top:1px solid var(--line);padding-top:9px">'+esc(st[2])+'</div>'+
+(st[3]?'<div class="warn">'+esc(st[3])+'</div>':'')+'</div>';
+if(M.step===5){h+='<div class="card"><h2>The five losing strategies</h2>'+LOSING.map(function(x){
+return '<div style="padding:7px 0;border-bottom:1px solid var(--line)"><div style="font-size:14px">'+x[0]+'</div><div class="tiny">'+esc(x[1])+'</div></div>'}).join("")+'</div>'}
+h+='<div class="verdict y">'+esc(FLOOD)+'</div>';
+if(M.step===2){var oc=D.rel.filter(function(r){return r.kind==="commit"});
+h+='<h2>Commitments to read back</h2>';
+if(!oc.length)h+='<div class="empty">None logged yet.</div>';
+oc.slice(0,10).forEach(function(x){if(x.freq&&x.freq!=="once"){var st2=recStreak(x);
+h+='<div class="dki"><div style="flex:1"><div style="font-size:14px">'+esc(x.t)+'</div><div class="tiny num">'+st2.hit+' of '+st2.n+' days · '+st2.pct+'%</div></div></div>'}
+else h+='<div class="dki"><div class="box '+(x.done?"on":"")+'" onclick="relDone('+x.id+')"></div><div style="flex:1;font-size:14px" class="'+(x.done?"done":"")+'">'+esc(x.t)+'</div></div>'})}
+if(M.step===3){var rr=D.rel.filter(function(r){return r.kind==="raised"});
+h+='<h2>Her items</h2>';
+if(!rr.length)h+='<div class="empty">Nothing logged. Next time, write them down when she says them.</div>';
+rr.slice(0,10).forEach(function(x){h+='<div class="dki"><div style="flex:1"><div style="font-size:14px">'+esc(x.t)+'</div><div class="tiny">'+x.date+'</div></div></div>'})}
+if(M.step===4&&D.prep.item)h+='<div class="card"><h2>Your prepped item</h2><p style="font-size:15px;color:var(--tx);margin:0">'+esc(D.prep.item)+'</p></div>';
+h+='<div class="card"><h2>Carry it</h2><div class="tiny" style="margin-bottom:8px">Not refusing to discuss it — routing it. Anything about marriage, kids or timing goes straight onto the couples therapy list. Carrying something is progress, not avoidance.</div>'+
+'<div class="inline"><input id="parkin" placeholder="what to carry"><button class="go" onclick="carryIt()">Carry to therapy</button></div>';
+if(M.parked.length)h+=M.parked.map(function(p){return '<div class="tiny" style="padding:5px 0;color:var(--y)">· '+esc(p)+'</div>'}).join("");
+h+='</div>';
+h+='<div class="opts" style="margin-bottom:10px"><button onclick="meetStep('+(M.step-1)+')">Back</button>'+
+(M.step<MEET.length-1?'<button class="sel" onclick="meetStep('+(M.step+1)+')">Next step</button>':'')+'</div>';
+h+='<textarea id="mnotes" rows="3" placeholder="notes from this meeting">'+esc(M.notes||"")+'</textarea><div style="height:10px"></div>';
+h+='<button class="save" onclick="endMeet()">End the meeting</button>';
+h+='<div class="tiny" style="margin-top:9px;text-align:center">The timer is running. When it ends, stop — even mid-agenda. That is the rule that makes these survivable.</div>'}}
+else{
+h+='<div class="card"><h2>Three lists, on purpose</h2><div class="tiny">What she raised, so you act on it in week two instead of hearing it again in month three. What you appreciated, because a log built only from the hard moments becomes a case file. What you committed to, because that is the one that changes the outcome.</div></div>';
+h+='<h2>Add an entry</h2><div class="opts" style="margin-bottom:8px">'+
+[["raised","She raised"],["appr","I appreciated"],["commit","I committed"]].map(function(o){
+return '<button class="'+(S.relKind===o[0]?"sel":"")+'" onclick="pick(\'relKind\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>';
+if(S.relKind==="commit")h+='<div class="opts" style="margin-bottom:8px">'+
+[["once","One-off"],["daily","Daily"],["weekday","Weekdays"],["often","3x a week"]].map(function(o){
+return '<button class="'+(S.relFreq===o[0]?"sel":"")+'" onclick="pick(\'relFreq\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>';
+h+='<div class="inline"><input id="relin" placeholder="'+(S.relKind==="raised"?"what she raised":S.relKind==="appr"?"what you appreciated":"what you committed to")+'"><button class="go" onclick="addRel()">Add</button></div>';
+var open2=D.rel.filter(function(r){return r.kind==="commit"&&!r.done});
+if(open2.length)h+='<div class="verdict y">'+open2.length+' commitment'+(open2.length>1?"s":"")+' still open. Small and unprompted beats a list produced during an argument.</div>';
+[["commit","Commitments"],["raised","She raised"],["appr","I appreciated"]].forEach(function(kk){
+var list=D.rel.filter(function(r){return r.kind===kk[0]});
+h+='<h2 style="margin-top:14px">'+kk[1]+'</h2>';
+if(!list.length)h+='<div class="empty">Nothing yet.</div>';
+list.slice(0,25).forEach(function(x){var rec=kk[0]==="commit"&&x.freq&&x.freq!=="once";
+if(rec){var st3=recStreak(x),done7=[];for(var q7=6;q7>=0;q7--)done7.push(x.log&&x.log[ago(q7)]);
+h+='<div class="dki"><div class="box '+(x.log&&x.log[today()]?"on":"")+'" onclick="tickRec('+x.id+',\''+today()+'\')"></div>'+
+'<div style="flex:1"><div style="font-size:14px" onclick="editRel('+x.id+')">'+esc(x.t)+'</div>'+
+'<div class="tiny num">'+({daily:"daily",weekday:"weekdays",often:"3x a week"}[x.freq])+' · '+st3.hit+' of '+st3.n+' days · '+st3.pct+'%</div>'+
+'<div class="prog" style="margin:6px 0 0">'+done7.map(function(y){return '<i class="'+(y?"on":"")+'"></i>'}).join("")+'</div></div>'+
+'<button class="del" onclick="rmRel('+x.id+')">×</button></div>'}
+else h+='<div class="dki">'+(kk[0]==="commit"?'<div class="box '+(x.done?"on":"")+'" onclick="relDone('+x.id+')"></div>':'')+
+'<div style="flex:1" onclick="editRel('+x.id+')"><div style="font-size:14px" class="'+(x.done?"done":"")+'">'+esc(x.t)+'</div><div class="tiny">'+x.date+' · tap to edit</div></div><button class="del" onclick="rmRel('+x.id+')">×</button></div>'})});
+h+='<div class="wkbar" style="margin-top:16px"><span>'+esc(meetLabel())+'</span><span class="tiny num">'+(daysToMeet()===0?"today":"in "+daysToMeet()+"d")+'</span></div>';
+h+='<div class="card"><h2>Five minutes of prep</h2><div class="tiny" style="margin-bottom:10px">Do this before she is in the room. '+prepDone()+' of '+PREP.length+' done.</div>';
+PREP.forEach(function(p){h+='<div style="margin-bottom:11px"><div style="font-size:14px">'+p[1]+'</div><div class="tiny" style="margin:2px 0 5px">'+esc(p[2])+'</div>'+
+'<textarea id="pr_'+p[0]+'" rows="2" oninput="prepSet(\''+p[0]+'\',this.value)" placeholder="">'+esc(D.prep[p[0]]||"")+'</textarea></div>'});
+h+='<button class="wide" onclick="clearPrep()">Clear prep</button></div>';
+h+='<div class="card"><h2>Partnership meeting</h2><div class="tiny">Six steps, twenty-five minutes, a timer that ends it. Mid-week, not Sunday. Marriage, kids and timing are explicitly off this agenda and go to the couples therapist. The meeting is for the week you are living in.</div>'+
+'<button class="save" style="margin-top:12px" onclick="startMeet()">Start a meeting</button></div>';
+h+='<div class="card"><h2>Where the format comes from</h2><div class="tiny">Gottman for the shape — positive start-up, the stress-reducing conversation, softened start-up and reflecting back. Terry Real for the losing strategies and turning complaints into specific behavioural requests. Tatkin for the landing at the start and the couple bubble at the end. Thirty minutes and a timer are mine, because four unresolved hours on a Sunday is what made you stop.</div></div>';
+if(D.meets.length){h+='<h2 style="margin-top:14px">Past meetings</h2>';
+D.meets.slice(0,10).forEach(function(m){h+='<div class="dki" onclick="openMeet('+m.id+')"><div style="flex:1"><div style="font-size:14px">'+m.date+'</div>'+
+'<div class="tiny">'+(m.parked.length?m.parked.length+' parked for therapy · ':'')+(m.notes?'notes saved':'no notes')+'</div></div></div>'})}}}}
+
+if(S.tab==="fuel"){var f=D.fuel[t]||{};
+h+='<div class="card"><h2>Targets</h2>'+FUEL.map(function(x){return '<div class="tgt"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join("")+
+'<div class="tiny" style="margin-top:10px">Protein 1.6–2.0 g/kg is where resistance-training gains plateau on average, with the upper end useful in a deficit. Calories are a trend to steer by, not a number to engrave.</div></div>';
+h+='<div class="inline"><input id="fp" type="number" inputmode="numeric" placeholder="protein g" value="'+(f.p||"")+'"><input id="fw" type="number" inputmode="decimal" step="0.1" placeholder="water L" value="'+(f.w||"")+'"></div>';
+h+='<div class="inline"><input id="fb" type="number" inputmode="decimal" step="0.1" placeholder="bodyweight lb" value="'+(f.bw||"")+'"><button class="go" onclick="saveFuel()">Save</button></div>';
+h+='<div class="dki" onclick="togSup(\'vitd\')"><div class="box '+(f.vitd?"on":"")+'"></div><div style="flex:1"><div style="font-size:14px">Vitamin D</div><div class="tiny">Get a level tested at your next appointment.</div></div></div>';
+h+='<div class="dki" onclick="togSup(\'cr\')"><div class="box '+(f.cr?"on":"")+'"></div><div style="flex:1"><div style="font-size:14px">Creatine HCl</div><div class="tiny">Experiment. Stop rule: any return of bleeding, stop and tell your doctor.</div></div></div>';
+var days=Object.keys(D.fuel).sort().slice(-14),bws=days.map(function(d){return D.fuel[d].bw}).filter(function(x){return x>0});
+if(bws.length>1){var mx=Math.max.apply(null,bws),mn=Math.min.apply(null,bws);
+h+='<div class="card"><h2>Bodyweight</h2><div class="spark" style="height:44px">'+bws.map(function(x){return '<div style="height:'+Math.max(10,(x-mn+1)/(mx-mn+1)*100)+'%"></div>'}).join("")+'</div><div class="tiny num">'+bws[0]+' → '+bws[bws.length-1]+' lb · about 1 lb per week is the pace</div></div>'}
+var pr=days.map(function(d){return D.fuel[d].p}).filter(function(x){return x>0});
+if(pr.length)h+='<div class="card"><h2>Protein</h2><div class="big num ser">'+Math.round(pr.reduce(function(a,b){return a+b},0)/pr.length)+'<span style="font-size:16px;color:var(--dim)"> g avg</span></div><div class="tiny">across '+pr.length+' days</div></div>'}
+
+if(S.tab==="events"){
+if(!D.events.length)h+='<div class="card"><div class="tiny">No records yet. Test two or three of these this week — max push-ups, a bodyweight, a knee-to-wall measurement. Each one unlocks a piece of kit on your figure, and they are the only numbers that tell you whether eight weeks of this worked.</div></div>';
+h+='<div class="tiny" style="margin-bottom:12px">Seven domains. The decathlon against aging. Injuries are constraints on how the events get trained, not the thing being trained. Retest every six to eight weeks. Each record unlocks the domain\'s kit on your figure.</div>';
+DOMAINS.forEach(function(d){var done=d[3].filter(function(e){return evBest(e[0])!=null}).length;
+h+='<div class="dom"><div class="row" style="margin-bottom:8px"><div class="ser" style="font-size:17px">'+d[1]+'</div><div class="tiny">'+d[2]+' · '+done+'/'+d[3].length+'</div></div><div class="bar"><div style="width:'+Math.round(done/d[3].length*100)+'%"></div></div>';
+d[3].forEach(function(e){var b=evBest(e[0]),l=evLast(e[0]);
+h+='<div class="ev"><div><div style="font-size:13px">'+e[1]+'</div>'+(l?'<div class="tiny num">last '+l.v+' on '+l.date+'</div>':'<div class="tiny">not tested</div>')+'</div>'+
+'<div class="er num">'+(b!=null?b+' <small>'+e[2]+'</small>':'<span style="color:var(--dim);font-size:13px">—</span>')+'</div></div>'+
+'<div class="inline" style="margin:6px 0 2px"><input id="ev_'+e[0]+'" type="number" inputmode="decimal" step="0.1" placeholder="new '+e[2]+'"><button class="go" onclick="saveEvent(\''+e[0]+'\')">Save</button></div>'});
+h+='</div>'});
+h+='<div class="tiny">Lower is better on the 1.5 mile run and the waist. Aerobic capacity carries the largest health association here and is the strongest lever on Sexual Health, because erectile function is vascular.</div>'}
+
+if(S.tab==="stats"){
+var ids=[];D.sets.forEach(function(s){if(ids.indexOf(s.exId)<0)ids.push(s.exId)});
+var g=ids.map(function(id){var x=stats(id);return x?{id:id,name:EX[id]?exLabel(id):id,t:x}:null}).filter(function(x){return x&&x.t.n>1});
+var avg=g.length?Math.round(g.reduce(function(a,x){return a+x.t.pct},0)/g.length):null;
+h+='<div class="card"><div class="row"><span class="muted">This week</span><span class="num">'+w.st+'/3 strength · '+w.ca+'/2 engine</span></div>'+
+'<div class="tiny" style="margin-top:6px">Weekly targets, not a daily streak. A planned rest day is full compliance and pays XP.</div></div>';
+if(avg!==null)h+='<div class="card"><h2>Average gain</h2><div class="big num ser">'+(avg>=0?"+":"")+avg+'%</div><div class="tiny">Across '+g.length+' tracked movements since each one\'s current baseline. Level up resets a baseline so a harder variation never reads as a loss. A rising number with no level ups means you should have progressed already.</div></div>';
+g.sort(function(a,b){return b.t.pct-a.t.pct}).forEach(function(x){var mx=Math.max.apply(null,x.t.ser);
+h+='<div class="card" style="padding:13px"><div class="row"><span style="font-size:14px">'+esc(x.name)+'</span><span class="pct num '+(x.t.pct>0?"up":x.t.pct<0?"dn":"")+'">'+(x.t.pct>=0?"+":"")+x.t.pct+'%</span></div><div class="spark">'+
+x.t.ser.map(function(v){return '<div style="height:'+Math.max(9,v/mx*100)+'%"></div>'}).join("")+'</div><div class="tiny num">'+x.t.base+' → '+x.t.cur+' · all-time '+x.t.all+' · '+x.t.n+' sessions</div></div>'});
+var c={},att=[];
+D.sessions.filter(function(s){return s.am!=null}).forEach(function(s){(s.ex||[]).forEach(function(e){
+if(!c[e])c[e]={n:0,ww:0};c[e].n++;if(s.am==="worse")c[e].ww++})});
+for(var kk in c)if(c[kk].n>=3)att.push({id:kk,n:c[kk].n,w:c[kk].ww});
+h+='<h2 style="margin-top:16px">Exposure and response</h2>';
+if(!att.length)h+='<div class="empty">Needs three logged sessions with a morning-after answer before patterns mean anything.</div>';
+else{h+='<div class="tiny" style="margin-bottom:9px">Correlation only. Tells you what to look at, not what caused what.</div>';
+att.sort(function(a,b){return(b.w/b.n)-(a.w/a.n)}).slice(0,8).forEach(function(a){
+h+='<div class="card" style="padding:12px"><div style="font-size:14px">'+esc(EX[a.id]?EX[a.id][2]:a.id)+'</div><div class="tiny">preceded a worse morning '+a.w+' of '+a.n+' sessions</div></div>'})}
+var sd={};D.skillsets.forEach(function(x){sd[x.skill]=(sd[x.skill]||0)+1});
+if(Object.keys(sd).length){h+='<h2 style="margin-top:16px">Skill practice</h2>';
+SKILLS.forEach(function(sk){if(!sd[sk[0]])return;var cur=D.rungs[sk[0]]!=null?D.rungs[sk[0]]:-1;
+h+='<div class="card" style="padding:12px"><div class="row"><span style="font-size:14px">'+sk[1]+'</span><span class="tiny num">'+sd[sk[0]]+' sets</span></div>'+
+'<div class="tiny">rung '+(cur+1)+' of '+sk[3].length+' · practised '+skillDays(sk[0])+' of the last 7 days</div></div>'})}
+h+='<h2 style="margin-top:16px">Settings</h2>';
+h+='<div class="card"><div class="tgt"><span>Rest timer</span><b>'+(D.settings.rest||"off")+(D.settings.rest?'s':'')+'</b></div><div class="opts" style="margin:8px 0 14px">'+
+[0,60,90,120,180].map(function(r){return '<button class="'+(D.settings.rest===r?"sel":"")+'" onclick="setOpt(\'rest\','+r+')">'+(r?r:"Off")+'</button>'}).join("")+'</div>'+
+'<div class="tgt"><span>Strength sessions per week</span><b>'+D.settings.tStr+'</b></div><div class="opts" style="margin:8px 0 14px">'+
+[2,3,4,5].map(function(r){return '<button class="'+(D.settings.tStr===r?"sel":"")+'" onclick="setOpt(\'tStr\','+r+')">'+r+'</button>'}).join("")+'</div>'+
+'<div class="tgt"><span>Aerobic sessions per week</span><b>'+D.settings.tEng+'</b></div><div class="opts" style="margin:8px 0 4px">'+
+[1,2,3,4].map(function(r){return '<button class="'+(D.settings.tEng===r?"sel":"")+'" onclick="setOpt(\'tEng\','+r+')">'+r+'</button>'}).join("")+'</div>'+
+'<div class="tiny" style="margin-top:10px">Programme started '+D.settings.start+' · currently week '+weekNo()+'.</div></div>';
+h+='<div class="card"><h2>Partnership meeting slot</h2><div class="opts" style="margin-bottom:8px">'+
+[1,2,3,4,5].map(function(d){return '<button class="'+(D.settings.meetDay===d?"sel":"")+'" onclick="setOpt(\'meetDay\','+d+')">'+DAYS[d].slice(0,3)+'</button>'}).join("")+'</div>'+
+'<div class="opts">'+[16,17,18,19,20].map(function(hr){return '<button class="'+(D.settings.meetHr===hr?"sel":"")+'" onclick="setOpt(\'meetHr\','+hr+')">'+hr+':00</button>'}).join("")+'</div>'+
+'<div class="tiny" style="margin-top:9px">Currently '+DAYS[D.settings.meetDay]+' at '+D.settings.meetHr+':00. A standing slot is easier to keep than sometime this week.</div></div>';
+h+='<h2 style="margin-top:16px">Correct a set</h2>';
+var recent=D.sets.slice(-14).reverse();
+if(!recent.length)h+='<div class="empty">No sets logged yet. They will appear here so you can fix a typo.</div>';
+recent.forEach(function(x){h+='<div class="card" style="padding:10px 13px"><div class="row"><div><div style="font-size:14px">'+esc(EX[x.exId]?EX[x.exId][3]:x.exId)+'</div><div class="tiny num">'+x.date+' · '+x.value+(x.load?" · "+x.load+" lb":"")+'</div></div>'+
+'<div><button class="del" onclick="editSet('+x.id+')">Edit</button> <button class="del danger" onclick="rmSet('+x.id+')">Delete</button></div></div></div>'});
+h+='<h2 style="margin-top:16px">Backup and restore</h2><div class="tiny" style="margin-bottom:8px">Data lives on this device only. An automatic backup is kept every tenth save.</div>'+
+'<button class="wide" onclick="expo()">Copy backup to clipboard</button>'+
+'<div class="inline" style="margin-top:10px"><input id="imp" placeholder="paste a backup here"><button class="go" onclick="doImport()">Restore</button></div>'+
+'<button class="wide" onclick="recover()">Recover last automatic backup</button>'}
+
+document.getElementById("app").innerHTML=h}
+render();
+</script>
+</body>
+</html>
