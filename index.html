@@ -180,6 +180,7 @@ padding:11px 16px calc(11px + env(safe-area-inset-bottom));display:flex;align-it
 animation:slideup .25s ease both}
 @keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
 .floatbar .ft{font-size:26px;color:var(--br2);font-variant-numeric:tabular-nums;min-width:74px}
+.floatbar .ft{cursor:pointer}.floatbar.gs .ft{color:var(--y);font-size:34px}.floatbar button.pr{background:var(--br);color:#FFF9EC;border-color:var(--br);font-weight:600}
 .floatbar .fl{flex:1;font-size:12px;color:var(--mut);line-height:1.3}
 .floatbar button{background:var(--pan2);border:1px solid var(--edge);color:var(--tx);padding:9px 13px;font:12px inherit;font-family:inherit;letter-spacing:.06em;text-transform:uppercase}
 .prog{display:flex;gap:3px;margin:10px 0 14px}
@@ -1051,7 +1052,7 @@ function rehabTog(id){var t=today(),a=D.daily[t]||[],k="RH_"+id,i=a.indexOf(k);
 if(i<0){a.push(k);D.daily[t]=a;save();pop("Logged",REHAB.filter(function(x){return x[0]===id})[0][2]+" done. Frequency is the lever here.")}
 else{a.splice(i,1);D.daily[t]=a;save();render()}}
 function rehabCount(){return REHAB.filter(function(x){return rehabDone(x[0])}).length}
-function addSkillSet(sk,rung){var el=document.getElementById("sk_"+sk);if(!el)return;
+function addSkillSet(sk,rung){var el=document.getElementById("sk_"+sk);if(!el)return;if(S.pre)delete S.pre[sk];
 var v=parseInt(el.value,10);if(!v||v<1)return;
 var t=today(),todaysForSkill=D.skillsets.filter(function(x){return x.date===t&&x.skill===sk}).length;
 var firstOfDay=!D.skillsets.some(function(x){return x.date===t});
@@ -1226,20 +1227,66 @@ if(open.length)q.push(["Follow up: "+open[0].t.slice(0,34),0,"mind"]);
 return q.slice(0,4)}
 
 function fmt(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x}
-function paint(){var el=document.getElementById("tdisp");if(el)el.textContent=fmt(T.left)}
-function startT(sec,lab,kind){stopT();T.left=sec;T.lab=lab;T.kind=kind||"hold";
-T.id=setInterval(function(){T.left--;paint();
-if(T.left<=0){clearInterval(T.id);T.id=null;pop(T.kind==="rest"?"Rest done":"Time","+ "+T.lab);render()}},1000);render()}
+var AC=null,WL=null;
+var GSDEF={gb_crow:5,gb_ring:5,gb_lsit:5,gc_cope:5,carry_a:5,carry_b:5,hs_a:5,gd_sprint:5,sk_crow:5,sk_hand:5,sk_lsit:5,sk_flever:5,sk_flag:5};
+function gsFor(id){return D.gs&&D.gs[id]!=null?D.gs[id]:(GSDEF[id]!=null?GSDEF[id]:3)}
+function cycleGS(id){var a=[0,3,5,10,15],v=gsFor(id),i=a.indexOf(v);D.gs=D.gs||{};D.gs[id]=a[(i+1)%a.length];save();render()}
+function audioInit(){if(D.settings.beep==="off")return;
+try{if(navigator.audioSession)navigator.audioSession.type=D.settings.beep==="loud"?"playback":"ambient"}catch(e){}
+try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C()}if(AC&&AC.state==="suspended")AC.resume()}catch(e){}}
+function beep(f,d){if(D.settings.beep==="off"||!AC)return;d=d||0.15;
+try{var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f||880;
+g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.7,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+0.05)}catch(e){}}
+function testBeep(){audioInit();beep(660,0.12);setTimeout(function(){beep(660,0.12)},350);setTimeout(function(){beep(1175,0.4)},700)}
+function wake(on){try{if(on&&navigator.wakeLock&&!WL){navigator.wakeLock.request("screen").then(function(w){WL=w}).catch(function(){})}
+else if(!on&&WL){WL.release();WL=null}}catch(e){}}
+function fmt(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x}
+function nowMs(){return Date.now()}
+function tLeft(){var n=T.paused?T.pAt:nowMs();if(T.phase==="set")return Math.max(0,Math.ceil((T.gsEnd-n)/1000));
+if(T.mode==="up")return Math.max(0,Math.floor((n-T.t0)/1000));return Math.max(0,Math.ceil((T.t1-n)/1000))}
+function paint(){var el=document.getElementById("tdisp");if(el){var l=tLeft();el.textContent=T.phase==="set"?String(l):fmt(l)}}
+function startT(sec,lab,kind,o){endT();o=o||{};audioInit();
+T={id:null,kind:kind||"hold",lab:lab,mode:o.up?"up":"down",dur:sec,ex:o.ex||null,sk:o.sk||null,best:o.best||null,
+sides:o.sides||1,side:1,gs:o.gs||0,rounds:o.rounds||0,round:1,iph:"on",paused:false,lastB:null,left:sec};
+if(T.gs>0){T.phase="set";T.gsEnd=nowMs()+T.gs*1000;T.left=T.gs;beep(440,0.06)}else goPhase(true);
+T.id=setInterval(tick,200);wake(true);render()}
+function goPhase(quiet){T.phase="go";T.t0=nowMs();T.t1=T.t0+T.dur*1000;T.lastB=null;T.left=T.mode==="up"?0:T.dur;if(!quiet)beep(1175,0.35)}
+function tick(){if(!T.id||T.paused)return;var l=tLeft(),cd=T.kind!=="deep"&&T.kind!=="meet";
+if(T.phase==="set"){if(l<=3&&l>=1&&T.lastB!==l){T.lastB=l;beep(660,0.12)}if(l<=0){goPhase();render();return}}
+else if(T.mode==="down"){if(cd&&l<=3&&l>=1&&T.lastB!==l){T.lastB=l;beep(660,0.12)}if(l<=0){finishDown();return}}
+T.left=l;paint()}
+function finishDown(){
+if(T.kind==="int"){if(T.iph==="on"){if(T.round>=T.rounds){beep(1175,0.6);var r=T.rounds;endT();pop("Sprints done",r+" rounds. Log them.");return}T.iph="off";T.dur=60}
+else{T.iph="on";T.round++;T.dur=20}goPhase();render();return}
+if(T.side<T.sides){T.side++;beep(880,0.3);T.phase="set";T.gsEnd=nowMs()+Math.max(3,T.gs)*1000;T.lastB=null;render();return}
+beep(1175,0.5);var k=T.kind,lab=T.lab;endT();pop(k==="rest"?"Rest done":"Time",k==="rest"?"Next set":lab)}
+function endT(){if(T.id)clearInterval(T.id);T.id=null;wake(false)}
+function stopT(){endT()}
+function togPause(){if(!T.id)return;if(T.paused){var sh=nowMs()-T.pAt;T.t0+=sh;T.t1+=sh;if(T.gsEnd)T.gsEnd+=sh;T.paused=false}else{T.paused=true;T.pAt=nowMs()}render()}
+function adjT(n){if(!T.id)return;if(T.phase==="set")T.gsEnd+=n*1000;else if(T.mode==="down")T.t1=Math.max(nowMs()+1000,T.t1+n*1000);tick();paint()}
+function addRest(n){adjT(n)}
+function goNow(){if(T.id&&T.phase==="set"){T.paused=false;goPhase();render()}}
+function doneUp(){var sec=tLeft(),ex=T.ex,sk=T.sk;if(T.phase==="set")sec=0;endT();
+if(sec<1){render();return}
+if(ex){var prev=setsFor(ex).reduce(function(a,x){return Math.max(a,x.value)},0);
+D.sets.push({id:Date.now(),date:today(),plan:S.plan,exId:ex,swap:swapOf(ex),value:sec,rir:null,load:0});save();
+pop((prev>0&&sec>prev&&!swapOf(ex))?"Personal best":"Set logged",exLabel(ex)+" · "+sec+"s");startRest(ex)}
+else if(sk){S.pre=S.pre||{};S.pre[sk]=sec;pop(sec+"s","Tap Log set to save it")}else render()}
+function bestOf(id){var b=setsFor(id).reduce(function(a,x){return Math.max(a,x.value)},0);return b||null}
+function exTimer(id){var e=EX[id],up=/max/i.test(e[4]);startT(up?0:e[8],exLabel(id),"hold",{gs:gsFor(id),up:up,ex:id,best:up?bestOf(id):null,sides:/per side/i.test(e[4])?2:1})}
+function skWatch(sk,name){startT(0,name,"hold",{gs:gsFor("sk_"+sk),up:true,sk:sk})}
+function tLabel(){if(T.paused)return '<b>PAUSED</b><br>Tap the clock to resume';
+if(T.phase==="set")return '<b style="color:var(--y)">'+(T.side>1?"SWITCH SIDES":"GET SET")+'</b><br>'+esc(T.lab);
+if(T.kind==="int")return '<b style="color:var(--'+(T.iph==="on"?'r':'g')+')">'+(T.iph==="on"?'SPRINT':'WALK')+'</b><br>Round '+T.round+' of '+T.rounds;
+if(T.mode==="up")return '<b>HOLD</b> · tap Done when you break<br>'+esc(T.lab)+(T.best?' · best '+T.best+'s':'');
+return esc(T.lab)+(T.sides>1?' · side '+T.side+' of '+T.sides:'')+(T.kind==="rest"?'<br>Rest between sets':T.kind==="deep"?'<br>Deep work':T.kind==="meet"?'<br>Partnership meeting':T.kind==="cool"?'<br>Double inhale, long exhale':'<br>Hold')}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&T.id)tick()});
 function startRest(id){var r=(id&&REST[id])||D.settings.rest;if(r>0)startT(r,"Next set","rest")}
-function addRest(n){if(T.id&&T.kind==="rest"){T.left=Math.max(5,T.left+n);paint()}}
-function stopT(){if(T.id){clearInterval(T.id);T.id=null}}
 function p2Week(){var a=new Date(D.settings.p2start+"T00:00:00"),n=new Date(today()+"T00:00:00");return Math.floor((n-a)/6048e5)+1}
 function sprintPlan(){if(deloadActive())return[4,"easy, about 70 percent"];var w=p2Week();return w<=2?[6,"about 80 percent"]:w<=4?[9,"about 90 percent"]:[9,"all-out"]}
 function sprintRx(){var p=sprintPlan();return p[0]+" x 20s at "+p[1]+" · 60s walk between · week "+p2Week()}
-function startIntervals(){var p=sprintPlan();stopT();T.kind="int";T.rounds=p[0];T.round=1;T.phase="on";T.left=20;T.lab="Sprints";
-T.id=setInterval(function(){T.left--;paint();if(T.left<=0){
-if(T.phase==="on"){if(T.round>=T.rounds){clearInterval(T.id);T.id=null;pop("Sprints done",T.rounds+" rounds. Log them.");render();return}T.phase="off";T.left=60}
-else{T.phase="on";T.round++;T.left=20}render()}},1000);render()}
+function startIntervals(){var p=sprintPlan();startT(20,"Sprints","int",{gs:gsFor("gd_sprint"),rounds:p[0]})}
 function modeToday(){return D.mode&&D.mode.date===today()?D.mode.m:"normal"}
 function setMode(m){D.mode={date:today(),m:m};save();pop(m==="alpha"?"Alpha day":m==="omega"?"Omega day":"Normal day",m==="alpha"?"Joint armor plus one main lift. Skip the sprints. Go home.":m==="omega"?"Last set of the main lift to AMRAP. No extra exercises.":"Full session.")}
 function dpHint(id){var t=today(),prev=D.sets.filter(function(x){return x.exId===id&&!x.swap&&x.date<t});
@@ -1361,7 +1408,7 @@ function swapBox(e,id,sw){var h='<div class="body"><h2>Swap for today only</h2><
 h+='<div class="inline" style="margin-top:8px"><input id="cs_'+id+'" placeholder="or type your own"><button class="go" onclick="customSwap(\''+id+'\')">Set</button></div>';
 if(sw)h+='<button class="wide" onclick="setSwap(\''+id+'\',null)">Back to '+esc(e[3])+'</button>';
 return h+'</div>'}
-function setOpt(k,v){D.settings[k]=v;save();pop("Saved",k==="rest"?"Rest timer "+(v?v+"s":"off"):"Target updated")}
+function setOpt(k,v){D.settings[k]=v;save();if(k==="beep"){AC=null;audioInit();testBeep()}pop("Saved",k==="rest"?"Rest timer "+(v?v+"s":"off"):k==="beep"?"Beeps: "+v:"Target updated")}
 function weekNo(){var s=new Date(D.settings.start+"T00:00:00"),n=new Date(today()+"T00:00:00");
 return Math.floor((n-s)/6048e5)+1}
 function deloadDue(){return weekNo()%4===0}
@@ -1493,15 +1540,15 @@ h+='<div class="item'+(ts.length?" doneEx":"")+'"><div class="head"><div class="
 '<div class="name ser">'+esc(exLabel(id))+(sw?' <span class="tiny">· swapped today</span>':'')+'</div><div class="rx">'+esc(id==="gd_sprint"?sprintRx():e[4])+'</div>'+
 (DP[id]&&!sw?'<div class="tiny" style="margin-top:4px;color:var(--br2)">'+esc(deloadActive()?"Deload: half the sets, stop at 3 RIR. Same weight as last time.":dpHint(id))+'</div>':'')+
 (mode==="omega"&&ALPHA_MAIN[S.plan]===id?'<div class="tiny" style="margin-top:4px;color:var(--g)">Omega: last set to AMRAP</div>':'');
-if(ts.length)h+='<div class="chips">'+ts.map(function(x){return '<span class="chip num">'+x.value+(x.load?"·"+x.load+"lb":"")+(isNaN(x.rir)?"":" @"+x.rir+"R")+'</span>'}).join("")+'</div>';
+if(ts.length)h+='<div class="chips">'+ts.map(function(x){return '<span class="chip num">'+x.value+(x.load?"·"+x.load+"lb":"")+(x.rir==null||isNaN(x.rir)?"":" @"+x.rir+"R")+'</span>'}).join("")+'</div>';
 h+='</div>';
 h+='<div class="logrow"><input id="v_'+id+'" type="number" inputmode="numeric" placeholder="reps/secs"><input id="r_'+id+'" class="n" type="number" inputmode="numeric" placeholder="RIR"><input id="l_'+id+'" class="n" type="number" inputmode="numeric" placeholder="lb"><button onclick="addSet(\''+id+'\')">Log</button></div>';
 h+='<div class="minirow"><button class="'+(S.info===id?"on":"")+'" onclick="pick(\'info\',\''+(S.info===id?"":id)+'\')">Info</button>'+
 '<button class="'+(S.swapUI===id?"on":"")+'" onclick="pick(\'swapUI\',\''+(S.swapUI===id?"":id)+'\')">Swap</button>'+
-(id==="gd_sprint"?'<button onclick="startIntervals()">Intervals</button>':e[8]>0?'<button onclick="startT('+e[8]+',\''+esc(e[3])+'\',\'hold\')">Timer</button>':'<button onclick="startRest()">Rest</button>')+
+(id==="gd_sprint"?'<button onclick="startIntervals()">Intervals</button><button onclick="cycleGS(\'gd_sprint\')">Set '+gsFor("gd_sprint")+'s</button>':(e[8]>0||/max/i.test(e[4]))?'<button onclick="exTimer(\''+id+'\')">'+(/max/i.test(e[4])?"Stopwatch":"Timer")+'</button><button onclick="cycleGS(\''+id+'\')">Set '+gsFor(id)+'s</button>':'<button onclick="startRest()">Rest</button>')+
 '<button onclick="lvl(\''+id+'\')">Level up</button></div>';
 if(ts.length){h+='<div style="padding:0 12px 10px;background:var(--bg2)">';
-ts.forEach(function(x){h+='<div class="row" style="padding:5px 0"><span class="tiny num">'+x.value+(x.load?" · "+x.load+" lb":"")+(isNaN(x.rir)?"":" · "+x.rir+" RIR")+'</span><button class="del" onclick="rmSet('+x.id+')">Remove</button></div>'});
+ts.forEach(function(x){h+='<div class="row" style="padding:5px 0"><span class="tiny num">'+x.value+(x.load?" · "+x.load+" lb":"")+(x.rir==null||isNaN(x.rir)?"":" · "+x.rir+" RIR")+'</span><button class="del" onclick="rmSet('+x.id+')">Remove</button></div>'});
 h+='<textarea id="nt_'+id+'" rows="1" placeholder="note on this movement today" oninput="setNote(\''+id+'\')" style="font-size:13px;padding:8px">'+esc(noteOf(id))+'</textarea></div>'}
 if(S.swapUI===id)h+=swapBox(e,id,sw);
 if(S.info===id){h+='<div class="body">';
@@ -1617,7 +1664,8 @@ h+='<div class="lad"><div class="row" onclick="pick(\'skill\',\''+(S.skill===sk[
 '<div class="bar" style="margin-top:8px"><div style="width:'+Math.round((cur+1)/sk[3].length*100)+'%"></div></div>';
 var work=Math.min(cur+1,sk[3].length-1),ts=skillToday(sk[0]),d7=skillDays(sk[0]);
 h+='<div class="tiny" style="margin-top:7px">Working rung: '+esc(sk[3][work].n)+' · practised '+d7+' of the last 7 days</div>';
-h+='<div class="logrow" style="margin-top:8px"><input id="sk_'+sk[0]+'" type="number" inputmode="numeric" placeholder="secs or reps"><button onclick="addSkillSet(\''+sk[0]+'\','+work+')">Log set</button></div>';
+h+='<div class="logrow" style="margin-top:8px"><input id="sk_'+sk[0]+'" type="number" inputmode="numeric" placeholder="secs or reps" value="'+((S.pre&&S.pre[sk[0]])||"")+'"><button onclick="addSkillSet(\''+sk[0]+'\','+work+')">Log set</button></div>'+
+'<div class="minirow" style="padding:6px 0 0;background:none"><button onclick="skWatch(\''+sk[0]+'\',\''+esc(sk[1])+'\')">Stopwatch</button><button onclick="cycleGS(\'sk_'+sk[0]+'\')">Get-set '+gsFor("sk_"+sk[0])+'s</button></div>';
 if(SKEV[sk[0]])h+='<div class="tiny" style="padding-top:6px">Beat your best here and it records to Events automatically. No double entry.</div>';
 if(ts.length)h+='<div class="chips" style="padding:8px 0 0">'+ts.map(function(x){return '<span class="chip num" onclick="rmSkillSet('+x.id+')">'+x.v+'</span>'}).join("")+'<span class="tiny" style="align-self:center;margin-left:4px">'+ts.length+' today'+(ts.length>=5?' · XP cap':'')+'</span></div>';
 if(S.skill===sk[0]){sk[3].forEach(function(r,i){var key=sk[0]+"_"+i;
@@ -1806,6 +1854,10 @@ SKILLS.forEach(function(sk){if(!sd[sk[0]])return;var cur=D.rungs[sk[0]]!=null?D.
 h+='<div class="card" style="padding:12px"><div class="row"><span style="font-size:14px">'+sk[1]+'</span><span class="tiny num">'+sd[sk[0]]+' sets</span></div>'+
 '<div class="tiny">rung '+(cur+1)+' of '+sk[3].length+' · practised '+skillDays(sk[0])+' of the last 7 days</div></div>'})}
 h+='<h2 style="margin-top:16px">Settings</h2>';
+h+='<div class="card"><div class="tgt"><span>Timer beeps</span><b>'+({off:"Off",on:"On",loud:"Loud"}[D.settings.beep||"on"])+'</b></div><div class="opts" style="margin:8px 0">'+
+[["off","Off"],["on","On"],["loud","Loud"]].map(function(o){return '<button class="'+((D.settings.beep||"on")===o[0]?"sel":"")+'" onclick="setOpt(\'beep\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div>'+
+'<div class="tiny">On: plays over your music, but the silent switch mutes it. Loud: plays even on silent, but iPhone may pause your music. Beeps only play while the app is open. The screen stays awake during a timer.</div>'+
+'<button class="wide" onclick="testBeep()">Test beep</button></div>';
 h+='<div class="card"><div class="tgt"><span>Rest timer</span><b>'+(D.settings.rest||"off")+(D.settings.rest?'s':'')+'</b></div><div class="opts" style="margin:8px 0 14px">'+
 [0,60,90,120,180].map(function(r){return '<button class="'+(D.settings.rest===r?"sel":"")+'" onclick="setOpt(\'rest\','+r+')">'+(r?r:"Off")+'</button>'}).join("")+'</div>'+
 '<div class="tgt"><span>Strength sessions per week</span><b>'+D.settings.tStr+'</b></div><div class="opts" style="margin:8px 0 14px">'+
@@ -1850,10 +1902,12 @@ oldk.forEach(function(o){h+='<div class="card" style="padding:11px 13px"><div cl
 h+='<div class="tiny" style="margin-top:8px">Merging never deletes anything. Duplicates are skipped by id.</div>'}
 
 var ae=document.activeElement,aid=ae&&ae.id,ss=null;try{ss=ae&&ae.selectionStart}catch(err){}
-if(T.id)h+='<div class="floatbar"><div class="ft" id="tdisp">'+fmt(T.left)+'</div><div class="fl">'+
-(T.kind==="int"?'<b style="color:var(--'+(T.phase==="on"?'r':'g')+')">'+(T.phase==="on"?'SPRINT':'WALK')+'</b><br>Round '+T.round+' of '+T.rounds:esc(T.lab)+(T.kind==="rest"?'<br>Rest between sets':T.kind==="deep"?'<br>Deep work':T.kind==="meet"?'<br>Partnership meeting':T.kind==="cool"?'<br>Double inhale, long exhale':'<br>Hold'))+'</div>'+
-(T.kind==="rest"?'<button onclick="addRest(30)">+30</button>':'')+
-'<button onclick="stopT();render()">Stop</button></div>';
+if(T.id){var tl=tLeft(),st5=T.kind==="rest"?15:5,lng=T.kind==="deep"||T.kind==="meet"||T.kind==="cool";
+h+='<div class="floatbar'+(T.phase==="set"?' gs':'')+'"><div class="ft" id="tdisp" onclick="togPause()">'+(T.phase==="set"?tl:fmt(tl))+'</div><div class="fl">'+tLabel()+'</div>'+
+(T.phase==="set"?'<button onclick="adjT(5)">+5</button><button class="pr" onclick="goNow()">Go</button>':
+T.mode==="up"?'<button class="pr" onclick="doneUp()">Done</button>':
+(!lng&&T.kind!=="int"?'<button onclick="adjT(-'+st5+')">−'+st5+'</button><button onclick="adjT('+st5+')">+'+st5+'</button>':''))+
+'<button onclick="stopT();render()">✕</button></div>'}
 document.getElementById("app").innerHTML=h;
 if(aid){var n2=document.getElementById(aid);if(n2&&n2.focus){n2.focus();try{if(ss!=null&&n2.setSelectionRange)n2.setSelectionRange(ss,ss)}catch(err){}}}}
 render();
