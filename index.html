@@ -382,7 +382,7 @@ var LIFT={A:1,B:1,U1:1,L1:1,U2:1,L2:1};
 var SCHED={1:"U1",2:"BJ",3:"L1",4:"BJ",5:"U2",6:"L2"};
 var ALPHA_MAIN={U1:"gc_dbfp",L1:"gc_rdl",U2:"gc_row",L2:"gc_goblet"};
 var DPTOP={gc_wpu:8,gc_atg:8,gc_bss:8,gc_curl:15,gc_bridge:15,gc_hlr:15,gc_bext:15,gc_cuban:12};
-var REST={gc_wpu:180,gc_rdl:180,gc_goblet:120,gc_bss:120,gc_hlr:90,gc_bext:90,gc_swing:60,ga_pa:30,ga_calf:30,gc_dbfp:120,gc_ohp:120,gc_atg:120,gc_row:120,gc_wdpu:120,gc_cuban:90,gc_curl:90,gc_bridge:90,gb_crow:120,gb_lsit:120,gb_ring:120,gb_pistol:120,ga_wrist:30,ga_tib:30};
+var REST={gc_nord:90,gc_cope:60,ga_sol:30,gc_wpu:180,gc_rdl:180,gc_goblet:120,gc_bss:120,gc_hlr:90,gc_bext:90,gc_swing:60,ga_pa:30,ga_calf:30,gc_dbfp:120,gc_ohp:120,gc_atg:120,gc_row:120,gc_wdpu:120,gc_cuban:90,gc_curl:90,gc_bridge:90,gb_crow:120,gb_lsit:120,gb_ring:120,gb_pistol:120,ga_wrist:30,ga_tib:30};
 var DP={gc_bss:1,gc_hlr:1,gc_bext:1,gc_curl:1,gc_bridge:1,gc_wpu:1,gc_dbfp:1,gc_ohp:1,gc_rdl:1,gc_atg:1,gc_row:1,gc_wdpu:1,gc_cuban:1,gc_goblet:1};
 var PAUSED={hs_a:"Overhead work is out until your physio clears it.",hs_b:"Overhead work is out until your physio clears it.",push_b:"Overhead work is out until your physio clears it.",
 gc_ohp:"Overhead pressing is out until your physio clears it. Swap in a press below.",
@@ -399,6 +399,8 @@ SW.sq=["Reverse lunges (knee override)","Leg press","Box squat","Bulgarian split
 SW.hinge2=["45-degree back extension (back override)","Hip thrust","Cable pull-through","Single-leg RDL"];
 SW.swing=["Heavy glute bridges","DB RDL","Hip thrust","Broad jumps"];
 SW.spr=["Assault bike","Rower","80 percent run","Hill sprints"];
+SW.ham=["Band-assisted Nordics","Partner-held Nordics","Slider hamstring curls, slow lowering","Single-leg RDL, 3s lowering"];
+SW.add=["Copenhagen, knee on bench","Side-lying adductor raise","Cable or band hip adduction","Adductor machine"];
 SW.mat=["Drilling only","Light flow rolling","Rest day instead"];
 
 function ARMOR(){return [
@@ -436,7 +438,7 @@ E("Intrinsic foot strength and control. The small muscles that shape the arch an
 "Mobility & Movement · Durability")]]}
 
 function SPRINT(){return ["gd_sprint","D · SPRINT ENGINE","spr","3-minute sprint engine","","run",
-["20 seconds on, 60 seconds walking, for the rounds shown above","Tap Intervals and the timer runs the whole thing for you","If running: build into each rep over the first few seconds rather than launching — cold hamstrings","Bike or rower spares the toe and ankle, and counts exactly the same"],
+["Warm-up: 2 minutes walking BACKWARD. Treadmill at a slow speed, a sled drag, or an open hallway. Ben Patrick's staple, and a gentle knee warm-up before sprints","20 seconds on, 60 seconds walking, for the rounds shown above","Tap Intervals and the timer runs the whole thing for you","If running: build into each rep over the first few seconds rather than launching — cold hamstrings","Bike or rower spares the toe and ankle, and counts exactly the same"],
 "Toe or hamstring complains, drop back to the 80 percent version until it does not.",0,
 E("Short all-out repeated efforts. Top-end aerobic power and the ability to recover between bursts.",
 "You asked for it three times a week. It ramps: 6 rounds at about 80 percent for two weeks, then 9 at about 90, then 9 all-out from week five. Sprinting after a long layoff is how hamstrings get pulled, which is why it builds.",
@@ -478,6 +480,14 @@ E("Elbow flexors and grip.","From Gemini's Upper 1 grid. Grip and elbow-flexor s
 SPRINT()])};
 
 PROG.L1={name:"Lower 1",x:ARMOR().concat([
+["ga_sol","A · FOOT ARMOR","ankle","Bent-knee calf raises","2 x 15-20 · slow · 30s rest","calf",
+["Knees bent about 45 degrees and kept bent the whole set","Off a step if you have one, full range","Seated with a dumbbell on the knees also works","Slow on the way down"],
+"",0,
+E("Soleus, the deep calf muscle underneath. Bending the knee takes the upper calf out and loads the soleus.",
+"Your Lower 2 calf raises are straight-legged. The soleus carries the most load of any calf muscle when you run, and you sprint three times a week.",
+"Moderate. It is well established that the soleus takes the largest share of calf force in running. Injury-prevention trials specific to it are thin.",
+"Bodyweight → single leg → dumbbell on the knee → seated calf machine.",
+"Durability · Mobility & Movement")],
 ["gb_lsit","B · SKILL","skill2","L-sit progression","3 x max time · stop before failing · 2 min rest","lsit",
 ["Hands on the floor or parallettes beside the hips","Push the floor down hard, shoulders away from the ears","Tuck, then one leg out, then both","Use the Skills tab to see which rung you are on"],
 "Shoulders stay depressed the whole time. If the right one complains, stop the set.",15,
@@ -502,6 +512,22 @@ E("Deep knee flexion under load. Quads, the ankle range and the hip flexor on th
 ["Upper back on the floor or a bench, dumbbell or plate across the hips","Drive through the heels, squeeze the glutes to full lockout","Pause one second at the top","Ribs down — the lift comes from the hips, not an arched low back"],
 "",0,
 E("Glute strength at full hip extension.","From Gemini's Lower 1 grid. It loads the upper outer glute area where your back pain seems to start, and bridging is a core BJJ escape.","Moderate for glute strengthening in low back and hip complaints.","Climb 12 → 15, then heavier.","Relative Strength · Durability")],
+["gc_nord","C · ACCESSORY","ham","Nordic hamstring curls","2 x 4-6 · slow lowering · 90s rest","",
+["Kneel on a pad, ankles anchored under a lat pulldown pad, a loaded bar or a partner's hands","Body straight from knees to head, hips locked, arms ready to catch","Lower yourself forward as SLOWLY as you can, fight the whole way down","Catch yourself on your hands, push back up. The lowering is the rep"],
+"Very sore the first time. Week 1: one set of 3-5. They must be in place before the all-out sprints in week 5.",0,
+E("Eccentric hamstring strength: the hamstrings resisting while they lengthen, which is exactly what they do as the leg swings forward in a sprint.",
+"The biggest gap Knees Over Toes Guy fills for you. You sprint three times a week, all-out from week 5, and nothing else in the program trains the hamstrings this way. Sprinting is how hamstrings tear.",
+"Strong. A 2019 meta-analysis (van Dyk, British Journal of Sports Medicine) found programs that included Nordics cut hamstring injuries by up to about half, mostly in soccer players. Low volume works.",
+"Band-assisted → full range, 1 set → 2 x 4-6 → slower lowering → 2 x 6-8.",
+"Durability · Power")],
+["gc_cope","C · ACCESSORY","add","Copenhagen plank","2 x 15-30s per side · 60s rest","",
+["Side plank on your forearm, top leg resting on a bench","Short version: knee on the bench. Long version: ankle on the bench","Squeeze the top leg down into the bench to lift your hips","Bottom leg hangs, or lifts for the hardest version"],
+"Same forearm support as your physio's side plank. If theirs is fine, this is. Any pinch in the right shoulder, stop and ask them.",20,
+E("Adductor (inner thigh) strength in a lengthened position.",
+"Guard work, sprawls and wide stances load the groin, and nothing else in your program trains the adductors.",
+"Moderate. A 2019 trial in over 600 male soccer players (Harøy, British Journal of Sports Medicine) found about 41 percent fewer groin problems. The evidence is from soccer, not grappling.",
+"Knee on bench 15s → 30s → ankle on bench 15s → 30s → bottom leg lifted.",
+"Durability · Relative Strength")],
 SPRINT()])};
 
 PROG.U2={name:"Upper 2",x:ARMOR().concat([
@@ -573,7 +599,15 @@ E("Hip snap. Fast, forceful hip extension.",
 ["gc_bext","C · ACCESSORY","hinge2","45-degree back extensions","2 x 12-15 · 1-2 RIR · 90s rest","",
 ["Hips on the pad, feet locked","Hinge down with a neutral spine, then squeeze the glutes to come up","Stop level with the body, do not over-arch at the top","Hold a plate at the chest when 15 gets easy"],
 "If the low back pinches rather than working, shorten the range.",0,
-E("Glutes, hamstrings and spinal erectors.","From Gemini's Lower 2 grid, and its own override for RDLs when the back flares.","Moderate. Back extensor training helps low back pain in several trials.","Bodyweight → plate → slower tempo.","Durability")]])};
+E("Glutes, hamstrings and spinal erectors.","From Gemini's Lower 2 grid, and its own override for RDLs when the back flares.","Moderate. Back extensor training helps low back pain in several trials.","Bodyweight → plate → slower tempo.","Durability")],
+["gc_nord","C · ACCESSORY","ham","Nordic hamstring curls","2 x 4-6 · slow lowering · 90s rest","",
+["Kneel on a pad, ankles anchored under a lat pulldown pad, a loaded bar or a partner's hands","Body straight from knees to head, hips locked, arms ready to catch","Lower yourself forward as SLOWLY as you can, fight the whole way down","Catch yourself on your hands, push back up. The lowering is the rep"],
+"Very sore the first time. Week 1: one set of 3-5. They must be in place before the all-out sprints in week 5.",0,
+E("Eccentric hamstring strength: the hamstrings resisting while they lengthen, which is exactly what they do as the leg swings forward in a sprint.",
+"The biggest gap Knees Over Toes Guy fills for you. You sprint three times a week, all-out from week 5, and nothing else in the program trains the hamstrings this way. Sprinting is how hamstrings tear.",
+"Strong. A 2019 meta-analysis (van Dyk, British Journal of Sports Medicine) found programs that included Nordics cut hamstring injuries by up to about half, mostly in soccer players. Low volume works.",
+"Band-assisted → full range, 1 set → 2 x 4-6 → slower lowering → 2 x 6-8.",
+"Durability · Power")]])};
 
 PROG.BJ={name:"Mat day",x:ARMOR().concat([
 ["gm_mat","MAT","mat","BJJ / wrestling","Log minutes as reps","",
@@ -1275,6 +1309,7 @@ function rh(){if(rehabCount()<REHAB.length){var nx=REHAB.filter(function(r){retu
 if(hr<11){blk("morning");sess();rh();blk("desk1")}
 else if(hr<19){sess();blk("desk1");blk("desk2");rh();blk("desk3");blk("shoulder");blk("feet");blk("morning")}
 else{if(hr<21)sess();rw();blk("evening");rh()}
+if(isArch()&&(!D.lastBak||D.lastBak<ago(6)))L.unshift({k:"bak",title:"Sunday · weekly backup",act:"Copy your backup, paste it in Notes.",how:"Thirty seconds. Your data lives only on this phone. This is the insurance."});
 return L}
 function nowCard(){var L=nowList(),h='<div class="now">';
 if(S.skip===1){h+='<div class="nk">No negotiating sitting down</div><div class="na ser">Stand up. Clothes on. Walk outside.</div><div class="tiny">You are not allowed to decide this from the couch. Stand outside for two minutes, then decide.</div>'+
@@ -1291,7 +1326,7 @@ h+='<div class="nk">'+esc(nm)+' · step '+(n+1)+' of '+st.length+'</div><div cla
 '<div class="nb"><button class="p" onclick="goStep()">'+(n>=st.length-1?"Open the session":"Done →")+'</button></div>'+
 '<div class="nl">'+(L.length>1?'<span onclick="nowNext()">Something else first</span>':'<i></i>')+'<span onclick="skipStart()">Thinking of skipping?</span></div></div>';return h}
 h+='<div class="nk">'+esc(it.title)+'</div><div class="na ser">'+esc(it.act)+'</div><div class="tiny">'+esc(it.how)+'</div>'+
-'<div class="nb">'+(it.k==="blk"?'<button class="p" onclick="nowTick(\''+it.id+'\')">Done</button>':it.k==="rw"?'<button class="p" onclick="rwTog(\''+it.id+'\')">Done</button>':'<button class="p" onclick="go(\'rehab\')">Open rehab</button>')+'</div>'+
+'<div class="nb">'+(it.k==="blk"?'<button class="p" onclick="nowTick(\''+it.id+'\')">Done</button>':it.k==="rw"?'<button class="p" onclick="rwTog(\''+it.id+'\')">Done</button>':it.k==="bak"?'<button class="p" onclick="expo()">Copy backup</button>':'<button class="p" onclick="go(\'rehab\')">Open rehab</button>')+'</div>'+
 '<div class="nl">'+(L.length>1?'<span onclick="nowNext()">Something else</span>':'<i></i>')+'<span>'+esc(todayLabel())+'</span></div></div>';return h}
 function dayX(d){if(D.sessions.some(function(x){return x.date===d})||D.rest.indexOf(d)>=0)return true;
 var s=SCHED[dowOf(d)];if(s&&LSEQ.indexOf(s)>=0)return false;
@@ -1359,7 +1394,7 @@ try{var p=JSON.parse(b);for(var f in p)D[f]=p[f];save();pop("Recovered","Last au
 function editSet(i){var s=D.sets.filter(function(x){return x.id===i})[0];if(!s)return;
 var v=prompt("Value for "+exLabel(s.exId)+" on "+s.date,s.value);if(v===null)return;
 var n=parseInt(v,10);if(!n||n<1)return;s.value=n;save();pop("Updated","Set corrected.")}
-function expo(){var t=document.createElement("textarea");t.value=JSON.stringify(D);document.body.appendChild(t);t.select();
+function expo(){D.lastBak=today();save();var t=document.createElement("textarea");t.value=JSON.stringify(D);document.body.appendChild(t);t.select();
 try{document.execCommand("copy");flash("Backup copied. Paste it somewhere safe.")}catch(e){flash("Select and copy")}
 setTimeout(function(){document.body.removeChild(t)},150)}
 function figure(t,k,big){
@@ -1500,6 +1535,7 @@ h+='<div class="card"><div class="tiny" style="margin-bottom:9px">'+(isArch()?'S
 var ai=D.arch.filter(function(a){return !a.done});
 if(ai.length)h+='<div class="tiny" style="margin:8px 0 4px">'+ai.length+' parked</div>';
 (archGate()?D.arch.slice(0,30):ai.slice(0,3)).forEach(function(a){h+='<div class="dki"><div class="box '+(a.done?"on":"")+'" onclick="archDone('+a.id+')"></div><div style="flex:1;font-size:14px" class="'+(a.done?"done":"")+'">'+esc(a.t)+'<div class="tiny">'+a.date+'</div></div><button class="del" onclick="rmArch('+a.id+')">×</button></div>'});
+if(isArch())h+='<button class="wide" onclick="expo()">Weekly backup · copy, paste into Notes'+(D.lastBak?' · last '+D.lastBak:'')+'</button>';
 if(!archGate())h+='<button class="wide" onclick="openArch()">Open Learn and Constraints anyway</button>';
 h+='</div>';
 if(archGate()){
@@ -1788,6 +1824,19 @@ var recent=D.sets.slice(-14).reverse();
 if(!recent.length)h+='<div class="empty">No sets logged yet. They will appear here so you can fix a typo.</div>';
 recent.forEach(function(x){h+='<div class="card" style="padding:10px 13px"><div class="row"><div><div style="font-size:14px">'+esc(EX[x.exId]?EX[x.exId][3]:x.exId)+'</div><div class="tiny num">'+x.date+' · '+x.value+(x.load?" · "+x.load+" lb":"")+'</div></div>'+
 '<div><button class="del" onclick="editSet('+x.id+')">Edit</button> <button class="del danger" onclick="rmSet('+x.id+')">Delete</button></div></div></div>'});
+var rc={};D.rel.forEach(function(r){rc[r.kind]=(rc[r.kind]||0)+1});var sdt=D.sessions.map(function(x){return x.date}).sort();
+var bk=null;try{bk=JSON.parse(localStorage.getItem(KEY+"-bak")||"null")}catch(e){}
+var allk=[];try{for(var ki=0;ki<localStorage.length;ki++){var kn=localStorage.key(ki);allk.push(kn+" · "+Math.round((localStorage.getItem(kn)||"").length/1024)+" KB")}}catch(e){}
+h+='<h2 style="margin-top:16px">What is on this phone</h2><div class="card" style="padding:13px">'+
+'<div class="tgt"><span>Opened from</span><b>'+(navigator.standalone?"Home screen icon":"Safari tab")+'</b></div>'+
+'<div class="tgt"><span>Sessions</span><b>'+D.sessions.length+(sdt.length?' · since '+sdt[0]:'')+'</b></div>'+
+'<div class="tgt"><span>Sets</span><b>'+D.sets.length+'</b></div>'+
+'<div class="tgt"><span>Commitments · raised · appreciated</span><b>'+(rc.commit||0)+' · '+(rc.raised||0)+' · '+(rc.appr||0)+'</b></div>'+
+'<div class="tgt"><span>Therapy notes</span><b>'+D.ther.length+'</b></div>'+
+'<div class="tgt"><span>Auto backup</span><b>'+(bk?(bk.sessions||[]).length+' sessions · '+(bk.rel||[]).length+' Us notes':'none')+'</b></div>'+
+'<div class="tgt"><span>Last manual backup</span><b>'+(D.lastBak||"never")+'</b></div>'+
+'<div class="tiny" style="margin-top:8px">Everything saved on this site: '+esc(allk.join(" | ")||"nothing")+'</div>'+
+'<div class="tiny" style="margin-top:8px">On iPhone, the home screen icon and a Safari tab keep SEPARATE storage. Deleting and re-adding the icon starts it empty. If numbers look low, open the app the other way and compare.</div></div>';
 h+='<h2 style="margin-top:16px">Backup and restore</h2><div class="tiny" style="margin-bottom:8px">Data lives on this device only. An automatic backup is kept every tenth save.</div>'+
 '<button class="wide" onclick="expo()">Copy backup to clipboard</button>'+
 '<div class="inline" style="margin-top:10px"><input id="imp" placeholder="paste a backup here"><button class="go" onclick="doImport()">Restore</button></div>'+
