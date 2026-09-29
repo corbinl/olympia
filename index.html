@@ -181,6 +181,21 @@ animation:slideup .25s ease both}
 @keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
 .floatbar .ft{font-size:26px;color:var(--br2);font-variant-numeric:tabular-nums;min-width:74px}
 .floatbar .ft{cursor:pointer}.floatbar.gs .ft{color:var(--y);font-size:34px}.floatbar button.pr{background:var(--br);color:#FFF9EC;border-color:var(--br);font-weight:600}
+.sheet{position:fixed;inset:0;z-index:90;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 20px);text-align:center}
+.sheet .sx{position:absolute;top:calc(env(safe-area-inset-top) + 14px);right:16px;background:transparent;border:1px solid var(--edge);color:inherit;padding:8px 14px;border-radius:18px;font:12px inherit;font-family:inherit;letter-spacing:.1em;text-transform:uppercase}
+.sheet .sk{font-size:13px;letter-spacing:.3em;font-weight:700;text-transform:uppercase;color:var(--br2)}
+.sheet .sn{font-size:22px;margin:6px 0 2px}
+.sheet .big{font-size:min(32vw,150px);line-height:1;margin:22px 0 8px;font-variant-numeric:tabular-nums;font-weight:400;color:var(--br2);cursor:pointer}
+.sheet .adj{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0;font-size:15px}
+.sheet .adj span{min-width:120px}
+.sheet .adj button{width:48px;height:44px;border:1px solid var(--edge);background:var(--pan);color:var(--tx);font-size:20px;border-radius:2px}
+.sheet .row2{display:flex;gap:8px;width:100%;max-width:420px;margin-top:18px}
+.sheet .row2 button{flex:1;padding:18px 6px;font:17px inherit;font-family:inherit;border:1px solid var(--edge);background:var(--pan);color:var(--tx);border-radius:2px}
+.sheet .row2 button.pr{background:var(--br);border-color:var(--br);color:#FFF9EC;font-weight:600;flex:2}
+.sheet.ph-set .big,.sheet.ph-set .sk{color:var(--y)}
+.sheet.ph-on{background:var(--r);color:#fff}.sheet.ph-off{background:var(--g);color:#fff}
+.sheet.ph-on .sk,.sheet.ph-off .sk,.sheet.ph-on .big,.sheet.ph-off .big,.sheet.ph-on .tiny,.sheet.ph-off .tiny,.sheet.ph-on .sn,.sheet.ph-off .sn{color:#fff!important}.sheet.ph-on .row2 button,.sheet.ph-off .row2 button{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.5);color:#fff}
+.sheet.ph-p .big{opacity:.4}
 .floatbar .fl{flex:1;font-size:12px;color:var(--mut);line-height:1.3}
 .floatbar button{background:var(--pan2);border:1px solid var(--edge);color:var(--tx);padding:9px 13px;font:12px inherit;font-family:inherit;letter-spacing:.06em;text-transform:uppercase}
 .prog{display:flex;gap:3px;margin:10px 0 14px}
@@ -1022,9 +1037,9 @@ var T={id:null,left:0,lab:"",kind:""};
 function toggleTheme(){D.theme=D.theme==="light"?"dark":"light";document.documentElement.setAttribute("data-t",D.theme);save();render()}
 function flash(m){S.flash=m;render();setTimeout(function(){S.flash=null;render()},2600)}
 function pop(big,small){S.pop=[big,small||""];render();setTimeout(function(){S.pop=null;render()},2200)}
-function go(t){S.tab=t;stopT();render()}
+function go(t){S.tab=t;render()}
 function setPlan(p){S.plan=p;S.ex=null;D.lastPlan=p;save();render()}
-function tog(id){S.ex=S.ex===id?null:id;stopT();render()}
+function tog(id){S.ex=S.ex===id?null:id;render()}
 function pick(k,v){S[k]=v;render()}
 function openLearn(k){S.learn=S.learn===k?null:k;render()}
 function togBlk(b){S.openBlk=S.openBlk===b?null:b;render()}
@@ -1261,7 +1276,7 @@ if(T.kind==="int"){if(T.iph==="on"){if(T.round>=T.rounds){beep(1175,0.6);var r=T
 else{T.iph="on";T.round++;T.dur=20}goPhase();render();return}
 if(T.side<T.sides){T.side++;beep(880,0.3);T.phase="set";T.gsEnd=nowMs()+Math.max(3,T.gs)*1000;T.lastB=null;render();return}
 beep(1175,0.5);var k=T.kind,lab=T.lab;endT();pop(k==="rest"?"Rest done":"Time",k==="rest"?"Next set":lab)}
-function endT(){if(T.id)clearInterval(T.id);T.id=null;wake(false)}
+function endT(){if(T.id)clearInterval(T.id);T.id=null;wake(false);S.full=false;S.sheet=null}
 function stopT(){endT()}
 function togPause(){if(!T.id)return;if(T.paused){var sh=nowMs()-T.pAt;T.t0+=sh;T.t1+=sh;if(T.gsEnd)T.gsEnd+=sh;T.paused=false}else{T.paused=true;T.pAt=nowMs()}render()}
 function adjT(n){if(!T.id)return;if(T.phase==="set")T.gsEnd+=n*1000;else if(T.mode==="down")T.t1=Math.max(nowMs()+1000,T.t1+n*1000);tick();paint()}
@@ -1286,6 +1301,21 @@ function startRest(id){var r=(id&&REST[id])||D.settings.rest;if(r>0)startT(r,"Ne
 function p2Week(){var a=new Date(D.settings.p2start+"T00:00:00"),n=new Date(today()+"T00:00:00");return Math.floor((n-a)/6048e5)+1}
 function sprintPlan(){if(deloadActive())return[4,"easy, about 70 percent"];var w=p2Week();return w<=2?[6,"about 80 percent"]:w<=4?[9,"about 90 percent"]:[9,"all-out"]}
 function sprintRx(){var p=sprintPlan();return p[0]+" x 20s at "+p[1]+" · 60s walk between · week "+p2Week()}
+var GSTEPS=[0,3,5,10,15,20];
+function durFor(id){return D.tdur&&D.tdur[id]?D.tdur[id]:(EX[id]?EX[id][8]:30)}
+function tcfg(id){if(id==="gd_sprint"){var sp=sprintPlan();return{kind:"int",lab:"Sprints",up:false,dur:20,rounds:sp[0],rx:sp[0]+" rounds · 20s sprint at "+sp[1]+" · 60s walk"}}
+if(id.indexOf("sk_")===0){var sk=SKILLS.filter(function(x){return x[0]===id.slice(3)})[0];return{kind:"hold",lab:sk?sk[1]:"Skill",up:true,sk:id.slice(3),rx:"Hold until you break"}}
+var e=EX[id],up=/max/i.test(e[4]);return{kind:"hold",lab:exLabel(id),up:up,dur:durFor(id),ex:id,sides:/per side/i.test(e[4])?2:1,best:up?bestOf(id):null,rx:e[4]}}
+function openSheet(id){S.sheet=id;S.full=false;audioInit();render()}
+function closeSheet(){S.sheet=null;render()}
+function adjGS(id,d){var v=gsFor(id),i=GSTEPS.indexOf(v);if(i<0)i=2;i=Math.max(0,Math.min(GSTEPS.length-1,i+d));D.gs=D.gs||{};D.gs[id]=GSTEPS[i];save();render()}
+function adjDur(id,d){D.tdur=D.tdur||{};D.tdur[id]=Math.max(5,durFor(id)+d);save();render()}
+function sheetStart(){var id=S.sheet,c=tcfg(id);startT(c.up?0:c.dur,c.lab,c.kind,{gs:gsFor(id),up:c.up,ex:c.ex,sk:c.sk,best:c.best,sides:c.sides,rounds:c.rounds});S.full=true;S.sheet=id;render()}
+function sheetLab(){if(T.paused)return["PAUSED","Tap the clock to resume"];
+if(T.phase==="set")return[T.side>1?"SWITCH SIDES":"GET SET",T.lab];
+if(T.kind==="int")return[T.iph==="on"?"SPRINT":"WALK","Round "+T.round+" of "+T.rounds];
+if(T.mode==="up")return["HOLD",T.lab+(T.best?" · best "+T.best+"s":"")];
+return[T.kind==="rest"?"REST":"HOLD",T.lab+(T.sides>1?" · side "+T.side+" of "+T.sides:"")]}
 function startIntervals(){var p=sprintPlan();startT(20,"Sprints","int",{gs:gsFor("gd_sprint"),rounds:p[0]})}
 function modeToday(){return D.mode&&D.mode.date===today()?D.mode.m:"normal"}
 function setMode(m){D.mode={date:today(),m:m};save();pop(m==="alpha"?"Alpha day":m==="omega"?"Omega day":"Normal day",m==="alpha"?"Joint armor plus one main lift. Skip the sprints. Go home.":m==="omega"?"Last set of the main lift to AMRAP. No extra exercises.":"Full session.")}
@@ -1545,7 +1575,7 @@ h+='</div>';
 h+='<div class="logrow"><input id="v_'+id+'" type="number" inputmode="numeric" placeholder="reps/secs"><input id="r_'+id+'" class="n" type="number" inputmode="numeric" placeholder="RIR"><input id="l_'+id+'" class="n" type="number" inputmode="numeric" placeholder="lb"><button onclick="addSet(\''+id+'\')">Log</button></div>';
 h+='<div class="minirow"><button class="'+(S.info===id?"on":"")+'" onclick="pick(\'info\',\''+(S.info===id?"":id)+'\')">Info</button>'+
 '<button class="'+(S.swapUI===id?"on":"")+'" onclick="pick(\'swapUI\',\''+(S.swapUI===id?"":id)+'\')">Swap</button>'+
-(id==="gd_sprint"?'<button onclick="startIntervals()">Intervals</button><button onclick="cycleGS(\'gd_sprint\')">Set '+gsFor("gd_sprint")+'s</button>':(e[8]>0||/max/i.test(e[4]))?'<button onclick="exTimer(\''+id+'\')">'+(/max/i.test(e[4])?"Stopwatch":"Timer")+'</button><button onclick="cycleGS(\''+id+'\')">Set '+gsFor(id)+'s</button>':'<button onclick="startRest()">Rest</button>')+
+(id==="gd_sprint"||e[8]>0||/max/i.test(e[4])?'<button onclick="openSheet(\''+id+'\')">Timer</button>':'<button onclick="startRest(\''+id+'\')">Rest</button>')+
 '<button onclick="lvl(\''+id+'\')">Level up</button></div>';
 if(ts.length){h+='<div style="padding:0 12px 10px;background:var(--bg2)">';
 ts.forEach(function(x){h+='<div class="row" style="padding:5px 0"><span class="tiny num">'+x.value+(x.load?" · "+x.load+" lb":"")+(x.rir==null||isNaN(x.rir)?"":" · "+x.rir+" RIR")+'</span><button class="del" onclick="rmSet('+x.id+')">Remove</button></div>'});
@@ -1665,7 +1695,7 @@ h+='<div class="lad"><div class="row" onclick="pick(\'skill\',\''+(S.skill===sk[
 var work=Math.min(cur+1,sk[3].length-1),ts=skillToday(sk[0]),d7=skillDays(sk[0]);
 h+='<div class="tiny" style="margin-top:7px">Working rung: '+esc(sk[3][work].n)+' · practised '+d7+' of the last 7 days</div>';
 h+='<div class="logrow" style="margin-top:8px"><input id="sk_'+sk[0]+'" type="number" inputmode="numeric" placeholder="secs or reps" value="'+((S.pre&&S.pre[sk[0]])||"")+'"><button onclick="addSkillSet(\''+sk[0]+'\','+work+')">Log set</button></div>'+
-'<div class="minirow" style="padding:6px 0 0;background:none"><button onclick="skWatch(\''+sk[0]+'\',\''+esc(sk[1])+'\')">Stopwatch</button><button onclick="cycleGS(\'sk_'+sk[0]+'\')">Get-set '+gsFor("sk_"+sk[0])+'s</button></div>';
+'<div class="minirow" style="padding:6px 0 0;background:none"><button onclick="openSheet(\'sk_'+sk[0]+'\')">Timer</button></div>';
 if(SKEV[sk[0]])h+='<div class="tiny" style="padding-top:6px">Beat your best here and it records to Events automatically. No double entry.</div>';
 if(ts.length)h+='<div class="chips" style="padding:8px 0 0">'+ts.map(function(x){return '<span class="chip num" onclick="rmSkillSet('+x.id+')">'+x.v+'</span>'}).join("")+'<span class="tiny" style="align-self:center;margin-left:4px">'+ts.length+' today'+(ts.length>=5?' · XP cap':'')+'</span></div>';
 if(S.skill===sk[0]){sk[3].forEach(function(r,i){var key=sk[0]+"_"+i;
@@ -1902,12 +1932,29 @@ oldk.forEach(function(o){h+='<div class="card" style="padding:11px 13px"><div cl
 h+='<div class="tiny" style="margin-top:8px">Merging never deletes anything. Duplicates are skipped by id.</div>'}
 
 var ae=document.activeElement,aid=ae&&ae.id,ss=null;try{ss=ae&&ae.selectionStart}catch(err){}
-if(T.id){var tl=tLeft(),st5=T.kind==="rest"?15:5,lng=T.kind==="deep"||T.kind==="meet"||T.kind==="cool";
+if(S.sheet&&!(T.id&&S.full)){var sc=tcfg(S.sheet),sid=S.sheet;
+h+='<div class="sheet"><button class="sx" onclick="closeSheet()">✕</button>'+
+'<div class="sk">'+(sc.kind==="int"?"Intervals":sc.up?"Stopwatch":"Countdown")+'</div><div class="sn ser">'+esc(sc.lab)+'</div><div class="tiny">'+esc(sc.rx||"")+'</div>'+
+'<div class="big">'+(sc.up?"0:00":fmt(sc.dur))+'</div>'+
+(sc.kind==="hold"&&!sc.up?'<div class="adj"><button onclick="adjDur(\''+sid+'\',-5)">−</button><span>Length '+fmt(sc.dur)+(sc.sides>1?' per side':'')+'</span><button onclick="adjDur(\''+sid+'\',5)">+</button></div>':'')+
+'<div class="adj"><button onclick="adjGS(\''+sid+'\',-1)">−</button><span>Get set '+gsFor(sid)+'s</span><button onclick="adjGS(\''+sid+'\',1)">+</button></div>'+
+'<div class="tiny" style="max-width:320px">'+(sc.up?"Counts up once you are set. Tap Done when you break and the time logs itself.":sc.kind==="int"?"Beeps count you into every sprint and every walk. Screen goes red to sprint, green to walk.":"Beeps at 3, 2, 1 and at the end.")+'</div>'+
+'<div class="row2"><button class="pr" onclick="sheetStart()">Start</button></div>'+
+'<div class="opts" style="margin-top:16px;width:100%;max-width:420px">'+[["off","Beeps off"],["on","On"],["loud","Loud"]].map(function(o){return '<button class="'+((D.settings.beep||"on")===o[0]?"sel":"")+'" onclick="setOpt(\'beep\',\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div></div>'}
+if(T.id&&S.full){var tl2=tLeft(),sl=sheetLab(),phc=T.paused?"ph-p":T.phase==="set"?"ph-set":T.kind==="int"?(T.iph==="on"?"ph-on":"ph-off"):"";
+h+='<div class="sheet '+phc+'"><button class="sx" onclick="S.full=false;S.sheet=null;render()">Minimize</button>'+
+'<div class="sk">'+esc(sl[0])+'</div><div class="sn ser">'+esc(sl[1])+'</div>'+
+'<div class="big" id="tdisp" onclick="togPause()">'+(T.phase==="set"?tl2:fmt(tl2))+'</div><div class="tiny" style="opacity:.8">Tap the clock to pause</div>'+
+'<div class="row2">'+(T.phase==="set"?'<button onclick="adjT(5)">+5</button><button class="pr" onclick="goNow()">Go</button>':
+T.mode==="up"?'<button class="pr" onclick="doneUp()">Done</button>':
+T.kind!=="int"?'<button onclick="adjT(-5)">−5</button><button onclick="adjT(5)">+5</button>':'')+
+'<button onclick="stopT();render()">Stop</button></div></div>'}
+else if(T.id){var tl=tLeft(),st5=T.kind==="rest"?15:5,lng=T.kind==="deep"||T.kind==="meet"||T.kind==="cool";
 h+='<div class="floatbar'+(T.phase==="set"?' gs':'')+'"><div class="ft" id="tdisp" onclick="togPause()">'+(T.phase==="set"?tl:fmt(tl))+'</div><div class="fl">'+tLabel()+'</div>'+
 (T.phase==="set"?'<button onclick="adjT(5)">+5</button><button class="pr" onclick="goNow()">Go</button>':
 T.mode==="up"?'<button class="pr" onclick="doneUp()">Done</button>':
 (!lng&&T.kind!=="int"?'<button onclick="adjT(-'+st5+')">−'+st5+'</button><button onclick="adjT('+st5+')">+'+st5+'</button>':''))+
-'<button onclick="stopT();render()">✕</button></div>'}
+(T.kind!=="deep"&&T.kind!=="meet"&&T.kind!=="cool"?'<button onclick="S.full=true;render()">⤢</button>':'')+'<button onclick="stopT();render()">✕</button></div>'}
 document.getElementById("app").innerHTML=h;
 if(aid){var n2=document.getElementById(aid);if(n2&&n2.focus){n2.focus();try{if(ss!=null&&n2.setSelectionRange)n2.setSelectionRange(ss,ss)}catch(err){}}}}
 render();
