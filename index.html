@@ -1041,6 +1041,7 @@ function go(t){S.tab=t;render()}
 function setPlan(p){S.plan=p;S.ex=null;D.lastPlan=p;save();render()}
 function tog(id){S.ex=S.ex===id?null:id;render()}
 function pick(k,v){S[k]=v;render()}
+function learnInline(k){if(S.learn!==k)return "";var L=LEARN[k];return '<div style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">'+L[1].map(function(p){return '<p class="tiny" style="margin-bottom:8px">'+esc(p)+'</p>'}).join("")+'</div>'}
 function openLearn(k){S.learn=S.learn===k?null:k;render()}
 function togBlk(b){S.openBlk=S.openBlk===b?null:b;render()}
 function tapTitle(){S.vt++;if(S.vt>=3){S.vt=0;S.showV=!S.showV;render()}}
@@ -1605,7 +1606,7 @@ h+='<h2 style="margin-top:18px">Recovery · optional</h2><div class="card" style
 '<div class="verdict '+(lifted?"y":"g")+'" style="margin-bottom:9px">'+(lifted?'You lifted today. Skip cold today or keep it a quick rinse. Cold after lifting blunts the muscle you just trained for. Tomorrow morning is the window.':'Cold window is open: morning, rest day, or before you lift. Not in the hours after lifting.')+'</div>'+
 '<div class="dki" onclick="togSup(\'cold\')"><div class="box '+(rf.cold?"on":"")+'"></div><div style="flex:1"><div style="font-size:14px">Morning cold shower · 1-3 min</div><div class="tiny">Experimental. Last 1-3 minutes of your morning shower, turned to cold. Rest days or before lifting are fine too. Never in the hours after lifting. No solo stock tank.</div></div></div>'+
 '<div class="dki" onclick="togSup(\'sauna\')"><div class="box '+(rf.sauna?"on":"")+'"></div><div style="flex:1"><div style="font-size:14px">Sauna</div><div class="tiny">Experimental. Electrolytes first. Sit a minute, stand in stages, leave if lightheaded. Never before lifting.</div></div></div>'+
-'<div class="tiny" style="margin-top:6px"><span class="link" onclick="openLearn(\'thermal\')">Why the timing matters</span></div></div>';
+'<div class="tiny" style="margin-top:6px"><span class="link" onclick="openLearn(\'thermal\')">'+(S.learn==="thermal"?"Hide":"Why the timing matters")+'</span></div>'+learnInline("thermal")+'</div>';
 h+='<h2 style="margin-top:18px">Architect · '+(isArch()?'hours open':'clocked out')+'</h2>';
 h+='<div class="card"><div class="tiny" style="margin-bottom:9px">'+(isArch()?'Sunday. Architect hours. Work the inbox, read, decide. Changes to the program happen now or not until next Sunday.':'The Architect works Sundays. Today you are the Grunt: execute the paper. New idea, Gemini batch, supplement, video? Park it here. It waits for Sunday.')+'</div>'+
 '<div class="inline"><input id="archin" placeholder="idea for Sunday"><button class="go" onclick="parkIt2()">Park it</button></div>';
@@ -1731,7 +1732,7 @@ return '<button class="'+(m.sleep===i?"sel":"")+'" onclick="saveMind({sleep:'+i+
 h+='<h2>Energy today</h2><div class="sl" style="margin-bottom:14px">'+[1,2,3,4,5].map(function(i){
 return '<button class="'+(m.energy===i?"sel":"")+'" onclick="saveMind({energy:'+i+'})">'+i+'</button>'}).join("")+'</div>';
 h+='<div class="card"><div class="row"><h2 style="margin:0">Caffeine delay</h2><span class="tiny">Experiment · 2 weeks</span></div>'+
-'<div class="tiny" style="margin:4px 0 9px">Did you wait 90+ min after waking before caffeine today? Then rate the afternoon, 2 to 4 pm. <span class="link" onclick="S.tab=\'train\';openLearn(\'caffeine\')">What this tests</span></div>'+
+'<div class="tiny" style="margin:4px 0 9px">Did you wait 90+ min after waking before caffeine today? Then rate the afternoon, 2 to 4 pm. <span class="link" onclick="openLearn(\'caffeine\')">'+(S.learn==="caffeine"?"Hide":"What this tests")+'</span></div>'+learnInline("caffeine")+
 '<div class="opts" style="margin-bottom:9px"><button class="'+(m.cafd===true?"sel g":"")+'" onclick="saveMind({cafd:true})">Delayed</button><button class="'+(m.cafd===false?"sel":"")+'" onclick="saveMind({cafd:false})">Not today</button></div>'+
 '<div class="tiny" style="margin-bottom:5px">Afternoon energy</div><div class="sl">'+[1,2,3,4,5].map(function(i){
 return '<button class="'+(m.pm===i?"sel":"")+'" onclick="saveMind({pm:'+i+'})">'+i+'</button>'}).join("")+'</div>';
